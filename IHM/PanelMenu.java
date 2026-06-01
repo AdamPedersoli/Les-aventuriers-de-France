@@ -11,7 +11,7 @@ public class PanelMenu extends JPanel implements ActionListener
 
 	public PanelMenu()
 	{
-		this.setLayout(new GridLayout(3, 1));
+		this.setLayout(new GridLayout(5, 1));
 
 		this.comboBoxPlateaux = new JComboBox<Plateau>();
 		for (Plateau plateau : Plateau.values()) 
