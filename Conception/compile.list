@@ -1,3 +1,4 @@
+<<<<<<< HEAD:Conception/compile.list
 Controleur.java
 
 IHM/FrameMenu.java
@@ -10,3 +11,20 @@ IHM/FrameModification.java
 IHM/PanelModification.java
 IHM/FrameSolo.java
 IHM/PanelSolo.java
+=======
+Controleur.java
+
+IHM/FrameMenu.java
+IHM/PanelMenu.java
+IHM/FrameConfig.java
+IHM/PanelConfig.java
+IHM/FrameCreation.java
+IHM/PanelCreation.java
+IHM/FrameModification.java
+IHM/PanelModification.java
+IHM/FrameSolo.java
+IHM/PanelSolo.java
+
+Metier/Pole.java
+Metier/MoyenTransport.java
+>>>>>>> b935cf6 (modif compile list, modif Pole et ajout MoyenTransport):compile.list
