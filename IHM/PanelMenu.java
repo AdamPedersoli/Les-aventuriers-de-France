@@ -34,7 +34,7 @@ public class PanelMenu extends JPanel implements ActionListener
 		this.buttonModification.addActionListener(this);
 		
 		this.add(this.buttonSolo);
-		this.add(new JLabel(""));
+		this.add(new JLabel("Choisir un plateau pour jouer ou le modifier", SwingConstants.CENTER));
 		this.add(this.jcbPlateaux);
 		this.add(new JLabel(""));
 		this.add(this.buttonCreation);
@@ -51,10 +51,14 @@ public class PanelMenu extends JPanel implements ActionListener
 		if (e.getSource() == this.buttonCreation) 
 		{
 			new FrameConfig();
+			this.setVisible(false);
+			this.setEnabled(false);
 		}
 		if (e.getSource() == this.buttonModification) 
 		{
 			new FrameModification();
+			this.setVisible(false);
+			this.setEnabled(false);
 		}
 	}
 	

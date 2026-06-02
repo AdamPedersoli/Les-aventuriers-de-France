@@ -7,7 +7,8 @@ public class FrameCreation extends JFrame
 	public FrameCreation()
 	{
 		this.setTitle("Creation");
-		this.setSize(400, 400);
+		// à changer en fonction de la taille du plateau
+		this.setSize(600, 600);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLocation(500, 200);
 		this.add(new PanelCreation());

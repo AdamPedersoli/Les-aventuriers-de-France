@@ -15,13 +15,18 @@ public class PanelConfig extends JPanel implements ActionListener
 		JPanel panelDep        = new JPanel();
 		JPanel panelTransport  = new JPanel();
 
-		panelDim.add(new JLabel("Dimensions :"));
-		panelDim.add(new JTextField("Largeur", 10));
-		panelDim.add(new JTextField("Hauteur", 10));
+		panelDim.add(new JLabel("Dimensions :   "));
+		panelDim.add(new JLabel("Ligne : "));
+		panelDim.add(new JTextField( 10));
+		panelDim.add(new JLabel("Colonne : "));
+		panelDim.add(new JTextField( 10));
 
-		panelPoles.add(new JTextField("Nombre de Pôles :", 10));
-		panelDep.add(new JTextField("Nombre de Départements :", 10));
-		panelTransport.add(new JTextField("Nombre de Transports :", 10));
+		panelPoles.add(new JLabel("Nombre de Pôles : "));
+		panelPoles.add(new JTextField( 10));
+		panelDep.add(new JLabel("Nombre de Départements : "));
+		panelDep.add(new JTextField( 10));
+		panelTransport.add(new JLabel("Nombre de Transports : "));
+		panelTransport.add(new JTextField( 10));
 		
 		this.add(panelDim);
 		this.add(panelPoles);
@@ -37,6 +42,8 @@ public class PanelConfig extends JPanel implements ActionListener
 		if (e.getSource() == this.buttonValider)
 		{
 			new FrameCreation();
+			this.setVisible(false);
+			this.setEnabled(false);
 		}
 	}
 }

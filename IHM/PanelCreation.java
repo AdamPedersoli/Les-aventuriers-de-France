@@ -46,15 +46,18 @@ public class PanelCreation extends JPanel
 		ImageIcon iconPole = new ImageIcon("src/IHM/Images/");
 
 		// panelPoles
+		panelPoles.add(new JLabel("Pôles : "));
 		panelPoles.add(jcbPoles);
 		panelPoles.add(new JLabel(iconPole));
 
 		// panelDep
+		panelDep.add(new JLabel("Départements : "));
 		panelDep.add(jcbDep);
 		panelDep.add(buttonRefreshDep);
 		panelDep.add(labelCouleur);
 
 		// panelTransport
+		panelTransport.add(new JLabel("Transports : "));
 		panelTransport.add(jcbTrans);
 		panelTransport.add(buttonRefreshTrans);
 
@@ -62,11 +65,12 @@ public class PanelCreation extends JPanel
 		this.panelConfig.add(panelDep);
 		this.panelConfig.add(panelTransport);
 
-		JTextField tfNomPlateau = new JTextField("Nom du plateau", 20);
+		JTextField tfNomPlateau = new JTextField( 20);
 
 		ArrayList<String> nomPlateaux = new ArrayList<String>(); // this.ctrl.getNomPlateaux();
 
 		// panelNomPlateau
+		panelNomPlateau.add(new JLabel("Nom du plateau : "));
 		panelNomPlateau.add(tfNomPlateau);
 
 		// panelVisual
