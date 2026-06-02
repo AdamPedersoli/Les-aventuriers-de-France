@@ -34,8 +34,9 @@ public class PanelCreation extends JPanel
 		JComboBox jcbDep   = new JComboBox(this.ctrl.getNomDeps());
 		JComboBox jcbTrans = new JComboBox(this.ctrl.getNomTransports());
 
-		JButton buttonRefresh = new JButton(new ImageIcon("/IHM/Images/refresh.png"));
-		JLabel labelCouleur   = new JLabel("");
+		JButton buttonRefreshDep   = new JButton(new ImageIcon("/IHM/Images/refresh.png"));
+		JButton buttonRefreshTrans = new JButton(new ImageIcon("/IHM/Images/refresh.png"));
+		JLabel labelCouleur        = new JLabel("");
 
 		// à déf
 		ImageIcon iconPole = new ImageIcon("src/IHM/Images/");
@@ -46,11 +47,12 @@ public class PanelCreation extends JPanel
 
 		// panelDep
 		panelDep.add(jcbDep);
-		panelDep.add(buttonRefresh);
+		panelDep.add(buttonRefreshDep);
 		panelDep.add(labelCouleur);
 
 		// panelTransport
 		panelTransport.add(jcbTrans);
+		panelTransport.add(buttonRefreshTrans);
 
 		this.panelConfig.add(panelPoles);
 		this.panelConfig.add(panelDep);
@@ -68,9 +70,11 @@ public class PanelCreation extends JPanel
 
 		// panelBouton
 		JButton buttonAnnuler = new JButton("Annuler");
+		JButton buttonEffacer = new JButton("Effacer");
 		JButton buttonValider = new JButton("Valider");
 
 		panelBouton.add(buttonAnnuler);
+		panelBouton.add(buttonEffacer);
 		panelBouton.add(buttonValider);
 
 		this.panelGrille.add(panelNomPlateau);
