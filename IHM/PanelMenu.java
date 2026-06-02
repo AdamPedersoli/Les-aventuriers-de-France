@@ -8,13 +8,14 @@ public class PanelMenu extends JPanel implements ActionListener
 {
 	private JButton buttonSolo;
 	private JButton buttonCreation;
+	private JButton buttonModification;
 	private JComboBox<String> jcbPlateaux;
 	// private Controleur ctrl;
 
 	public PanelMenu()
 	{
 		// this.ctrl = ctrl;
-		this.setLayout(new GridLayout(5, 1));
+		this.setLayout(new GridLayout(6, 1));
 
 		this.jcbPlateaux = new JComboBox<String>();
 
@@ -29,11 +30,15 @@ public class PanelMenu extends JPanel implements ActionListener
 		this.buttonCreation = new JButton("Creation");
 		this.buttonCreation.addActionListener(this);
 		
+		this.buttonModification = new JButton("Modification");
+		this.buttonModification.addActionListener(this);
+		
 		this.add(this.buttonSolo);
 		this.add(new JLabel(""));
 		this.add(this.jcbPlateaux);
 		this.add(new JLabel(""));
 		this.add(this.buttonCreation);
+		this.add(this.buttonModification);
 	}
 
 	public void actionPerformed(ActionEvent e) 
@@ -42,11 +47,15 @@ public class PanelMenu extends JPanel implements ActionListener
 		{
 			String plateauSelectionne = (String) this.jcbPlateaux.getSelectedItem();
 			new FrameSolo(Plateau.valueOf(plateauSelectionne));
-		} 
-		else if (e.getSource() == this.buttonCreation) 
-		{
-			new FrameCreation();
 		}*/
+		if (e.getSource() == this.buttonCreation) 
+		{
+			new FrameConfig();
+		}
+		if (e.getSource() == this.buttonModification) 
+		{
+			new FrameModification();
+		}
 	}
 	
 }

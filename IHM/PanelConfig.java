@@ -1,9 +1,11 @@
 package IHM;
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.*;
 
-public class PanelConfig extends JPanel
+public class PanelConfig extends JPanel implements ActionListener
 {
+	JButton buttonValider;
 	public PanelConfig()
 	{
 		this.setLayout(new GridLayout(5, 1));
@@ -25,6 +27,16 @@ public class PanelConfig extends JPanel
 		this.add(panelPoles);
 		this.add(panelDep);
 		this.add(panelTransport);
-		this.add(new JButton("Valider"));
+		this.buttonValider = new JButton("Valider");
+		this.buttonValider.addActionListener(this);
+		this.add(this.buttonValider);
+	}
+
+	public void actionPerformed(ActionEvent e) 
+	{
+		if (e.getSource() == this.buttonValider)
+		{
+			new FrameCreation();
+		}
 	}
 }
