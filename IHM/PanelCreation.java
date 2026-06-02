@@ -3,14 +3,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import controleur;
+// import controleur;
 
 public class PanelCreation extends JPanel
 {
 	// panel Principal
 	private JPanel panelConfig;
 	private JPanel panelGrille;
-	private Controleur ctrl;
+	// private Controleur ctrl;
 
 	public PanelCreation()
 	{
@@ -30,9 +30,13 @@ public class PanelCreation extends JPanel
 		JPanel panelVisual     = new JPanel();
 		JPanel panelBouton     = new JPanel();
 
-		JComboBox jcbPoles = new JComboBox(this.ctrl.getNomPoles());
-		JComboBox jcbDep   = new JComboBox(this.ctrl.getNomDeps());
-		JComboBox jcbTrans = new JComboBox(this.ctrl.getNomTransports());
+		JComboBox<String> jcbPoles = new JComboBox<String>(); //this.ctrl.getNomPoles());
+		JComboBox<String> jcbDep   = new JComboBox<String>(); //this.ctrl.getNomDeps());
+		JComboBox<String> jcbTrans = new JComboBox<String>(); //this.ctrl.getNomTransports());
+
+		jcbPoles.addItem("Poles");
+		jcbDep.addItem("Departement");
+		jcbTrans.addItem("transport");
 
 		JButton buttonRefreshDep   = new JButton(new ImageIcon("/IHM/Images/refresh.png"));
 		JButton buttonRefreshTrans = new JButton(new ImageIcon("/IHM/Images/refresh.png"));
@@ -60,7 +64,7 @@ public class PanelCreation extends JPanel
 
 		JTextField tfNomPlateau = new JTextField("Nom du plateau", 20);
 
-		ArrayList<String> nomPlateaux = this.ctrl.getNomPlateaux();
+		ArrayList<String> nomPlateaux = new ArrayList<String>(); // this.ctrl.getNomPlateaux();
 
 		// panelNomPlateau
 		panelNomPlateau.add(tfNomPlateau);

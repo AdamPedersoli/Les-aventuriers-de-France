@@ -2,18 +2,18 @@ package IHM;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-import Controleur;
+// import Controleur;
 
 public class PanelMenu extends JPanel implements ActionListener
 {
 	private JButton buttonSolo;
 	private JButton buttonCreation;
 	private JComboBox jcbPlateaux;
-	private Controleur ctrl;
+	// private Controleur ctrl;
 
 	public PanelMenu()
 	{
-		this.ctrl = ctrl;
+		// this.ctrl = ctrl;
 		this.setLayout(new GridLayout(5, 1));
 
 		this.jcbPlateaux = new JComboBox(this.ctrl.getNomPlateaux());
