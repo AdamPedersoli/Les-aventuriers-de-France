@@ -1,3 +1,4 @@
+package Les_aventuriers_de_France;
 import IHM.*;
 
 public class Controleur 
