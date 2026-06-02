@@ -66,7 +66,7 @@ public class PanelModification extends JPanel
 		panelNomPlateau.add(tfNomPlateau);
 
 		// panelVisual
-		panelVisual.add(// à définir);
+		panelVisual.add(/* à définir*/ );
 
 		// panelBouton
 		JButton buttonAnnuler = new JButton("Annuler");
