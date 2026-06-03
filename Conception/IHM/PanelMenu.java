@@ -73,14 +73,16 @@ import java.awt.event.*;
 
 public class PanelMenu extends JPanel implements ActionListener
 {
+	private FrameMenu frameMenu;
 	private JButton buttonSolo;
 	private JButton buttonCreation;
 	private JButton buttonModification;
 	private JComboBox<String> jcbPlateaux;
 	// private Controleur ctrl;
 
-	public PanelMenu()
+	public PanelMenu(FrameMenu frameMenu)
 	{
+		this.frameMenu = frameMenu;
 		// this.ctrl = ctrl;
 		this.setLayout(new GridLayout(6, 1));
 
@@ -99,6 +101,11 @@ public class PanelMenu extends JPanel implements ActionListener
 		
 		this.buttonModification = new JButton("Modification");
 		this.buttonModification.addActionListener(this);
+
+		this.jcbPlateaux.addItem(null);
+		this.jcbPlateaux.addItem("Test");
+		 // this.ctrl.getNomPlateaux());
+		this.jcbPlateaux.addActionListener(this);
 		
 		this.add(this.buttonSolo);
 		this.add(new JLabel("Choisir un plateau pour jouer ou le modifier", SwingConstants.CENTER));
@@ -110,30 +117,36 @@ public class PanelMenu extends JPanel implements ActionListener
 
 	public void actionPerformed(ActionEvent e) 
 	{
-		/*if (e.getSource() == this.buttonSolo) 
+		String nomPlateau = (String) this.jcbPlateaux.getSelectedItem();
+		if (nomPlateau != null) 
 		{
+			/*if (e.getSource() == this.buttonSolo) 
+			{
 			String plateauSelectionne = (String) this.jcbPlateaux.getSelectedItem();
 			new FrameSolo(Plateau.valueOf(plateauSelectionne));
-		}*/
+			}*/
+
+			/* 
+			String plateauSelectionne = (String) this.jcbPlateaux.getSelectedItem();
+			// FrameSolo frameSolo = new FrameSolo(plateauSelectionne);
+			// frameSolo.setVisible(true);
+			FrameMenu frameMenu = (FrameMenu) SwingUtilities.getWindowAncestor(this);
+			frameMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			this.setVisible(false);
+			this.setEnabled(false);*/
+
+			if (e.getSource() == this.buttonModification) 
+			{
+				this.frameMenu.getFrameModification().setVisible(true);
+				this.frameMenu.setVisible(false);
+			}
+		}
+
 		if (e.getSource() == this.buttonCreation) 
 		{
-			FrameConfig frameConfig = new FrameConfig();
-			frameConfig.setVisible(true);
-			FrameMenu frameMenu = (FrameMenu) SwingUtilities.getWindowAncestor(this);
-			frameMenu.setVisible(false);
-			this.setVisible(false);
-			this.setEnabled(false);
-		}
-		if (e.getSource() == this.buttonModification) 
-		{
-			FrameModification frameModification = new FrameModification();
-			frameModification.setVisible(true);
-			FrameMenu frameMenu = (FrameMenu) SwingUtilities.getWindowAncestor(this);
-			frameMenu.setVisible(false);
-			this.setVisible(false);
-			this.setEnabled(false);
+			this.frameMenu.getFrameConfig().setVisible(true);
+			this.frameMenu.setVisible(false);
 		}
 	}
-	
 }
 >>>>>>> 1175df4 (fonction de fermeture des frames):IHM/PanelMenu.java
