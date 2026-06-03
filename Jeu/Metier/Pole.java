@@ -1,17 +1,17 @@
 package Metier;
 
 import java.awt.Color;
+import java.util.ArrayList;
 
-public enum Pole
+public class Pole
 {
-	PORT           ( "Port"             ),
-	AEROPORT       ( "Aéroport"         ),
-	GARE           ( "Gare"             ),
-	STATION_VELO   ( "Station de velo"  ),
-	ARRET_BUS      ( "Arrêt de bus"     ),
-	ARRET_TRAMWAY  ( "Arrêt de tramway" ),
-	PASSAGE_PIETON ( "Passage piéton"   );
-	
+	public static String PORT           = "Port";
+	public static String AEROPORT       = "Aéroport";
+	public static String GARE           = "Gare";
+	public static String STATION_VELO   = "Station de velo";
+	public static String ARRET_BUS      = "Arrêt de bus";
+	public static String ARRET_TRAMWAY  = "Arrêt de tramway";
+	public static String PASSAGE_PIETON = "Passage piéton";
 	
 	
 	private String nom;
@@ -20,35 +20,37 @@ public enum Pole
 	
 	private boolean estVisite;
 	
-	private Pole suivant;
+	private ArrayList<Pole> lstVoisin;
 	
-	private Pole precedent;
-	
-	Pole ( String nom, int r, int v, int b )
+	public Pole ( String nom, Color c )
 	{
 		this.nom = nom;
 		
-		this.couleur = new Color( r, v, b);
+		this.couleur = c;
 		
 		this.estVisite = false;
-		this.suivant   = null;
-		this.precedent = null;
+		
+		this.lstVoisin = new ArrayList<Pole>();
 	}
 	
-	public String getNom     () { return this.nom;        }
-	public Color  getCouleur () { return this.couleur;    }
-	public Pole   getSvt     () { return this.suivant;    }
-	public Pole   getPrc     () { return this.precedent;  }
+	public String getNom     () { return this.nom;     }
+	public Color  getCouleur () { return this.couleur; }
 	
-	public boolean estVisite () { return this.estVisite;  }
-	
-	
-	public void setSvt ( Pole suivant   ) { this.suivant   = suivant;   }
-	public void setPrc ( Pole precedent ) { this.precedent = precedent; }
+	public boolean estVisite () { return this.estVisite; }
 	
 	public void setEstVisite ( boolean estVisite )
 	{
-		this.estVisite = estVisite
+		this.estVisite = estVisite;
+	}
+	
+	public void ajouterVoisin( Pole voisin )
+	{
+		this.lstVoisin.add( voisin );
+	}
+	
+	public boolean estVoisin( Pole p )
+	{
+		return this.lstVoisin.contains( p );
 	}
 	
 }

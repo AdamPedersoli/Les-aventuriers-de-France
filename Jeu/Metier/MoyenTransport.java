@@ -22,9 +22,8 @@ public enum MoyenTransport
 		this.nom = nom;
 	}
 	
-	public getNom() { return this.nom; }
-	
-	public getCouleur() { return this.couleur; }
+	public String getNom    () { return this.nom;     }
+	public Color getCouleur () { return this.couleur; }
 	
 	public void setCouleur( Color c ) { this.couleur = c; }
 	
