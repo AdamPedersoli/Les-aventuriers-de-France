@@ -1,4 +1,4 @@
-package IHM;
+package Jeu.IHM;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;

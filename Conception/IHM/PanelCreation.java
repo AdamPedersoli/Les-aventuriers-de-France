@@ -35,7 +35,6 @@ public class PanelCreation extends JPanel implements ActionListener
 		JPanel panelTransport  = new JPanel();
 
 		// sous-panel de panelGrille
-		JPanel panelNomPlateau = new JPanel();
 		JPanel panelVisual     = new JPanel();
 		JPanel panelBouton     = new JPanel();
 
@@ -75,13 +74,7 @@ public class PanelCreation extends JPanel implements ActionListener
 		this.panelConfig.add(panelTransport);
 		this.panelConfig.add(scrollbarRGB);
 
-		JTextField tfNomPlateau = new JTextField( 20);
-
 		ArrayList<String> nomPlateaux = new ArrayList<String>(); // this.ctrl.getNomPlateaux();
-
-		// panelNomPlateau
-		panelNomPlateau.add(new JLabel("Nom du plateau : "));
-		panelNomPlateau.add(tfNomPlateau);
 
 		// panelVisual
 		panelVisual.add(nomPlateaux.isEmpty() ? new JLabel("Aucun plateau disponible") : new JLabel(new ImageIcon("src/IHM/Images/" + nomPlateaux.get(0) + ".png")));
@@ -96,7 +89,6 @@ public class PanelCreation extends JPanel implements ActionListener
 		panelBouton.add(this.buttonEffacer);
 		panelBouton.add(this.buttonValider);
 
-		this.panelGrille.add(panelNomPlateau);
 		this.panelGrille.add(panelVisual);
 		this.panelGrille.add(panelBouton);
 
