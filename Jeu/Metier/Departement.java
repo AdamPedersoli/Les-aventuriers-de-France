@@ -3,6 +3,10 @@ package Metier;
 import java.awt.Color;
 import java.util.ArrayList;
 
+
+/**
+* Cette classe énumère les départements de France.
+*/
 public enum Departement
 {
 	
@@ -136,12 +140,30 @@ public enum Departement
 	D976_MAYOTTE    ("Mayotte"   , 40, 200, 140);
 	
 	
+	/**
+	* Nom du département.
+	*/
 	private String nom;
 	
+	/**
+	* Couleur du département.
+	*/
 	private Color  couleur;
 	
+	/**
+	* Liste des cases que le département recouvre.
+	*/
 	private ArrayList<Case> lstCase;
 	
+	/**
+	* Crée un département avec le nom, la valeur de la couleur rouge,
+	* la valeur de la couleur verte et la valeur de la couleur bleu entre 0 et 255.
+	*
+	* @param nom le nom du département.
+	* @param r la composante rouge de la couleur entre 0 et 255.
+	* @param v la composante verte de la couleur entre 0 et 255.
+	* @param b la composante bleue de la couleur entre 0 et 255.
+	*/
 	Departement( String nom, int r, int v, int b )
 	{
 		this.nom = nom;
@@ -151,14 +173,36 @@ public enum Departement
 		this.lstCase = new ArrayList<Case>();
 	}
 	
+	/**
+	* Méthode pour obtenir le nom du département.
+	*
+	* @return le nom du département.
+	*/
 	public String getNom()     { return this.nom;     }
+	
+	/**
+	* Méthode pour obtenir la couleur du département.
+	*
+	* @return la couleur du département.
+	*/
 	public Color  getCouleur() { return this.couleur; }
 	
+	/**
+	* Ajoute une case à la liste des cases.
+	*
+	* @param c la case à ajouter.
+	*/
 	public void ajouterCase( Case c )
 	{
 		this.lstCase.add(c);
 	}
 	
+	/**
+	* Méthode pour obtenir une case la liste avec l'indice.
+	*
+	* @param indice l'indice de la case dans la liste.
+	* @return la case correspondant à l'indice.
+	*/
 	public Case getCase( int indice )
 	{
 		return this.lstCase.get(indice);
