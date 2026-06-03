@@ -1,5 +1,7 @@
 package Metier;
 
+import java.awt.Point;
+
 /**
 * Cette classe permet de gérer les case.
 */
@@ -60,6 +62,13 @@ public class Case
 	* @return la coordonnée Y de la case.
 	*/
 	public int  getY    () { return this.posY; }
+	
+	/**
+	* Méthode pour obtenir le point de la position de la case.
+	*
+	* @return un point de la position.
+	*/
+	public Point getPoint() { return new Point( this.posX, this.posY ); }
 	
 	/**
 	* Méthode pout obtenir le pôle de la case.
