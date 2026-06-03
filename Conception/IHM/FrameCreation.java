@@ -28,7 +28,7 @@ public class FrameCreation extends JFrame
 		this.frameMenu = frameMenu;
 		this.setTitle("Creation");
 		// à changer en fonction de la taille du plateau
-		this.setSize(600, 600);
+		this.setSize(800, 600);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.frameMenu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLocation(500, 200);

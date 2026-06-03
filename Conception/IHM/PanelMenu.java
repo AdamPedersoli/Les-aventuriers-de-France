@@ -107,10 +107,16 @@ public class PanelMenu extends JPanel implements ActionListener
 		 // this.ctrl.getNomPlateaux());
 		this.jcbPlateaux.addActionListener(this);
 		
+		JLabel labelInfo = new JLabel("Choisir un plateau pour jouer ou le modifier", SwingConstants.CENTER);
+		JLabel labelVide = new JLabel("");
+		this.setOpaque(false);
 		this.add(this.buttonSolo);
-		this.add(new JLabel("Choisir un plateau pour jouer ou le modifier", SwingConstants.CENTER));
+		labelInfo.setOpaque(true);
+		labelInfo.setForeground(Color.WHITE);
+		this.add(labelInfo).setBackground(new Color(0,0, 255));
 		this.add(this.jcbPlateaux);
-		this.add(new JLabel(""));
+		labelVide.setOpaque(true);
+		this.add(labelVide).setBackground(new Color(255, 0, 0));
 		this.add(this.buttonCreation);
 		this.add(this.buttonModification);
 	}
@@ -120,11 +126,11 @@ public class PanelMenu extends JPanel implements ActionListener
 		String nomPlateau = (String) this.jcbPlateaux.getSelectedItem();
 		if (nomPlateau != null) 
 		{
-			/*if (e.getSource() == this.buttonSolo) 
+			if (e.getSource() == this.buttonSolo) 
 			{
-			String plateauSelectionne = (String) this.jcbPlateaux.getSelectedItem();
-			new FrameSolo(Plateau.valueOf(plateauSelectionne));
-			}*/
+				String plateauSelectionne = (String) this.jcbPlateaux.getSelectedItem();
+				new FrameSolo(this.frameMenu);//(Plateau.valueOf(plateauSelectionne));
+			}
 
 			/* 
 			String plateauSelectionne = (String) this.jcbPlateaux.getSelectedItem();

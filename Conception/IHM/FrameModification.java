@@ -26,7 +26,7 @@ public class FrameModification extends JFrame
 	{
 		this.frameMenu = frameMenu;
 		this.setTitle("Modification");
-		this.setSize(600, 600);
+		this.setSize(800, 600);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.frameMenu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLocation(500, 200);
