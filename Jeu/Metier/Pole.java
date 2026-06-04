@@ -1,4 +1,4 @@
-package Metier;
+package Jeu.Metier;
 
 import java.awt.Color;
 import java.util.ArrayList;
@@ -11,49 +11,14 @@ public class Pole
 {
 	
 	/**
-	* Port.
+	* Type du pôle.
 	*/
-	public static String PORT           = "Port";
+	private TypePole typePole;
 	
 	/**
-	* Aéroport.
+	* Position du pôle sur le plateau.
 	*/
-	public static String AEROPORT       = "Aéroport";
-	
-	/**
-	* Gare.
-	*/
-	public static String GARE           = "Gare";
-	
-	/**
-	* Velo.
-	*/
-	public static String STATION_VELO   = "Station de velo";
-	
-	/**
-	* Arrêt de bus.
-	*/
-	public static String ARRET_BUS      = "Arrêt de bus";
-	
-	/**
-	* Arrêt de tramway.
-	*/
-	public static String ARRET_TRAMWAY  = "Arrêt de tramway";
-	
-	/**
-	* Passage piéton.
-	*/
-	public static String PASSAGE_PIETON = "Passage piéton";
-	
-	/**
-	* Nom du pôle.
-	*/
-	private String nom;
-	
-	/**
-	* Couleur du pôle.
-	*/
-	private Color couleur;
+	private Case position;
 	
 	/**
 	* booléen si le pôle a été visité par un joueur.
@@ -68,14 +33,11 @@ public class Pole
 	/**
 	* Crée un pôle avec un nom et une couleur.
 	*
-	* @param nom le nom du pôle.
-	* @param c la couleur du pôle.
+	* @param typePole le type du pôle.
 	*/
-	public Pole ( String nom, Color c )
+	public Pole ( TypePole typePole )
 	{
-		this.nom = nom;
-		
-		this.couleur = c;
+		this.typePole = typePole;
 		
 		this.estVisite = false;
 		
@@ -83,18 +45,11 @@ public class Pole
 	}
 	
 	/**
-	* Méthode pour obtenir le nom du pôle.
+	* Méthode pour obtenir le type du pôle.
 	*
-	* @return le nom du pôle.
+	* @return le type du pôle.
 	*/
-	public String getNom     () { return this.nom;     }
-	
-	/**
-	* Méthode pour obtenir la couleur du pôle.
-	*
-	* @return la couleur du pôle.
-	*/
-	public Color  getCouleur () { return this.couleur; }
+	public TypePole getTypePole () { return this.typePole; }
 	
 	/**
 	* Méthode pour savoir si le pôle a été visité.

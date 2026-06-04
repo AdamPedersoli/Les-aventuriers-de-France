@@ -1,4 +1,4 @@
-package Metier;
+package Jeu.Metier;
 
 import java.awt.Color;
 import java.util.ArrayList;
