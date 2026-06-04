@@ -8,6 +8,7 @@ public class FrameModification extends JFrame
 	private FrameMenu frameMenu;
 	public FrameModification(FrameMenu frameMenu)
 	{
+		this.setVisible(false);
 		this.frameMenu = frameMenu;
 		this.setTitle("Modification");
 		this.setSize(800, 600);
@@ -15,6 +16,10 @@ public class FrameModification extends JFrame
 		this.frameMenu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.setLocation(500, 200);
 		this.add(new PanelModification(this.frameMenu));
-		this.setVisible(true);
+	}
+
+	public FrameMenu getFrameMenu()
+	{
+		return this.frameMenu;
 	}
 }

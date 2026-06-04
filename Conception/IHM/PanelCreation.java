@@ -3,12 +3,13 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import IHM.PanelConfig;
 // import controleur;
 
 public class PanelCreation extends JPanel implements ActionListener
 {
+	FrameCreation frameCreation;
 	// panel Principal
-	private FrameCreation frameCreation;
 	private JPanel panelConfig;
 	private JPanel panelGrille;
 	// private Controleur ctrl;
@@ -23,6 +24,7 @@ public class PanelCreation extends JPanel implements ActionListener
 	public PanelCreation(FrameCreation frameCreation)
 	{
 		this.frameCreation = frameCreation;
+
 		this.setLayout(new GridLayout(1, 2));
 		this.panelConfig = new JPanel();
 		this.panelGrille = new JPanel();
@@ -48,7 +50,59 @@ public class PanelCreation extends JPanel implements ActionListener
 
 		JButton buttonRefreshDep   = new JButton(new ImageIcon("/IHM/Images/refresh.png"));
 		
-		JLabel labelCouleur        = new JLabel("");
+		JLabel labelCouleur        = new JLabel("#000000");
+
+		// Couleur en temps réel à partir de la scrollbar (RGB : on balaie le rouge)
+		labelCouleur.setBackground(Color.BLACK);
+
+		scrollbarRGB.setValue(0);
+		scrollbarRGB.setMinimum(0);
+		scrollbarRGB.setMaximum(255);
+
+		// 0..84   : r=255, g décroît, b=0
+		// 85..169 : g=0, b croît, r décroît
+		// 170..255: b=255, r croît, g=0
+		scrollbarRGB.addAdjustmentListener(new AdjustmentListener() 
+		{
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent e) 
+			{
+				int v = scrollbarRGB.getValue();
+				int r, g, b;
+
+				if (v <= 84) 
+				{
+					r = 255;
+					g = 255 - (v * 3);
+					b = 0;
+				} 
+				else if (v <= 169) 
+				{
+					int v2 = v - 85;
+					r = 255 - (v2 * 3);
+					g = 0;
+					b = v2 * 3;
+				} 
+				else 
+				{
+					int v3 = v - 170;
+					r = v3 * 3;
+					g = 0;
+					b = 255;
+				}
+
+					// clamp
+					r = Math.max(0, Math.min(255, r));
+					g = Math.max(0, Math.min(255, g));
+					b = Math.max(0, Math.min(255, b));
+
+					Color c = new Color(r, g, b);
+					labelCouleur.setBackground(c);
+					labelCouleur.setOpaque(true);
+					//labelCouleur.setText("#" + String.format("%02X%02X%02X", r, g, b));
+			}
+		});
+
 
 		// à déf
 		ImageIcon iconPole = new ImageIcon("src/IHM/Images/");
@@ -89,12 +143,15 @@ public class PanelCreation extends JPanel implements ActionListener
 		panelBouton.add(this.buttonEffacer);
 		panelBouton.add(this.buttonValider);
 
+		// Le nom du plateau vient de la configuration
+		this.panelGrille.add(new JLabel("nomPlateau"));
 		this.panelGrille.add(panelVisual);
 		this.panelGrille.add(panelBouton);
 
 		this.add(this.panelConfig);
 		this.add(this.panelGrille);
 	}
+
 
 	public void actionPerformed(ActionEvent e) 
 	{

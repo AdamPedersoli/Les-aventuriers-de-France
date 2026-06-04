@@ -3,17 +3,22 @@ package IHM;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+import Controleur.ControleurConception;
 
 public class PanelConfig extends JPanel implements ActionListener
 {
-	private FrameMenu frameMenu;
-	JButton buttonValider;
-	JTextField textFieldNom = new JTextField("NouveauPlateau", 20);
-	JTextField textFieldLigne = new JTextField( 10);
-	JTextField textFieldColonne = new JTextField( 10);
-	JTextField textFieldPoles = new JTextField( 10);
-	JTextField textFieldDep = new JTextField( 10);
-	JTextField textFieldTransport = new JTextField( 10);
+	ControleurConception ctrl;
+	FrameMenu frameMenu;
+	private JButton buttonValider;
+	private JTextField textFieldNom = new JTextField("NouveauPlateau", 20);
+	private JTextField textFieldLigne = new JTextField( 10);
+	private JTextField textFieldColonne = new JTextField( 10);
+	private JTextField textFieldPoles = new JTextField( 10);
+	private JTextField textFieldDep = new JTextField( 10);
+	private JTextField textFieldTransport = new JTextField( 10);
+
+	private String nomPlateau;
+	private int    lig, col, poles, dep, transport;
 	public PanelConfig(FrameMenu frameMenu)
 	{
 		this.frameMenu = frameMenu;
@@ -24,6 +29,8 @@ public class PanelConfig extends JPanel implements ActionListener
 		JPanel panelPoles      = new JPanel();
 		JPanel panelDep        = new JPanel();
 		JPanel panelTransport  = new JPanel();
+
+		textFieldNom.addActionListener(this);
 
 		panelNomPla.add(new JLabel("Nom du Plateau : "));
 		panelNomPla.add(textFieldNom);
@@ -54,15 +61,17 @@ public class PanelConfig extends JPanel implements ActionListener
 
 	public void actionPerformed(ActionEvent e) 
 	{
+		nomPlateau = textFieldNom.getText();
 		// on vérifie que tous les champs remplis sont des int et que les champs ne sont pas vides
 		try 
 		{
-			Integer.parseInt(textFieldLigne.getText());
-			Integer.parseInt(textFieldColonne.getText());
-			Integer.parseInt(textFieldPoles.getText());
-			Integer.parseInt(textFieldDep.getText());
-			Integer.parseInt(textFieldTransport.getText());
+			lig = Integer.parseInt(textFieldLigne.getText());
+			col = Integer.parseInt(textFieldColonne.getText());
+			poles = Integer.parseInt(textFieldPoles.getText());
+			dep = Integer.parseInt(textFieldDep.getText());
+			transport = Integer.parseInt(textFieldTransport.getText());
 		} 
+
 		catch (NumberFormatException ex) 
 		{
 			if (!textFieldLigne.getText().isEmpty() && 
@@ -83,13 +92,22 @@ public class PanelConfig extends JPanel implements ActionListener
 		// sinon on ouvre la frame de création de plateau
 		if (e.getSource() == this.buttonValider)
 		{
+			((FrameCreation) this.frameMenu.getFrameCreation()).setNomPlateauConfig(this.nomPlateau);
 			this.frameMenu.getFrameCreation().setVisible(true);
 			this.frameMenu.getFrameConfig().setVisible(false);
-			textFieldLigne.setText("");
-			textFieldColonne.setText("");
-			textFieldPoles.setText("");
-			textFieldDep.setText("");
-			textFieldTransport.setText("");
+
+
+			textFieldLigne.     setText("");
+			textFieldColonne.   setText("");
+			textFieldPoles.     setText("");
+			textFieldDep.       setText("");
+			textFieldTransport. setText("");
 		}
 	}
+
+	public void setPlateau(String nomPlateau, int lig, int col, int nbPoles, int nbDep, int nbManches)
+	{
+		ctrl.setPlateau(nomPlateau, lig, col, nbPoles, nbDep, nbManches);
+	}
 }
+
