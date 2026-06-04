@@ -1,4 +1,4 @@
-package Jeu.Metier;
+package Conception.Metier;
 
 import java.awt.Color;
 import javax.swing.ImageIcon;
