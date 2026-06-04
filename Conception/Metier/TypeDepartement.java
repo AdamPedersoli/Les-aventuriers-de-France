@@ -155,7 +155,7 @@ public enum TypeDepartement
 	* @param v la composante verte de la couleur entre 0 et 255.
 	* @param b la composante bleue de la couleur entre 0 et 255.
 	*/
-	Departement( String nom, int r, int v, int b )
+	TypeDepartement( String nom, int r, int v, int b )
 	{
 		this.nom = nom;
 		

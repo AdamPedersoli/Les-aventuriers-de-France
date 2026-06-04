@@ -37,7 +37,7 @@ public class Departement
 	*
 	* @return le type de département.
 	*/
-	public TypeDepartement getTypeDepartement() { return this.typeDepartement; }
+	public TypeDepartement getTypeDep () { return this.typeDepartement; }
 	
 	/**
 	* Méthode pour obtenir le nombre de case relié au département.
@@ -66,6 +66,7 @@ public class Departement
 	{
 		return this.lstCase.get(indice);
 	}
+
 	
 	/**
 	* Méthode pour récupérer une version string à afficher.

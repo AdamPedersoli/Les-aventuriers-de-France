@@ -4,3 +4,5 @@ Metier/Pole.java
 Metier/TypePole.java
 Metier/Departement.java
 Metier/TypeDepartement.java
+Metier/GestionPlateau.java
+Metier/Plateau.java
