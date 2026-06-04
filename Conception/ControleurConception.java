@@ -16,7 +16,10 @@ public class ControleurConception
 		this.frameModification = new FrameModification(frameMenu);
 	}
 
-	public void setPlateau(String nomPlateau, int lig, int col, int nbPoles, int nbDep, int nbManches){}
+	public void setPlateau(String nomPlateau, int lig, int col, int nbPoles, int nbDep, int nbManches)
+	{
+		
+	}
 	
 	public static void main(String[] args) 
 	{

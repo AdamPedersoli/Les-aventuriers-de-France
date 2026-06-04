@@ -18,8 +18,14 @@ public class PanelCreation extends JPanel implements ActionListener
 	private JButton buttonEffacer = new JButton("Effacer");
 	private JButton buttonValider = new JButton("Valider");
 
+	private String[] lstDep;
+	private	JComboBox<String> jcbPoles = new JComboBox<String>(); //this.ctrl.getNomPoles());
+	private	JComboBox<String> jcbDep   = new JComboBox<String>(); //this.ctrl.getNomDeps()); couleur prédéfinie
+	private	JComboBox<String> jcbTrans = new JComboBox<String>(); //this.ctrl.getNomTransports()); remplacer String par MoyenTransport
+
 	private JScrollBar scrollbarRGB = new JScrollBar(JScrollBar.HORIZONTAL, 0, 1, 0, 255);
 
+	private JButton buttonRefreshDep   = new JButton(new ImageIcon("/IHM/Images/refresh.png"));
 
 	public PanelCreation(FrameCreation frameCreation)
 	{
@@ -28,41 +34,40 @@ public class PanelCreation extends JPanel implements ActionListener
 		this.setLayout(new GridLayout(1, 2));
 		this.panelConfig = new JPanel();
 		this.panelGrille = new JPanel();
-		this.panelConfig.setLayout(new GridLayout(4,1));
+		this.panelConfig.setLayout(new GridLayout(5,1));
 		this.panelGrille.setLayout(new GridLayout(3,1));
 		
 		// sous-panel de panelConfig 
-		JPanel panelPoles      = new JPanel();
-		JPanel panelDep        = new JPanel();
-		JPanel panelTransport  = new JPanel();
+		JPanel panelPoles        = new JPanel();
+		JPanel panelDep          = new JPanel();
+		JPanel panelTransport    = new JPanel();
+		JPanel panelDepScrollbar = new JPanel();
 
 		// sous-panel de panelGrille
 		JPanel panelVisual     = new JPanel();
 		JPanel panelBouton     = new JPanel();
 
-		JComboBox<String> jcbPoles = new JComboBox<String>(); //this.ctrl.getNomPoles());
-		JComboBox<String> jcbDep   = new JComboBox<String>(); //this.ctrl.getNomDeps()); couleur prédéfinie
-		JComboBox<String> jcbTrans = new JComboBox<String>(); //this.ctrl.getNomTransports()); remplacer String par MoyenTransport
-
-		jcbPoles.addItem("Poles");
-		jcbDep.addItem("Departement");
-		jcbTrans.addItem("transport");
-
-		JButton buttonRefreshDep   = new JButton(new ImageIcon("/IHM/Images/refresh.png"));
+		this.jcbPoles .addItem("Poles");
+		this.jcbPoles .addItem("test");
+		this.jcbDep   .addItem("Departement");
+		this.jcbDep   .addItem("test");
+		this.jcbDep   .addItem("test2");
+		this.jcbDep   .addItem("test3");
+		this.jcbTrans .addItem("transport");
 		
-		JLabel labelCouleur        = new JLabel("#000000");
+		JLabel labelCouleur        = new JLabel("               ");
 
 		// Couleur en temps réel à partir de la scrollbar (RGB : on balaie le rouge)
 		labelCouleur.setBackground(Color.BLACK);
 
-		scrollbarRGB.setValue(0);
-		scrollbarRGB.setMinimum(0);
-		scrollbarRGB.setMaximum(255);
+		this.scrollbarRGB.setValue(0);
+		this.scrollbarRGB.setMinimum(0);
+		this.scrollbarRGB.setMaximum(255);
 
 		// 0..84   : r=255, g décroît, b=0
 		// 85..169 : g=0, b croît, r décroît
 		// 170..255: b=255, r croît, g=0
-		scrollbarRGB.addAdjustmentListener(new AdjustmentListener() 
+		this.scrollbarRGB.addAdjustmentListener(new AdjustmentListener() 
 		{
 			@Override
 			public void adjustmentValueChanged(AdjustmentEvent e) 
@@ -99,7 +104,6 @@ public class PanelCreation extends JPanel implements ActionListener
 					Color c = new Color(r, g, b);
 					labelCouleur.setBackground(c);
 					labelCouleur.setOpaque(true);
-					//labelCouleur.setText("#" + String.format("%02X%02X%02X", r, g, b));
 			}
 		});
 
@@ -116,17 +120,22 @@ public class PanelCreation extends JPanel implements ActionListener
 		panelDep.add(new JLabel("Départements : "));
 		panelDep.add(jcbDep);
 		panelDep.add(buttonRefreshDep);
-		panelDep.add(labelCouleur);
+		
+		//panelDepScrollbar
+		panelDepScrollbar.setLayout(new GridLayout(2,2));
+		panelDepScrollbar.add(scrollbarRGB);
+		panelDepScrollbar.add(labelCouleur);
+		panelDepScrollbar.add(new JLabel(""));
 
 		// panelTransport
 		panelTransport.add(new JLabel("Transports : "));
 		panelTransport.add(jcbTrans);
 		
-
 		this.panelConfig.add(panelPoles);
+		this.panelConfig.add(new JLabel("Le bouton flèche donne de nouveau départements aléatoires", SwingConstants.CENTER));
 		this.panelConfig.add(panelDep);
+		this.panelConfig.add(panelDepScrollbar);
 		this.panelConfig.add(panelTransport);
-		this.panelConfig.add(scrollbarRGB);
 
 		ArrayList<String> nomPlateaux = new ArrayList<String>(); // this.ctrl.getNomPlateaux();
 
@@ -135,6 +144,7 @@ public class PanelCreation extends JPanel implements ActionListener
 
 		// panelBouton
 		
+		buttonRefreshDep  .addActionListener(this);
 		this.buttonValider.addActionListener(this);
 		this.buttonAnnuler.addActionListener(this);
 		this.buttonEffacer.addActionListener(this);
@@ -144,7 +154,7 @@ public class PanelCreation extends JPanel implements ActionListener
 		panelBouton.add(this.buttonValider);
 
 		// Le nom du plateau vient de la configuration
-		this.panelGrille.add(new JLabel("nomPlateau"));
+		this.panelGrille.add(new JLabel("nomPlateau", SwingConstants.CENTER));
 		this.panelGrille.add(panelVisual);
 		this.panelGrille.add(panelBouton);
 
@@ -160,6 +170,31 @@ public class PanelCreation extends JPanel implements ActionListener
 			this.frameCreation.getFrameMenu().setVisible(true);
 			this.frameCreation.setVisible(false);
 		}
-		// à implémenter
+
+		if (e.getSource() == this.buttonAnnuler)
+		{
+			this.frameCreation.getFrameMenu().setVisible(true);
+			this.frameCreation.setVisible(false);
+		}
+
+		if (e.getSource() == this.buttonEffacer)
+		{
+			this.jcbPoles.setSelectedIndex(0);
+			this.jcbDep  .setSelectedIndex(0);
+			this.jcbTrans.setSelectedIndex(0);
+
+			this.scrollbarRGB.setValue(0);
+		}
+
+		if (e.getSource() == this.buttonRefreshDep)
+		{
+			this.jcbDep.removeAllItems();
+			int nbRandom = 0;
+			for (int i = 0; i < 4; i++)
+			{
+				nbRandom = (int) (Math.random() * 102 + 1);
+				//this.jcbDep.addItem(/* un dep aléatoire de la liste grâce à l'indice */)
+			}
+		}
 	}
 }

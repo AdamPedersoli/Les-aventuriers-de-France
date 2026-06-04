@@ -37,7 +37,7 @@ public class PanelMenu extends JPanel implements ActionListener
 		 // this.ctrl.getNomPlateaux());
 		this.jcbPlateaux.addActionListener(this);
 		
-		JLabel labelInfo = new JLabel("Choisir un plateau pour jouer ou le modifier", SwingConstants.CENTER);
+		JLabel labelInfo = new JLabel("Choisir un plateau le modifier", SwingConstants.CENTER);
 		JLabel labelVide = new JLabel("");
 		this.setOpaque(false);
 		labelInfo.setOpaque(true);
