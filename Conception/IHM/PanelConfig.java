@@ -3,11 +3,11 @@ package IHM;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-import Controleur.ControleurConception;
+//import ControleurConception;
 
 public class PanelConfig extends JPanel implements ActionListener
 {
-	ControleurConception ctrl;
+	//ControleurConception ctrl;
 	FrameMenu frameMenu;
 	private JButton buttonValider;
 	private JTextField textFieldNom = new JTextField("NouveauPlateau", 20);
@@ -107,7 +107,7 @@ public class PanelConfig extends JPanel implements ActionListener
 
 	public void setPlateau(String nomPlateau, int lig, int col, int nbPoles, int nbDep, int nbManches)
 	{
-		ctrl.setPlateau(nomPlateau, lig, col, nbPoles, nbDep, nbManches);
+		//ctrl.setPlateau(nomPlateau, lig, col, nbPoles, nbDep, nbManches);
 	}
 }
 

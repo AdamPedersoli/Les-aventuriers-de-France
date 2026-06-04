@@ -1,4 +1,4 @@
-package Controleur;
+//package Controleur;
 import IHM.*;
 
 public class ControleurConception
