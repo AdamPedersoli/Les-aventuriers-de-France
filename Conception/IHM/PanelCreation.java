@@ -4,20 +4,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-<<<<<<< HEAD
-import Conception.IHM.PanelConfig;
-import Conception.Metier.TypeDepartement;
-import Conception.Metier.Plateau;
-import Conception.Metier.TypePole;
-// import controleur;
-=======
 
 import Conception.Metier.Departement;
 import Conception.Metier.Plateau;
 import Conception.Metier.TypeDepartement;
 import Conception.Metier.TypePole;
 import Conception.ControleurConception;
->>>>>>> main
 
 public class PanelCreation extends JPanel implements ActionListener
 {
@@ -51,11 +43,7 @@ public class PanelCreation extends JPanel implements ActionListener
 
 	public PanelCreation(FrameCreation frameCreation, ControleurConception ctrl)
 	{
-<<<<<<< HEAD
-		
-=======
 		this.ctrl = ctrl;
->>>>>>> main
 		this.plateau = this.ctrl.getPlateau();
 		this.frameCreation = frameCreation;
 
@@ -273,9 +261,7 @@ public class PanelCreation extends JPanel implements ActionListener
 		if ( e.getSource() == this.jcbPoles )
 		{
 			ImageIcon icon = TypePole.PORT.getImage();
-
-			System.out.println(icon.getIconWidth());
-			System.out.println(icon.getIconHeight());
+			
 			this.lblPole.setIcon( icon );
 		}
 	}

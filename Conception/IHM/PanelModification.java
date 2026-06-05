@@ -1,20 +1,16 @@
 package Conception.IHM;
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-<<<<<<< HEAD
-import Conception.IHM.PanelConfig;
-// import controleur;
-=======
 
 import Conception.ControleurConception;
->>>>>>> main
 
 public class PanelModification extends JPanel implements ActionListener
 {
 	private FrameModification frameModification;
-	// panel Principal
 	private JPanel panelConfig;
 	private JPanel panelGrille;
 	private ControleurConception ctrl;

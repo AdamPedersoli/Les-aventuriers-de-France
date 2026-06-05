@@ -3,23 +3,13 @@ package Conception.IHM;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-<<<<<<< HEAD
 
-import Conception.ControleurConception;
-//import ControleurConception;
-
-public class PanelConfig extends JPanel implements ActionListener
-{
-	ControleurConception ctrl;
-	FrameMenu frameMenu;
-=======
 import Conception.ControleurConception;
 import Conception.Metier.TypePole;
 
 public class PanelConfig extends JPanel implements ActionListener
 {
 	private ControleurConception ctrl;
->>>>>>> main
 	private JButton buttonValider;
 	private JTextField textFieldNom       = new JTextField("NouveauPlateau", 20);
 	private JTextField textFieldLigne     = new JTextField(10);
