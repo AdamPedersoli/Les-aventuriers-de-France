@@ -1,4 +1,6 @@
-Controleur.java
+<<<<<<< HEAD
+
+ControleurConception.java
 
 IHM/FrameMenu.java
 IHM/PanelMenu.java
@@ -8,5 +10,14 @@ IHM/FrameCreation.java
 IHM/PanelCreation.java
 IHM/FrameModification.java
 IHM/PanelModification.java
-IHM/FrameSolo.java
-IHM/PanelSolo.java
+
+=======
+
+Metier/Case.java
+Metier/Pole.java
+Metier/TypePole.java
+Metier/Departement.java
+Metier/TypeDepartement.java
+Metier/GestionPlateau.java
+Metier/Plateau.java
+>>>>>>> alexis

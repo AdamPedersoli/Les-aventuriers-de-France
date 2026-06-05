@@ -1,5 +1,5 @@
 
-package IHM;
+package Jeu.IHM;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -8,8 +8,8 @@ import java.awt.event.*;
 public class PanelMenu extends JPanel implements ActionListener
 {
 	private FrameMenu frameMenu;
-	private JButton buttonCreation;
-	private JButton buttonModification;
+	private JButton buttonSolo;
+	private JButton buttonMultijoueur;
 	private JComboBox<String> jcbPlateaux;
 	// private Controleur ctrl;
 
@@ -17,7 +17,7 @@ public class PanelMenu extends JPanel implements ActionListener
 	{
 		this.frameMenu = frameMenu;
 		// this.ctrl = ctrl;
-		this.setLayout(new GridLayout(5, 1));
+		this.setLayout(new GridLayout(6, 1));
 
 		this.jcbPlateaux = new JComboBox<String>();
 
@@ -26,28 +26,28 @@ public class PanelMenu extends JPanel implements ActionListener
 			this.jcbPlateaux.addItem(plateau.toString());
 	    }*/
 		
-		this.buttonCreation = new JButton("Creation");
-		this.buttonCreation.addActionListener(this);
+		this.buttonSolo = new JButton("Solo");
+		this.buttonSolo.addActionListener(this);
 		
-		this.buttonModification = new JButton("Modification");
-		this.buttonModification.addActionListener(this);
+		this.buttonMultijoueur = new JButton("Multijoueur");
+		this.buttonMultijoueur.addActionListener(this);
 
 		this.jcbPlateaux.addItem(null);
 		this.jcbPlateaux.addItem("Test");
 		 // this.ctrl.getNomPlateaux());
 		this.jcbPlateaux.addActionListener(this);
 		
-		JLabel labelInfo = new JLabel("Choisir un plateau le modifier", SwingConstants.CENTER);
+		JLabel labelInfo = new JLabel("Choisir un plateau pour jouer ou le modifier", SwingConstants.CENTER);
 		JLabel labelVide = new JLabel("");
 		this.setOpaque(false);
+		this.add(this.buttonSolo);
 		labelInfo.setOpaque(true);
 		labelInfo.setForeground(Color.WHITE);
 		this.add(labelInfo).setBackground(new Color(0,0, 255));
 		this.add(this.jcbPlateaux);
 		labelVide.setOpaque(true);
 		this.add(labelVide).setBackground(new Color(255, 0, 0));
-		this.add(this.buttonCreation);
-		this.add(this.buttonModification);
+		this.add(this.buttonMultijoueur);
 	}
 
 	public void actionPerformed(ActionEvent e) 
@@ -55,6 +55,12 @@ public class PanelMenu extends JPanel implements ActionListener
 		String nomPlateau = (String) this.jcbPlateaux.getSelectedItem();
 		if (nomPlateau != null) 
 		{
+			if (e.getSource() == this.buttonSolo) 
+			{
+				String plateauSelectionne = (String) this.jcbPlateaux.getSelectedItem();
+				new FrameSolo(this.frameMenu);//(Plateau.valueOf(plateauSelectionne));
+			}
+
 			/* 
 			String plateauSelectionne = (String) this.jcbPlateaux.getSelectedItem();
 			// FrameSolo frameSolo = new FrameSolo(plateauSelectionne);
@@ -64,17 +70,6 @@ public class PanelMenu extends JPanel implements ActionListener
 			this.setVisible(false);
 			this.setEnabled(false);*/
 
-			if (e.getSource() == this.buttonModification) 
-			{
-				this.frameMenu.getFrameModification().setVisible(true);
-				this.frameMenu.setVisible(false);
-			}
-		}
-
-		if (e.getSource() == this.buttonCreation) 
-		{
-			this.frameMenu.getFrameConfig().setVisible(true);
-			this.frameMenu.setVisible(false);
 		}
 	}
 }
