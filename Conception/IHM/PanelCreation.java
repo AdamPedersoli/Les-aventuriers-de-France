@@ -1,6 +1,8 @@
 package Conception.IHM;
 import javax.swing.*;
 
+import java.io.File;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -214,7 +216,7 @@ public class PanelCreation extends JPanel implements ActionListener
 		panelBouton.add(this.buttonValider);
 
 		// Le nom du plateau vient de la configuration
-		this.panelGrille.add(new JLabel("nomPlateau", SwingConstants.CENTER));
+		this.panelGrille.add(new JLabel(ctrl.getNom(), SwingConstants.CENTER));
 		this.panelGrille.add(panelVisual);
 		this.panelGrille.add(panelBouton);
 
@@ -245,6 +247,10 @@ public class PanelCreation extends JPanel implements ActionListener
 			this.jcbTrans.setSelectedIndex(0);
 
 			this.scrollbarRGB.setValue(0);
+			
+			for ( JLabel[] lig : this.tabLabel )
+				for ( JLabel col : lig )
+					col.setIcon( null );
 		}
 
 		if (e.getSource() == this.buttonRefreshDep)
@@ -258,13 +264,26 @@ public class PanelCreation extends JPanel implements ActionListener
 			}
 		}
 		
-		if ( e.getSource() == this.jcbPoles )
+		if (e.getSource() == this.jcbPoles)
 		{
-			ImageIcon icon = TypePole.PORT.getImage();
+			java.net.URL url =
+				PanelCreation.class.getResource("/Conception/images/poles/gare.png");
 
-			System.out.println(icon.getIconWidth());
-			System.out.println(icon.getIconHeight());
-			this.lblPole.setIcon( icon );
+			System.out.println(url);
+
+			if (url != null)
+			{
+				ImageIcon icon = new ImageIcon(url);
+
+				System.out.println(icon.getIconWidth());
+				System.out.println(icon.getIconHeight());
+
+				this.lblPole.setIcon(icon);
+			}
+			else
+			{
+				System.out.println("Image introuvable");
+			}
 		}
 	}
 	

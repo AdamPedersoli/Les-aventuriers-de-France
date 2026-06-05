@@ -36,6 +36,11 @@ public class ControleurConception
 		return this.plateau;
 	}
 	
+	public String getNom()
+	{
+		return this.plateau.getNom();
+	}
+	
 	public int getTailleXPlateau()
 	{
 		return this.plateau.getTailleX();
