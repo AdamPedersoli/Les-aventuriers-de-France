@@ -92,6 +92,7 @@ public class PanelConfig extends JPanel implements ActionListener
 		// sinon on ouvre la frame de création de plateau
 		if (e.getSource() == this.buttonValider)
 		{
+			this.ctrl.creerPlateau(nomPlateau, lig, col, dep, poles, transport);
 			((FrameCreation) this.frameMenu.getFrameCreation()).setNomPlateauConfig(this.nomPlateau);
 			this.frameMenu.getFrameCreation().setVisible(true);
 			this.frameMenu.getFrameConfig().setVisible(false);

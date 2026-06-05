@@ -1,25 +1,37 @@
-package IHM;
+package Conception.IHM;
 import javax.swing.*;
+
+import org.w3c.dom.events.MouseEvent;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import IHM.PanelConfig;
+import TP.s2.TD5.Exo4.Departement;
+import TP.s2.TD6.TD6.chess.metier.Plateau;
+import Conception.Metier.TypeDepartement;
 // import controleur;
 
 public class PanelCreation extends JPanel implements ActionListener
 {
+	
+	private Plateau plateau;
 	FrameCreation frameCreation;
 	// panel Principal
 	private JPanel panelConfig;
 	private JPanel panelGrille;
 	// private Controleur ctrl;
 
+	private JLabel[][] tabLabel;
 	private JButton buttonAnnuler = new JButton("Annuler");
 	private JButton buttonEffacer = new JButton("Effacer");
 	private JButton buttonValider = new JButton("Valider");
 
-	private String[] lstDep;
-	private	JComboBox<String> jcbPoles = new JComboBox<String>(); //this.ctrl.getNomPoles());
+	TypeDepartement dep;
+	private TypeDepartement[] lstDep;
+	TypePole type = TypePole.values()[jcbPoles.getSelectedIndex()];
+	ImageIcon icon = type.getImage();
+	private	JComboBox<TypePole> jcbPoles = new JComboBox<TypePole>(); //this.ctrl.getNomPoles());
 	private	JComboBox<String> jcbDep   = new JComboBox<String>(); //this.ctrl.getNomDeps()); couleur prédéfinie
 	private	JComboBox<String> jcbTrans = new JComboBox<String>(); //this.ctrl.getNomTransports()); remplacer String par MoyenTransport
 
@@ -29,6 +41,8 @@ public class PanelCreation extends JPanel implements ActionListener
 
 	public PanelCreation(FrameCreation frameCreation)
 	{
+		
+		this.plateau = ctrl.getPlateau();
 		this.frameCreation = frameCreation;
 
 		this.setLayout(new GridLayout(1, 2));
@@ -36,6 +50,8 @@ public class PanelCreation extends JPanel implements ActionListener
 		this.panelGrille = new JPanel();
 		this.panelConfig.setLayout(new GridLayout(5,1));
 		this.panelGrille.setLayout(new GridLayout(3,1));
+
+		this.lstDep = TypeDepartement.values();
 		
 		// sous-panel de panelConfig 
 		JPanel panelPoles        = new JPanel();
@@ -47,7 +63,57 @@ public class PanelCreation extends JPanel implements ActionListener
 		JPanel panelVisual     = new JPanel();
 		JPanel panelBouton     = new JPanel();
 
-		this.jcbPoles .addItem("Poles");
+		JLabel lblPole = new JLabel(type.getImage());
+
+		// drag and drop
+		lblPole.setTransferHandler(new TransferHandler("icon"));
+		lblPole.addMouseMotionListener(new MouseMotionAdapter()
+			{
+				public void mouseDragged(MouseEvent e)
+				{
+					JComponent c = (JComponent)e.getSource();
+
+					c.getTransferHandler().exportAsDrag(c, e, TransferHandler.COPY);
+				}
+			}
+		);
+		label.setTransferHandler( new TransferHandler("icon"));
+
+		// maj metier
+		plateau.getCase(lig,col).setPole(new Pole(type));
+
+		label.setBackground(dep.getCouleur());
+		Departement d = plateau.getDep(indice);
+		d.ajouterCase(plateau.getCase(lig,col));
+
+		this.panelVisual.setLayout(new GridLayout(plateau.getTailleX(), plateau.getTailleY()));
+
+		tabLabel = new JLabel[plateau.getTailleX()][plateau.getTailleY()];
+
+		for(int lig=0; lig<plateau.getTailleX(); lig++)
+		{
+			for(int col=0; col<plateau.getTailleY(); col++)
+			{
+				JLabel lbl = new JLabel();
+
+				lbl.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+				lbl.setOpaque(true);
+
+				tabLabel[lig][col] = lbl;
+
+				panelVisual.add(lbl);
+			}
+		}
+
+		////
+		for (int i = 0; i < this.lstDep.length; i++)
+		{
+			int nbRandom = 0;
+			nbRandom = (int) (Math.random() * 100 + 1);
+			this.jcbPoles .addItem(this.lstDep.values()[nbRandom].getNom());
+		}
+		
 		this.jcbPoles .addItem("test");
 		this.jcbDep   .addItem("Departement");
 		this.jcbDep   .addItem("test");
