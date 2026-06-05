@@ -12,31 +12,42 @@ public class ControleurConception
 	
 	public ControleurConception()
 	{
-		this.frameMenu = new FrameMenu();
-		this.frameConfig = new FrameConfig(frameMenu);
-		this.frameCreation = new FrameCreation(frameMenu);
-		this.frameModification = new FrameModification(frameMenu);
+		this.frameMenu = new FrameMenu(this);
 	}
 
 	public void setPlateau(String nomPlateau, int lig, int col, int nbPoles, int nbDep, int nbManches)
 	{
+		this.plateau = new Plateau(nomPlateau, lig, col, nbPoles, nbDep, nbManches);
+		this.plateau.initCase();
+	}
+
+	public void setPole( int lig, int col )
+	{
 		
+	}
+	
+	public void setCaseAtDep( int indexTypeDep, int ligCase, int colCase )
+	{
+	
 	}
 
 	public Plateau getPlateau()
 	{
 		return this.plateau;
 	}
-
-	public void creerPlateau(String nom, int lig, int col, int nbDep, int nbPole, int nbManches)
+	
+	public int getTailleXPlateau()
 	{
-		this.plateau = new Plateau(nom, lig, col, nbManches, nbDep, nbPole);
-
-		this.plateau.initCase();
+		return this.plateau.getTailleX();
+	}
+	
+	public int getTailleYPlateau()
+	{
+		return this.plateau.getTailleY();
 	}
 	
 	public static void main(String[] args) 
 	{
-		ControleurConception controleurConception = new ControleurConception();
+		new ControleurConception();
 	}
 }

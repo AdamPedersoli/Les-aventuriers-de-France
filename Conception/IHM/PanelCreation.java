@@ -4,42 +4,58 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+<<<<<<< HEAD
 import Conception.IHM.PanelConfig;
 import Conception.Metier.TypeDepartement;
 import Conception.Metier.Plateau;
 import Conception.Metier.TypePole;
 // import controleur;
+=======
+
+import Conception.Metier.Departement;
+import Conception.Metier.Plateau;
+import Conception.Metier.TypeDepartement;
+import Conception.Metier.TypePole;
+import Conception.ControleurConception;
+>>>>>>> main
 
 public class PanelCreation extends JPanel implements ActionListener
 {
 	
 	private Plateau plateau;
-	FrameCreation frameCreation;
-	// panel Principal
+	private FrameCreation frameCreation;
 	private JPanel panelConfig;
 	private JPanel panelGrille;
-	// private Controleur ctrl;
+	private ControleurConception ctrl;
 
 	private JLabel[][] tabLabel;
+	private JLabel lblPole;
+	
 	private JButton buttonAnnuler = new JButton("Annuler");
 	private JButton buttonEffacer = new JButton("Effacer");
 	private JButton buttonValider = new JButton("Valider");
 
 	TypeDepartement dep;
-	private TypeDepartement[] lstDep;
-	TypePole type = TypePole.values()[jcbPoles.getSelectedIndex()];
-	ImageIcon icon = type.getImage();
+	private TypeDepartement[] tabDep;
+
+
 	private	JComboBox<TypePole> jcbPoles = new JComboBox<TypePole>(); //this.ctrl.getNomPoles());
-	private	JComboBox<String> jcbDep   = new JComboBox<String>(); //this.ctrl.getNomDeps()); couleur prédéfinie
+	private	JComboBox<TypeDepartement> jcbDep   = new JComboBox<TypeDepartement>(); //this.ctrl.getNomDeps()); couleur prédéfinie
 	private	JComboBox<String> jcbTrans = new JComboBox<String>(); //this.ctrl.getNomTransports()); remplacer String par MoyenTransport
+
+	private TypePole type;
 
 	private JScrollBar scrollbarRGB = new JScrollBar(JScrollBar.HORIZONTAL, 0, 1, 0, 255);
 
 	private JButton buttonRefreshDep   = new JButton(new ImageIcon("/IHM/Images/refresh.png"));
 
-	public PanelCreation(FrameCreation frameCreation)
+	public PanelCreation(FrameCreation frameCreation, ControleurConception ctrl)
 	{
+<<<<<<< HEAD
 		
+=======
+		this.ctrl = ctrl;
+>>>>>>> main
 		this.plateau = this.ctrl.getPlateau();
 		this.frameCreation = frameCreation;
 
@@ -49,7 +65,7 @@ public class PanelCreation extends JPanel implements ActionListener
 		this.panelConfig.setLayout(new GridLayout(5,1));
 		this.panelGrille.setLayout(new GridLayout(3,1));
 
-		this.lstDep = TypeDepartement.values();
+		this.tabDep = TypeDepartement.values();
 		
 		// sous-panel de panelConfig 
 		JPanel panelPoles        = new JPanel();
@@ -61,36 +77,15 @@ public class PanelCreation extends JPanel implements ActionListener
 		JPanel panelVisual     = new JPanel();
 		JPanel panelBouton     = new JPanel();
 
-		JLabel lblPole = new JLabel(type.getImage());
+		
 
-		// drag and drop
-		lblPole.setTransferHandler(new TransferHandler("icon"));
-		lblPole.addMouseMotionListener(new MouseMotionAdapter()
-			{
-				public void mouseDragged(MouseEvent e)
-				{
-					JComponent c = (JComponent)e.getSource();
+		panelVisual.setLayout(new GridLayout(this.ctrl.getTailleXPlateau(), this.ctrl.getTailleYPlateau()));
 
-					c.getTransferHandler().exportAsDrag(c, e, TransferHandler.COPY);
-				}
-			}
-		);
-		label.setTransferHandler( new TransferHandler("icon"));
+		this.tabLabel = new JLabel[this.ctrl.getTailleXPlateau()][this.ctrl.getTailleYPlateau()];
 
-		// maj metier
-		plateau.getCase(lig,col).setPole(new Pole(type));
-
-		label.setBackground(dep.getCouleur());
-		Departement d = plateau.getDep(indice);
-		d.ajouterCase(plateau.getCase(lig,col));
-
-		this.panelVisual.setLayout(new GridLayout(plateau.getTailleX(), plateau.getTailleY()));
-
-		tabLabel = new JLabel[plateau.getTailleX()][plateau.getTailleY()];
-
-		for(int lig=0; lig<plateau.getTailleX(); lig++)
+		for(int lig=0; lig<this.tabLabel.length; lig++)
 		{
-			for(int col=0; col<plateau.getTailleY(); col++)
+			for(int col=0; col<this.tabLabel.length; col++)
 			{
 				JLabel lbl = new JLabel();
 
@@ -98,25 +93,30 @@ public class PanelCreation extends JPanel implements ActionListener
 
 				lbl.setOpaque(true);
 
+				lbl.setTransferHandler(new TransferHandler("icon"));
+
 				tabLabel[lig][col] = lbl;
 
 				panelVisual.add(lbl);
 			}
 		}
 
-		////
-		for (int i = 0; i < this.lstDep.length; i++)
+		for (int i = 0; i < 5; i++)
 		{
 			int nbRandom = 0;
-			nbRandom = (int) (Math.random() * 100 + 1);
-			this.jcbPoles .addItem(this.lstDep.values()[nbRandom].getNom());
+			nbRandom = (int) (Math.random() * TypeDepartement.values().length);
+			this.jcbDep.addItem(this.tabDep[nbRandom]);
 		}
 		
-		this.jcbPoles .addItem("test");
-		this.jcbDep   .addItem("Departement");
-		this.jcbDep   .addItem("test");
-		this.jcbDep   .addItem("test2");
-		this.jcbDep   .addItem("test3");
+		for ( TypePole typePole : TypePole.values() )
+			this.jcbPoles .addItem(typePole);
+
+		// Image Pole pas plateau
+		this.type = TypePole.values()[0];
+		this.jcbPoles.setSelectedIndex(0);
+		this.lblPole = new JLabel(TypePole.values()[0].getImage());
+		this.lblPole.setTransferHandler(new TransferHandler("icon"));
+		
 		this.jcbTrans .addItem("transport");
 		
 		JLabel labelCouleur        = new JLabel("               ");
@@ -178,7 +178,7 @@ public class PanelCreation extends JPanel implements ActionListener
 		// panelPoles
 		panelPoles.add(new JLabel("Pôles : "));
 		panelPoles.add(jcbPoles);
-		panelPoles.add(new JLabel(iconPole));
+		panelPoles.add(lblPole);
 
 		// panelDep
 		panelDep.add(new JLabel("Départements : "));
@@ -204,7 +204,7 @@ public class PanelCreation extends JPanel implements ActionListener
 		ArrayList<String> nomPlateaux = new ArrayList<String>(); // this.ctrl.getNomPlateaux();
 
 		// panelVisual
-		panelVisual.add(nomPlateaux.isEmpty() ? new JLabel("Aucun plateau disponible") : new JLabel(new ImageIcon("src/IHM/Images/" + nomPlateaux.get(0) + ".png")));
+		//panelVisual.add(nomPlateaux.isEmpty() ? new JLabel("Aucun plateau disponible") : new JLabel(new ImageIcon("src/IHM/Images/" + nomPlateaux.get(0) + ".png")));
 
 		// panelBouton
 		
@@ -212,6 +212,14 @@ public class PanelCreation extends JPanel implements ActionListener
 		this.buttonValider.addActionListener(this);
 		this.buttonAnnuler.addActionListener(this);
 		this.buttonEffacer.addActionListener(this);
+		
+		// drag and drop
+		this.lblPole.addMouseMotionListener(new GereSouris() );
+		
+		// Couleur Dep
+		for ( JLabel[] lblLig : this.tabLabel )
+			for ( JLabel lblCol : lblLig )
+				lblCol.addMouseMotionListener(new GereSouris() );
 
 		panelBouton.add(this.buttonAnnuler);
 		panelBouton.add(this.buttonEffacer);
@@ -222,6 +230,8 @@ public class PanelCreation extends JPanel implements ActionListener
 		this.panelGrille.add(panelVisual);
 		this.panelGrille.add(panelBouton);
 
+		this.jcbPoles.addActionListener(this);
+
 		this.add(this.panelConfig);
 		this.add(this.panelGrille);
 	}
@@ -231,14 +241,13 @@ public class PanelCreation extends JPanel implements ActionListener
 	{
 		if (e.getSource() == this.buttonValider)
 		{
-			this.frameCreation.getFrameMenu().setVisible(true);
+			new FrameMenu( this.ctrl );
 			this.frameCreation.setVisible(false);
 		}
 
 		if (e.getSource() == this.buttonAnnuler)
 		{
-			this.frameCreation.getFrameMenu().setVisible(true);
-			this.frameCreation.setVisible(false);
+			new FrameMenu( this.ctrl );
 		}
 
 		if (e.getSource() == this.buttonEffacer)
@@ -256,9 +265,39 @@ public class PanelCreation extends JPanel implements ActionListener
 			int nbRandom = 0;
 			for (int i = 0; i < 4; i++)
 			{
-				nbRandom = (int) (Math.random() * 102 + 1);
-				//this.jcbDep.addItem(/* un dep aléatoire de la liste grâce à l'indice */)
+				nbRandom = (int) (Math.random() * TypeDepartement.values().length);
+				this.jcbDep.addItem(this.tabDep[nbRandom]);
 			}
+		}
+		
+		if ( e.getSource() == this.jcbPoles )
+		{
+			ImageIcon icon = TypePole.PORT.getImage();
+
+			System.out.println(icon.getIconWidth());
+			System.out.println(icon.getIconHeight());
+			this.lblPole.setIcon( icon );
+		}
+	}
+	
+	private class GereSouris extends MouseAdapter
+	{
+		// Poles Source
+		public void mouseDragged(MouseEvent e)
+		{
+			JComponent c = (JComponent) ( e.getSource() );
+			c.getTransferHandler().exportAsDrag(c, e, TransferHandler.COPY);	
+		}
+		
+		public void mouseClicked(MouseEvent e)
+		{
+			for(int lig=0; lig<tabLabel.length; lig++)
+				for(int col=0; col<tabLabel[lig].length; col++)
+					if ( e.getSource() == tabLabel[lig][col] )
+					{
+						tabLabel[lig][col].setBackground( ( ( TypeDepartement ) PanelCreation.this.jcbDep.getSelectedItem() ).getCouleur() );
+						ctrl.setCaseAtDep( ( ( TypeDepartement ) PanelCreation.this.jcbDep.getSelectedItem() ).ordinal(), lig, col );
+					}
 		}
 	}
 }

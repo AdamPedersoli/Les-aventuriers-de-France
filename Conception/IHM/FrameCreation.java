@@ -2,44 +2,30 @@ package Conception.IHM;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import Conception.ControleurConception;
 
 public class FrameCreation extends JFrame
 {
+	private ControleurConception ctrl;
 	private FrameConfig frameConfig;
 	private FrameModification frameModification;
 
-	private FrameMenu frameMenu;
 	private String nomPlateauConfig = "";
 
-	public FrameCreation(FrameMenu frameMenu)
+	public FrameCreation(ControleurConception ctrl)
 	{
+		this.ctrl = ctrl;
 		this.setVisible(false);
-		this.frameMenu = frameMenu;
 		this.setTitle("Creation");
 		// à changer en fonction de la taille du plateau
 		this.setSize(800, 600);
 		this.setLocation(350,150);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.frameMenu.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		/* 
 		this.frameModification.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		this.frameConfig.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);*/
-		this.add(new PanelCreation(this));
+		this.add(new PanelCreation(this, this.ctrl));
 		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-
-		this.addWindowListener(new WindowAdapter()
-		{
-			@Override
-			public void windowClosing(WindowEvent e)
-			{
-				frameMenu.fermerToutesLesFenetres();
-			}
-		});
-	}
-
-	public FrameMenu getFrameMenu()
-	{
-		return this.frameMenu;
 	}
 
 	public void setNomPlateauConfig(String nomPlateau)
