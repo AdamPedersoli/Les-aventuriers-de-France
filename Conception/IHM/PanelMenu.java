@@ -1,9 +1,8 @@
-
-package IHM;
+package Conception.IHM;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-// import Controleur;
+import Conception.ControleurConception;
 
 public class PanelMenu extends JPanel implements ActionListener
 {
@@ -11,12 +10,12 @@ public class PanelMenu extends JPanel implements ActionListener
 	private JButton buttonCreation;
 	private JButton buttonModification;
 	private JComboBox<String> jcbPlateaux;
-	// private Controleur ctrl;
+	private ControleurConception ctrl;
 
-	public PanelMenu(FrameMenu frameMenu)
+	public PanelMenu(FrameMenu frameMenu, ControleurConception ctrl )
 	{
 		this.frameMenu = frameMenu;
-		// this.ctrl = ctrl;
+		this.ctrl = ctrl;
 		this.setLayout(new GridLayout(5, 1));
 
 		this.jcbPlateaux = new JComboBox<String>();
@@ -66,15 +65,13 @@ public class PanelMenu extends JPanel implements ActionListener
 
 			if (e.getSource() == this.buttonModification) 
 			{
-				this.frameMenu.getFrameModification().setVisible(true);
-				this.frameMenu.setVisible(false);
+				new FrameModification( this.ctrl );
 			}
 		}
 
 		if (e.getSource() == this.buttonCreation) 
 		{
-			this.frameMenu.getFrameConfig().setVisible(true);
-			this.frameMenu.setVisible(false);
+			(new FrameConfig( this.ctrl )).setVisible(true);
 		}
 	}
 }

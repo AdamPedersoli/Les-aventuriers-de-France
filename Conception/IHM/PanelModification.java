@@ -1,19 +1,18 @@
-package IHM;
+package Conception.IHM;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import IHM.PanelConfig;
-// import controleur;
+
+import Conception.ControleurConception;
 
 public class PanelModification extends JPanel implements ActionListener
 {
 	private FrameModification frameModification;
-	private FrameMenu frameMenu;
 	// panel Principal
 	private JPanel panelConfig;
 	private JPanel panelGrille;
-	// private Controleur ctrl;
+	private ControleurConception ctrl;
 
 	private JButton buttonAnnuler = new JButton("Annuler");
 	private JButton buttonEffacer = new JButton("Effacer");
@@ -22,10 +21,8 @@ public class PanelModification extends JPanel implements ActionListener
 	private JScrollBar scrollbarRGB = new JScrollBar(JScrollBar.HORIZONTAL, 0, 1, 0, 255);
 
 
-	public PanelModification(FrameMenu fameMenu)
+	public PanelModification(ControleurConception ctrl)
 	{
-		this.frameMenu = frameMenu;
-
 		this.setLayout(new GridLayout(1, 2));
 		this.panelConfig = new JPanel();
 		this.panelGrille = new JPanel();
@@ -106,8 +103,7 @@ public class PanelModification extends JPanel implements ActionListener
 	{
 		if (e.getSource() == this.buttonValider)
 		{
-			this.frameModification.getFrameMenu().setVisible(true);
-			this.frameModification.setVisible(false);
+			new FrameMenu( this.ctrl );
 		}
 		// à implémenter
 	}

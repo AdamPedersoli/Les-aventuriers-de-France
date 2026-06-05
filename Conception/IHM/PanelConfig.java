@@ -1,28 +1,36 @@
 
-package IHM;
+package Conception.IHM;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
-//import ControleurConception;
+import Conception.ControleurConception;
+import Conception.Metier.TypePole;
 
 public class PanelConfig extends JPanel implements ActionListener
 {
-	//ControleurConception ctrl;
-	FrameMenu frameMenu;
+	private ControleurConception ctrl;
 	private JButton buttonValider;
-	private JTextField textFieldNom = new JTextField("NouveauPlateau", 20);
-	private JTextField textFieldLigne = new JTextField( 10);
-	private JTextField textFieldColonne = new JTextField( 10);
-	private JTextField textFieldPoles = new JTextField( 10);
-	private JTextField textFieldDep = new JTextField( 10);
-	private JTextField textFieldTransport = new JTextField( 10);
+	private JTextField textFieldNom       = new JTextField("NouveauPlateau", 20);
+	private JTextField textFieldLigne     = new JTextField(10);
+	private JTextField textFieldColonne   = new JTextField(10);
+	private JCheckBox[] tabCbPoles;
+	private JTextField textFieldDep       = new JTextField(10);
+	private JTextField textFieldTransport = new JTextField(10);
+	private TypePole[] tabPoleUtilise;
 
 	private String nomPlateau;
-	private int    lig, col, poles, dep, transport;
-	public PanelConfig(FrameMenu frameMenu)
+	private int    lig, col, nbPoleDiff, dep, transport;
+	
+	public PanelConfig( ControleurConception ctrl )
 	{
-		this.frameMenu = frameMenu;
+		this.ctrl = ctrl;
 		this.setLayout(new GridLayout(6, 1));
+		
+		this.tabCbPoles = new JCheckBox[6];
+		this.tabPoleUtilise = new TypePole[6];
+		
+		for ( int cpt = 0 ; cpt < this.tabCbPoles.length ; cpt++ )
+			this.tabCbPoles[cpt] = new JCheckBox();
 		
 		JPanel panelNomPla     = new JPanel();
 		JPanel panelDim        = new JPanel();
@@ -41,8 +49,13 @@ public class PanelConfig extends JPanel implements ActionListener
 		panelDim.add(new JLabel("Colonne : "));
 		panelDim.add(textFieldColonne);
 
-		panelPoles.add(new JLabel("Nombre de Pôles : "));
-		panelPoles.add(textFieldPoles);
+		for ( int cpt = 0 ; cpt < this.tabCbPoles.length ; cpt++ )
+		{
+			panelPoles.add( new JLabel( TypePole.values()[cpt].getNom() ) );
+			panelPoles.add( this.tabCbPoles[cpt] );
+		}
+		
+		
 		panelDep.add(new JLabel("Nombre de Départements : "));
 		panelDep.add(textFieldDep);
 		panelTransport.add(new JLabel("Nombre de Transports : "));
@@ -67,7 +80,19 @@ public class PanelConfig extends JPanel implements ActionListener
 		{
 			lig = Integer.parseInt(textFieldLigne.getText());
 			col = Integer.parseInt(textFieldColonne.getText());
-			poles = Integer.parseInt(textFieldPoles.getText());
+
+			this.nbPoleDiff = 0;
+			for ( int cpt = 0 ; cpt < this.tabCbPoles.length ; cpt++ )
+			{
+				if ( this.tabCbPoles[cpt].isSelected() )
+				{
+					this.nbPoleDiff++;
+					this.tabPoleUtilise[cpt] = TypePole.values()[cpt];
+				}
+			}
+			if ( this.nbPoleDiff == 0 )
+				this.tabCbPoles[this.tabCbPoles.length + 1] = this.tabCbPoles[0];
+
 			dep = Integer.parseInt(textFieldDep.getText());
 			transport = Integer.parseInt(textFieldTransport.getText());
 		} 
@@ -76,7 +101,7 @@ public class PanelConfig extends JPanel implements ActionListener
 		{
 			if (!textFieldLigne.getText().isEmpty() && 
 			!textFieldColonne.getText().  isEmpty() && 
-			!textFieldPoles.getText().    isEmpty() && 
+			 this.nbPoleDiff == 0 && 
 			!textFieldDep.getText().      isEmpty() && 
 			!textFieldTransport.getText().isEmpty())
 			{
@@ -88,27 +113,23 @@ public class PanelConfig extends JPanel implements ActionListener
 			}
 			return;
 		}
+		
 		// si toutes les infos ne sont pas remplis on ne peut passer à la suite
 		// sinon on ouvre la frame de création de plateau
-		if (e.getSource() == this.buttonValider)
-		{
-			this.ctrl.creerPlateau(nomPlateau, lig, col, dep, poles, transport);
-			((FrameCreation) this.frameMenu.getFrameCreation()).setNomPlateauConfig(this.nomPlateau);
-			this.frameMenu.getFrameCreation().setVisible(true);
-			this.frameMenu.getFrameConfig().setVisible(false);
+		this.ctrl.setPlateau(nomPlateau, lig, col, dep, nbPoleDiff, transport);
+		( new FrameCreation( this.ctrl ) ).setVisible(true);
 
 
-			textFieldLigne.     setText("");
-			textFieldColonne.   setText("");
-			textFieldPoles.     setText("");
-			textFieldDep.       setText("");
-			textFieldTransport. setText("");
-		}
+		textFieldLigne.     setText("");
+		textFieldColonne.   setText("");
+		
+		for ( JCheckBox cb : tabCbPoles )
+			cb.setSelected(false);
+		
+		textFieldDep.       setText("");
+		textFieldTransport. setText("");
 	}
 
-	public void setPlateau(String nomPlateau, int lig, int col, int nbPoles, int nbDep, int nbManches)
-	{
-		//ctrl.setPlateau(nomPlateau, lig, col, nbPoles, nbDep, nbManches);
-	}
+
 }
 
