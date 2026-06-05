@@ -1,13 +1,15 @@
 
-package IHM;
+package Conception.IHM;
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
+
+import Conception.ControleurConception;
 //import ControleurConception;
 
 public class PanelConfig extends JPanel implements ActionListener
 {
-	//ControleurConception ctrl;
+	ControleurConception ctrl;
 	FrameMenu frameMenu;
 	private JButton buttonValider;
 	private JTextField textFieldNom = new JTextField("NouveauPlateau", 20);

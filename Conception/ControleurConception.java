@@ -1,6 +1,6 @@
 package Conception;
-import IHM.*;
-import Metier.Plateau;
+import Conception.IHM.*;
+import Conception.Metier.Plateau;
 
 public class ControleurConception
 {

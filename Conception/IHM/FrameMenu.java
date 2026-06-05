@@ -1,5 +1,5 @@
 
-package IHM;
+package Conception.IHM;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;

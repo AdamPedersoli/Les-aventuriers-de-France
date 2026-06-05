@@ -1,9 +1,9 @@
-package IHM;
+package Conception.IHM;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import IHM.PanelConfig;
+import Conception.IHM.PanelConfig;
 // import controleur;
 
 public class PanelModification extends JPanel implements ActionListener

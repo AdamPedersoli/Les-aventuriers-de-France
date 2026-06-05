@@ -1,15 +1,13 @@
 package Conception.IHM;
 import javax.swing.*;
 
-import org.w3c.dom.events.MouseEvent;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
-import IHM.PanelConfig;
-import TP.s2.TD5.Exo4.Departement;
-import TP.s2.TD6.TD6.chess.metier.Plateau;
+import Conception.IHM.PanelConfig;
 import Conception.Metier.TypeDepartement;
+import Conception.Metier.Plateau;
+import Conception.Metier.TypePole;
 // import controleur;
 
 public class PanelCreation extends JPanel implements ActionListener
@@ -42,7 +40,7 @@ public class PanelCreation extends JPanel implements ActionListener
 	public PanelCreation(FrameCreation frameCreation)
 	{
 		
-		this.plateau = ctrl.getPlateau();
+		this.plateau = this.ctrl.getPlateau();
 		this.frameCreation = frameCreation;
 
 		this.setLayout(new GridLayout(1, 2));
