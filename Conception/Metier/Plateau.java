@@ -170,11 +170,11 @@ public class Plateau
 	* Ajoute un département à la liste des départements.
 	*
 	* @param dep le département à ajouter.
+	* @param lig la ligne de la case.
+	* @param col la colonne de la case.
 	*/
 	public void ajouterDep ( TypeDepartement typeDep, int lig, int col )
 	{
-		this.lstDep.add( new Departement( typeDep ) );
-		
 		int indexDep = -1;
 		
 		for (int cpt = 0; cpt < this.lstDep.size(); cpt++)
@@ -193,6 +193,30 @@ public class Plateau
 		this.lstDep.get(indexDep).ajouterCase( this.tabCase[lig][col] );
 		
 		
+	}
+	
+	
+	/**
+	* Ajoute un département si il existe pas.
+	*
+	*@param dep le département à ajouter.
+	*/
+	public void ajouterDep( Departement dep )
+	{
+		int indexDep = -1;
+		
+		for (int cpt = 0; cpt < this.lstDep.size(); cpt++)
+		{
+			if ( this.lstDep.get(cpt).getTypeDep() == typeDep )
+				return;
+		}
+		
+		if ( indexDep == -1 )
+		{
+			this.lstDep.add( new Departement( typeDep ) );
+			
+			indexDep = this.lstDep.size() - 1;
+		}
 	}
 	
 	/**
