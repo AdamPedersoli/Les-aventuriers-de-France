@@ -6,6 +6,8 @@ import java.awt.event.*;
 import Conception.ControleurConception;
 import Conception.Metier.TypePole;
 
+import java.util.ArrayList;
+
 public class PanelConfig extends JPanel implements ActionListener
 {
 	private ControleurConception ctrl;
@@ -16,7 +18,7 @@ public class PanelConfig extends JPanel implements ActionListener
 	private JCheckBox[] tabCbPoles;
 	private JTextField textFieldDep       = new JTextField(10);
 	private JTextField textFieldTransport = new JTextField(10);
-	private TypePole[] tabPoleUtilise;
+	private ArrayList<Integer> lstPoleUtilise;
 
 	private String nomPlateau;
 	private int    lig, col, nbPoleDiff, dep, transport;
@@ -26,8 +28,8 @@ public class PanelConfig extends JPanel implements ActionListener
 		this.ctrl = ctrl;
 		this.setLayout(new GridLayout(6, 1));
 		
-		this.tabCbPoles = new JCheckBox[6];
-		this.tabPoleUtilise = new TypePole[6];
+		this.tabCbPoles = new JCheckBox[7];
+		this.lstPoleUtilise = new ArrayList<Integer>();
 		
 		for ( int cpt = 0 ; cpt < this.tabCbPoles.length ; cpt++ )
 			this.tabCbPoles[cpt] = new JCheckBox();
@@ -87,7 +89,7 @@ public class PanelConfig extends JPanel implements ActionListener
 				if ( this.tabCbPoles[cpt].isSelected() )
 				{
 					this.nbPoleDiff++;
-					this.tabPoleUtilise[cpt] = TypePole.values()[cpt];
+					this.lstPoleUtilise.add( TypePole.values()[cpt].ordinal() );
 				}
 			}
 			if ( this.nbPoleDiff == 0 )
@@ -117,7 +119,7 @@ public class PanelConfig extends JPanel implements ActionListener
 		// si toutes les infos ne sont pas remplis on ne peut passer à la suite
 		// sinon on ouvre la frame de création de plateau
 		this.ctrl.setPlateau(nomPlateau, lig, col, dep, nbPoleDiff, transport);
-		( new FrameCreation( this.ctrl ) ).setVisible(true);
+		( new FrameCreation( this.ctrl, this.lstPoleUtilise ) ).setVisible(true);
 
 
 		textFieldLigne.     setText("");
@@ -129,7 +131,5 @@ public class PanelConfig extends JPanel implements ActionListener
 		textFieldDep.       setText("");
 		textFieldTransport. setText("");
 	}
-
-
 }
 

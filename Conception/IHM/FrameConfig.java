@@ -8,7 +8,6 @@ public class FrameConfig extends JFrame
 {
 	private ControleurConception ctrl;
 	private FrameCreation frameCreation;
-	private FrameModification frameModification;
 	
 	public FrameConfig(ControleurConception ctrl)
 	{

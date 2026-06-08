@@ -2,6 +2,7 @@ package Conception.Metier;
 
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import java.net.URL;
 
 /**
 * Cette classe énumère tout les différents type de pole.
@@ -48,7 +49,7 @@ public enum TypePole
 		
 		this.couleur = new Color( r, v, b );
 		
-		String cheminImage = "../images/poles/" + nomImage;
+		URL cheminImage = TypePole.class.getResource("../images/poles/" + nomImage);
 		
 		this.image = new ImageIcon( cheminImage, this.nom );
 	}
