@@ -26,7 +26,7 @@ public class GestionPlateau
 	{
 		try
 		{
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream( "../plateaux/" + p.getNom() + ".data"), "UTF8" ));
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream( p.getNom() + ".data"), "UTF8" ));
 			
 			pw.println( p.getNom       () + "" );
 			pw.println( p.getTailleX   () + "" );
@@ -49,6 +49,8 @@ public class GestionPlateau
 			
 			pw.println( GestionPlateau.departementToString(p) );
 			
+			pw.close();
+			
 		}
 		catch ( Exception e ) { e.printStackTrace(); }
 	}
@@ -64,6 +66,8 @@ public class GestionPlateau
 		
 		try
 		{
+			
+			
 			Scanner sc = new Scanner ( new FileInputStream ( "../plateaux/" + nomPlateau + ".data" ) );
 
 			int[] infoPlateau = new int[5];
@@ -160,6 +164,7 @@ public class GestionPlateau
 	// Mise en forme des départements pour l'enregistrement dans un fichier
 	private static String departementToString( Plateau p )
 	{
+		Case c;
 		Departement dep;
 		String sRet = "";
 		

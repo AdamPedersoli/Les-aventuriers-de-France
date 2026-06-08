@@ -260,6 +260,23 @@ public class PanelCreation extends JPanel implements ActionListener
 	{
 		if (e.getSource() == this.buttonValider)
 		{
+			for ( int lig = 0 ; lig < this.tabLabel.length ; lig++ )
+				for ( int col = 0 ; col < this.tabLabel[lig].length ; col++ )
+				{
+					if ( this.tabLabel[lig][col].getIcon() != null )
+						for ( TypePole t : TypePole.values() )
+							if ( t.getImage().equals(this.tabLabel[lig][col].getIcon()) )
+								this.ctrl.ajouterPole( lig, col, t );
+					
+					if ( this.tabLabel[lig][col].getBackground() != null )
+						this.ctrl.ajouterDep( lig, col, TypeDepartement.valueOf( this.tabLabel[lig][col].getBackground() ) );
+
+					if ( this.tabLabel[lig][col].getBorder() != null )
+						this.ctrl.ajouterCaseDepart( lig, col );
+				}
+			
+			this.ctrl.sauvegarder();
+
 			new FrameMenu( this.ctrl );
 			this.frameCreation.setVisible(false);
 		}
@@ -439,7 +456,6 @@ public class PanelCreation extends JPanel implements ActionListener
 								     tabLabel[ lig + tabVoisin[ligVoisin][0] ][ col + tabVoisin[ligVoisin][1] ].getBackground().equals( coul )                                )
 								{
 									tabLabel[lig][col].setBackground( coul );
-									ctrl.setCaseAtDep( ( ( TypeDepartement ) PanelCreation.this.jcbDep.getSelectedItem() ).ordinal(), lig, col );
 								}
 							}
 						}
