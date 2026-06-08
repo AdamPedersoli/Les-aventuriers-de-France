@@ -183,4 +183,21 @@ public enum TypeDepartement
 	{
 		return this.nom;
 	}
+	
+	/**
+	* Retourne l'enum de la couleur
+	*
+	* @param coul la couleur du département.
+	* @return un enum TypeDepartement de la couleur.
+	*/
+	public static TypeDepartement valueOf( Color coul )
+	{
+		for ( TypeDepartement tp : TypeDepartement.values() )
+		{
+			if ( tp.getCouleur().equals(coul) )
+				return tp;
+		}
+		
+		return null;
+	}
 }

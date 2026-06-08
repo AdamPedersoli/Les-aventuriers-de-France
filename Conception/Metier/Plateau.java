@@ -185,4 +185,16 @@ public class Plateau
 	{
 		this.lstCaseDepart.add(c);
 	}
+	
+	/**
+	* Ajoute un pole à une case avec la ligne et la colonne.
+	*
+	* @param p le type pole à assigner à la case.
+	* @param lig la ligne de la case.
+	* @param col la colonne de la case.
+	*/
+	public void ajouterPole( TypePole tp, int lig, int col )
+	{
+		this.tabCase[lig][col].setPole( new Pole(tp) );
+	}
 }
