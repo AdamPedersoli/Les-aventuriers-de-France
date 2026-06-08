@@ -38,7 +38,8 @@ public class Plateau
 		this.nbDept     = nbDept;
 		this.nbPoleDiff = nbPoleDiff;
 		
-		this.lstDep = new ArrayList<Departement>();
+		this.lstDep        = new ArrayList<Departement>();
+		this.lstCaseDepart = new ArrayList<Case>       ();
 	}
 	
 	private Plateau( Plateau p )
