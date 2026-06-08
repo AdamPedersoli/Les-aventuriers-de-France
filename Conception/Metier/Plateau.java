@@ -203,20 +203,7 @@ public class Plateau
 	*/
 	public void ajouterDep( Departement dep )
 	{
-		int indexDep = -1;
-		
-		for (int cpt = 0; cpt < this.lstDep.size(); cpt++)
-		{
-			if ( this.lstDep.get(cpt).getTypeDep() == typeDep )
-				return;
-		}
-		
-		if ( indexDep == -1 )
-		{
-			this.lstDep.add( new Departement( typeDep ) );
-			
-			indexDep = this.lstDep.size() - 1;
-		}
+		this.lstDep.add(dep);
 	}
 	
 	/**
