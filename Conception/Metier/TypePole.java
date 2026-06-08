@@ -7,15 +7,35 @@ import java.net.URL;
 /**
 * Cette classe énumère tout les différents type de pole.
 */
-
 public enum TypePole
 {
+	/**
+	* Pôle port.
+	*/
 	PORT           ( "Port"            , "port.png"          ,  28,  74, 113 ),
+	/**
+	* Pôle aéroport.
+	*/
 	AEROPORT       ( "Aéroport"        , "aeroport.png"      , 141, 154, 163 ),
+	/**
+	* Pôle gare.
+	*/
 	GARE           ( "Gare"            , "gare.png"          , 216, 182, 133 ),
+	/**
+	* Pôle station de vélo.
+	*/
 	STATION_VELO   ( "Station de velo" , "station_velo.png"  , 154, 190,  80 ),
+	/**
+	* Pôle arrêt de bus.
+	*/
 	ARRET_BUS      ( "Arrêt de bus"    , "arret_bus.png"     , 254, 207,  18 ),
+	/**
+	* Pôle arrêt de tramway.
+	*/
 	ARRET_TRAMWAY  ( "Arrêt de tramway", "arret_tramway.png" , 135, 123, 198 ),
+	/**
+	* Pôle passage piéton.
+	*/
 	PASSAGE_PIETON ( "Passage piéton"  , "passage_pieton.png", 255, 144,   0 );
 	
 	

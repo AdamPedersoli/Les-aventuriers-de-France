@@ -1,4 +1,6 @@
 package Conception.IHM;
+
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
@@ -9,7 +11,6 @@ import Conception.ControleurConception;
 public class PanelModification extends JPanel implements ActionListener
 {
 	private FrameModification frameModification;
-	// panel Principal
 	private JPanel panelConfig;
 	private JPanel panelGrille;
 	private ControleurConception ctrl;
