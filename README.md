@@ -2,8 +2,9 @@
 
 C'est une adaption d'un jeu de société en java.
 Nous retrouvons 2 applications :
-	- Une application de conception pour créer un plateau
-	- Une application de Jeu pour jouer à partir d'un plateau créer précédement.
+
+- Une application de conception pour créer un plateau
+- Une application de Jeu pour jouer à partir d'un plateau créer précédement.
 
 ## Prérequis
 
