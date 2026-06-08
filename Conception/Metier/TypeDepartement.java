@@ -2,6 +2,9 @@ package Conception.Metier;
 
 import java.awt.Color;
 
+/**
+* Cette classe énumère tout les départements de France.
+*/
 public enum TypeDepartement
 {
 	
