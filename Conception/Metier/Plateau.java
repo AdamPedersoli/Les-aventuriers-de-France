@@ -171,9 +171,28 @@ public class Plateau
 	*
 	* @param dep le département à ajouter.
 	*/
-	public void ajouterDep ( Departement dep )
+	public void ajouterDep ( TypeDepartement typeDep, int lig, int col )
 	{
-		this.lstDep.add(dep);
+		this.lstDep.add( new Departement( typeDep ) );
+		
+		int indexDep = -1;
+		
+		for (int cpt = 0; cpt < this.lstDep.size(); cpt++)
+		{
+			if ( this.lstDep.get(cpt).getTypeDep() == typeDep )
+				indexDep = cpt;
+		}
+		
+		if ( indexDep == -1 )
+		{
+			this.lstDep.add( new Departement( typeDep ) );
+			
+			indexDep = this.lstDep.size() - 1;
+		}
+		
+		this.lstDep.get(indexDep).ajouterCase( this.tabCase[lig][col] );
+		
+		
 	}
 	
 	/**
