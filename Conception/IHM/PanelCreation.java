@@ -270,9 +270,6 @@ public class PanelCreation extends JPanel implements ActionListener
 					
 					if ( this.tabLabel[lig][col].getBackground() != null )
 						this.ctrl.ajouterDep( lig, col, TypeDepartement.valueOf( this.tabLabel[lig][col].getBackground() ) );
-
-					if ( this.tabLabel[lig][col].getBorder() != null )
-						this.ctrl.ajouterCaseDepart( lig, col );
 				}
 			
 			this.ctrl.sauvegarder();
@@ -466,6 +463,7 @@ public class PanelCreation extends JPanel implements ActionListener
 							{
 								tabLabel[lig][col].setBorder ( BorderFactory.createLineBorder( PanelCreation.this.labelCouleur.getBackground(), 3 ) );
 								PanelCreation.this.lstCouleurTransport.add(PanelCreation.this.labelCouleur.getBackground());
+								PanelCreation.this.ctrl.ajouterCaseDepart( lig, col );
 							}
 						}
 					}	

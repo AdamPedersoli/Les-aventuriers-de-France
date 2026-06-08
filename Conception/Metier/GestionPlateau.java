@@ -179,6 +179,7 @@ public class GestionPlateau
 				
 				sRet += "\t" + c.getX() + "," + c.getY();
 			}
+			sRet += "\n";
 		}
 		
 		return sRet;

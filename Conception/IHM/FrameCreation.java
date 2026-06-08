@@ -19,15 +19,10 @@ public class FrameCreation extends JFrame
 		this.ctrl = ctrl;
 		this.setVisible(false);
 		this.setTitle("Creation");
-		// à changer en fonction de la taille du plateau
 		this.setSize(800, 600);
 		this.setLocation(350,150);
 		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		/* 
-		this.frameModification.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		this.frameConfig.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);*/
 		this.add(new PanelCreation(this, this.ctrl, lstTypePole));
-		this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 	}
 
 	public void setNomPlateauConfig(String nomPlateau)
