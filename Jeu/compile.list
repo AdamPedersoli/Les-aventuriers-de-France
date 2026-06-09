@@ -1,9 +1,7 @@
-<<<<<<< HEAD
 IHM/FrameSolo.java
 IHM/PanelSolo.java
 IHM/FrameMenu.java
 IHM/PanelMenu.java
-=======
 
 
 Metier/Pole.java
@@ -12,4 +10,3 @@ Metier/MoyenTransport.java
 Metier/Case.java
 Metier/Departement.java
 Metier/TypeDepartement.java
->>>>>>> alexis
