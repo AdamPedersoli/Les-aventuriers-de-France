@@ -17,7 +17,6 @@ public enum TypePole
 	ARRET_TRAMWAY  ( "Arrêt de tramway", "arret_tramway.png" , 135, 123, 198 ),
 	PASSAGE_PIETON ( "Passage piéton"  , "passage_pieton.png", 255, 144,   0 );
 	
-	
 	/**
 	* Nom du pôle.
 	*/

@@ -2,21 +2,21 @@ package Jeu.Metier;
 
 import java.awt.Point;
 
-
 /**
 * Cette classe permet de créer un segment.
 */
 public class Segment
 {
 	/**
-	* 1er point du segment.
+	* 1ere case du segment.
 	*/
-	private Point A;
+	private Case CaseA;
 	
 	/**
-	* 2er point du segment.
-	*/
-	private Point B;
+	* 2eme case du segment.
+	*/	
+	private Case CaseB;
+	
 	
 	/**
 	* Crée un segment avec 2 points.
@@ -24,11 +24,11 @@ public class Segment
 	* @param A le 1er point.
 	* @param B le 2ème point.
 	*/
-	public Segment( Point A, Point B )
+	public Segment( Case CaseA, Case CaseB )
 	{
-		this.A = A;
+		this.CaseA = CaseA;
 		
-		this.B = B;
+		this.CaseB = CaseB;
 	}
 	
 	/**
@@ -36,14 +36,14 @@ public class Segment
 	* 
 	* @return le 1er point du segment.
 	*/
-	public Point getA () { return this.A; }
+	public Case getCaseA () { return this.CaseA; }
 	
 	/**
 	* Méthode pour obtenir le 2ème point du segment.
 	* 
 	* @return le 2ème point du segment.
 	*/
-	public Point getB () { return this.B; }
+	public Case getCaseB () { return this.CaseB; }
 	
 	/**
 	* Méthode pour savoir si le segment se croise avec un autre.
@@ -53,18 +53,22 @@ public class Segment
 	*/
 	public boolean seCroise( Segment seg )
 	{
-		double x1 = this.A.getX();
-		double y1 = this.A.getY();
+		double x1 = this.CaseA.getX();
+		double y1 = this.CaseA.getY();
 		
-		double x2 = this.B.getX();
-		double y2 = this.B.getY();
+		double x2 = this.CaseB.getX();
+		double y2 = this.CaseB.getY();
 		
-		double x3 = seg.A.getX();
-		double y3 = seg.A.getY();
+		double x3 = seg.CaseA.getX();
+		double y3 = seg.CaseA.getY();
 		
-		double x4 = seg.B.getX();
-		double y4 = seg.B.getY();
+		double x4 = seg.CaseB.getX();
+		double y4 = seg.CaseB.getY();
 		
+		Point p1 = new Point( (int)x1, (int)y1 );
+		Point p2 = new Point( (int)x2, (int)y2 );
+		Point p3 = new Point( (int)x3, (int)y3 );
+		Point p4 = new Point( (int)x4, (int)y4 );
 		
 		double a1 = 0.0;
 		double b1 = 0.0;
@@ -122,9 +126,7 @@ public class Segment
 			y = a2 * x + b2;
 		}
 		
-		
-		
-		
+
 		double xMaxSeg1 = Double.max( x1, x2 );
 		double yMaxSeg1 = Double.max( y1, y2 );
 		

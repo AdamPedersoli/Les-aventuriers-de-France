@@ -3,6 +3,7 @@ package Jeu.Metier;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import java.awt.Color;
 
 /**
 * Cette classe permet de gérer un Plateau.
@@ -55,6 +56,31 @@ public class Plateau
 	private ArrayList<Case>           lstCaseDepart;
 	
 	/**
+	* Liste des moyen de transport.
+	*/
+	private ArrayList<MoyenTransport> lstMoyenTransport;
+	
+	/**
+	* Liste des case contenant un pole.
+	*/
+	private ArrayList<Case>           lstCasePole;
+	
+	/**
+	* Liste des cartes de la pioche.
+	*/
+	private ArrayList<Carte>          pioche;
+	
+	/**
+	* Liste des cartes de la defausse.
+	*/
+	private ArrayList<Carte>          defausse;
+	
+	/**
+	* Liste des trajet.
+	*/
+	private ArrayList<Trajet>         lstTrajet;
+	
+	/**
 	* Crée un plateau avec le nom, la taille, le nombre de manche, le nombre de départements et le nombre de pôles différents.
 	*
 	* @param nomPlateau le nom du plateau.
@@ -73,7 +99,13 @@ public class Plateau
 		this.nbDept     = nbDept;
 		this.nbPoleDiff = nbPoleDiff;
 		
-		this.lstDep = new ArrayList<Departement>();
+		this.lstDep            = new ArrayList<Departement>   ();
+		this.lstCaseDepart     = new ArrayList<Case>          ();
+		this.lstMoyenTransport = new ArrayList<MoyenTransport>();
+		this.lstCasePole       = new ArrayList<Case>          ();
+		this.pioche            = new ArrayList<Carte>         ();
+		this.defausse          = new ArrayList<Carte>         ();
+		this.lstTrajet         = new ArrayList<Trajet>        ();
 	}
 	
 	/**
@@ -109,20 +141,67 @@ public class Plateau
 		this.tabCase = new Case[this.tailleX][this.tailleY];
 		for ( int lig = 0; lig < this.tabCase.length; lig++ )
 			for ( int col = 0; col < this.tabCase[lig].length; col++ )
-			{
 				this.tabCase[lig][col] = new Case(lig, col);
-			}
-		
 	}
 	
 	/**
-	* Sauvergarde le plateau sous forme d'un fichier.
+	* Initialise les transport
 	*/
-	public void sauvegarder()
+	public void initMoyenTransport()
 	{
-		GestionPlateau.sauvegarder(this);
+		int indexTransport;
+		for ( int cpt = 0 ; cpt < this.nbManche ; cpt++ )
+			while ( this.lstMoyenTransport.size() > cpt )
+			{
+				indexTransport = ( (int) Math.random() * MoyenTransport.values().length );
+				for ( MoyenTransport mT : this.lstMoyenTransport )
+					if ( MoyenTransport.values()[indexTransport].equals(mT) )
+						break;
+				this.lstMoyenTransport.add( MoyenTransport.values()[indexTransport] );
+			}
 	}
 	
+	/**
+	* Initialise la pioche
+	*/
+	public void initCarte()
+	{
+		TypePole[] typePoleUtilise = new TypePole[nbPoleDiff];
+		String nomPole;
+
+		for ( Case[] ligCase : this.tabCase )
+			for ( Case ligColCase : ligCase )
+			{
+				for ( TypePole typeUtilise : typePoleUtilise )
+					if ( ligColCase.getPole().getTypePole().equals(typePoleUtilise) )
+						break;
+				nomPole = ligColCase.getPole().getTypePole().getNom().toLowerCase();
+				
+				this.pioche.add( new Carte( nomPole, 'c' ) );
+				this.pioche.add( new Carte( nomPole, 'f' ) );
+			}
+		this.pioche.add( new Carte( "fusee", 'c' ) );
+		this.pioche.add( new Carte( "fusee", 'f' ) );
+		
+		Collections.shuffle( pioche );
+	}
+
+	/**
+	* Mettre la derniere carte de la pioche dans la defausse.
+	*/
+	public void jouerCarte()
+	{
+		this.defausse.add( this.pioche.remove( this.pioche.size() ) );
+	}
+
+	/**
+	* Supprimer le premiere element de la liste pour avoir la manche actuel
+	*/
+	public void ChangerManche()
+	{
+		this.lstMoyenTransport.removeFirst();
+	}
+
 	/**
 	* Méthode pour obtenir le nom du plateau.
 	*
@@ -207,6 +286,56 @@ public class Plateau
 	}
 	
 	/**
+	* Methode pour obtenir la liste des case contenant un pole.
+	*
+	* @return la liste des case contenant un pole.
+	*/
+	public ArrayList<Case> getLstCasePole()
+	{
+		return this.lstCasePole;
+	}
+	
+	/*
+	* Methode pour obtenir la liste des moyen de transport.
+	*
+	* @return la liste des moyen de transport
+	*/
+	public ArrayList<MoyenTransport> getLstMoyenTransport()
+	{
+		return this.lstMoyenTransport;
+	}
+	
+	/**
+	* Methode pour obtenir l'index de la manche actuelle
+	*
+	* @return l'index de la manche actuel.
+	*/
+	public int getIndexManche()
+	{
+		return this.nbManche - this.lstMoyenTransport.size();
+	}
+	
+	/**
+	* Methode pour obtenir le moyen de transport de la manche actuel.
+	*
+	* @return le Moyen de transport de la manche actuel.
+	*/
+	public MoyenTransport getTransportActuel()
+	{
+		return this.lstMoyenTransport.get(0);
+	}
+	
+	/**
+	* Methode pour obtenir la couleur du moyen de transport de la manche actuel.
+	*
+	* @return la couleur du moyen de transport actuel.
+	*/
+	public Color getColorTransportActuel()
+	{
+		return this.getTransportActuel().getCouleur();
+	}
+	
+	/**
 	* Ajoute un département à la liste des départements.
 	*
 	* @param dep le département à ajouter.
@@ -224,5 +353,38 @@ public class Plateau
 	public void ajouterCaseDepart ( Case c )
 	{
 		this.lstCaseDepart.add(c);
+	}
+	
+	/**
+	* Ajoute un trajet si nouveau et y rajoute le trajet.
+	*
+	* @param caseDep la case de depart du segment.
+	* @param caseArr la case d'arriver du segment.
+	* @return un boolean si l'ajout a fonctionner.
+	*/
+	public boolean ajouterSegment ( Case caseDep, Case caseArr )
+	{
+		if ( this.lstTrajet.get( this.getIndexManche() ) == null )
+		{
+			if ( caseDep == this.lstCaseDepart.get( this.getIndexManche() ) )
+			{
+				this.lstTrajet.add( new Trajet() );
+				this.lstTrajet.get( this.getIndexManche() ).ajouterSegment( caseDep, caseArr );
+				return true;
+			}
+			else
+				return false;
+		}
+		return this.lstTrajet.get( this.getIndexManche() ).ajouterSegment( caseDep, caseArr );
+	}
+	
+	/**
+	* Ajouter une case contenant un pole
+	*
+	* @param c la case a ajouter.
+	*/
+	public void ajouterCasePole ( Case c )
+	{
+		this.lstCasePole.add(c);
 	}
 }
