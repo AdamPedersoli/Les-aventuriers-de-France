@@ -80,6 +80,8 @@ public class Plateau
 	*/
 	private ArrayList<Trajet>         lstTrajet;
 	
+	private int                       indexManche;
+	
 	/**
 	* Crée un plateau avec le nom, la taille, le nombre de manche, le nombre de départements et le nombre de pôles différents.
 	*
@@ -98,6 +100,7 @@ public class Plateau
 		this.nbManche   = nbManche;
 		this.nbDept     = nbDept;
 		this.nbPoleDiff = nbPoleDiff;
+		this.indexManche = 0;
 		
 		this.lstDep            = new ArrayList<Departement>   ();
 		this.lstCaseDepart     = new ArrayList<Case>          ();
@@ -191,15 +194,15 @@ public class Plateau
 	*/
 	public void jouerCarte()
 	{
-		this.defausse.add( this.pioche.remove( this.pioche.size() ) );
+		this.defausse.add( this.pioche.remove( this.pioche.size()-1 ) );
 	}
 
 	/**
 	* Supprimer le premiere element de la liste pour avoir la manche actuel
 	*/
-	public void ChangerManche()
+	public void mancheSuivante()
 	{
-		this.lstMoyenTransport.removeFirst();
+		this.indexManche++;
 	}
 
 	/**
@@ -274,6 +277,11 @@ public class Plateau
 		return this.lstDep.get(indice);
 	}
 	
+	public ArrayList<Departement> getLstDep()
+	{
+		return this.lstDep;
+	}
+	
 	/**
 	* Méthode pour obtenir une case de départ avec l'indice dans la liste.
 	*
@@ -283,6 +291,21 @@ public class Plateau
 	public Case getCaseDepart ( int indice )
 	{
 		return this.lstCaseDepart.get(indice);
+	}
+	
+	public ArrayList<Case> getLstCaseDepart()
+	{
+		return this.lstCaseDepart;
+	}
+	
+	/**
+	* Methode pour obtenir la carte a jouer.
+	*
+	* @return la carte a jouer.
+	*/
+	public Carte getPioche()
+	{
+		return this.pioche().get(this.pioche.size()-1);
 	}
 	
 	/**
@@ -305,6 +328,11 @@ public class Plateau
 		return this.lstMoyenTransport;
 	}
 	
+	public ArrayList<Trajet> getLstTrajet()
+	{
+		return this.lstTrajet;
+	}
+	
 	/**
 	* Methode pour obtenir l'index de la manche actuelle
 	*
@@ -312,7 +340,7 @@ public class Plateau
 	*/
 	public int getIndexManche()
 	{
-		return this.nbManche - this.lstMoyenTransport.size();
+		return this.indexManche;
 	}
 	
 	/**
@@ -322,7 +350,7 @@ public class Plateau
 	*/
 	public MoyenTransport getTransportActuel()
 	{
-		return this.lstMoyenTransport.get(0);
+		return this.lstMoyenTransport.get(this.indexManche);
 	}
 	
 	/**
@@ -376,6 +404,21 @@ public class Plateau
 				return false;
 		}
 		return this.lstTrajet.get( this.getIndexManche() ).ajouterSegment( caseDep, caseArr );
+	}
+	
+	public boolean estFinManche()
+	{
+		int cpt;
+		for ( Carte c : this.defausse )
+			if ( c.getTeinte() == 'f' )
+				cpt++;
+
+		return nbPoleDiff + 1 == cpt; 
+	}
+	
+	public boolean estFin()
+	{
+		return this.indexManche < this.nbManche;
 	}
 	
 	/**

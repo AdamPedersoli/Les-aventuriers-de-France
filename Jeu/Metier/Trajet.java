@@ -46,4 +46,9 @@ public class Trajet
 	{
 		return this.lstSegment.size();
 	}
+	
+	public ArrayList<Segment> getLstSegment()
+	{
+		return this.lstSegment();
+	}
 }
