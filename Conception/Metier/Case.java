@@ -3,7 +3,7 @@ package Conception.Metier;
 import java.awt.Point;
 
 /**
-* Cette classe permet de gérer les case.
+* Cette classe permet de gérer les cases.
 */
 
 public class Case

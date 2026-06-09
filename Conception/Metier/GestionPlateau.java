@@ -10,15 +10,23 @@ import java.util.Scanner;
 import java.io.FileInputStream;
 import java.io.FileReader;
 
+/**
+* Cette classe permet de gérer l'enregistrement et la restitution de plateau.
+*/
 public class GestionPlateau
 {
 	private GestionPlateau () {}
 	
+	/**
+	* Sauvegarde sous forme de fichier un plateau.
+	*
+	* @param p le plateau à sauvegarder.
+	*/
 	public static void sauvegarder( Plateau p )
 	{
 		try
 		{
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream( "../plateaux/" + p.getNom() + ".data"), "UTF8" ));
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream( p.getNom() + ".data"), "UTF8" ));
 			
 			pw.println( p.getNom       () + "" );
 			pw.println( p.getTailleX   () + "" );
@@ -27,59 +35,39 @@ public class GestionPlateau
 			pw.println( p.getNbDep     () + "" );
 			pw.println( p.getNbPoleDiff() + "" );
 			
-			// Pole :
-			String sRet;
-			for ( int lig = 0 ; lig < p.getTailleX() ; lig++ )
-			{
-				sRet = "";
-				for ( int col = 0 ; col < p.getTailleY() ; col++ )
-				{
-					Pole pole = p.getCase(lig,col).getPole();
-					if ( pole == null )
-						sRet += null + "\t";
-					else
-						sRet += pole.getTypePole().ordinal() + "\t";
-				}
-				pw.println( sRet );
-			}
+			// Pole
 			
-			// Case Debut :
-			Case c;
-			sRet = "";
-			for (int cpt = 0; cpt < p.getNbCaseDepart(); cpt++)
-			{
-				c = p.getCaseDepart(cpt);
-				
-				sRet += c.getX() + "," + c.getY() + "\t";
-			}
-				
-			pw.println( sRet );
+			pw.println( GestionPlateau.poleToString(p) );
+			
+			
+			// Case Debut
+			
+			pw.println( GestionPlateau.caseDepartToString(p) );
+			
 			
 			// Departement
-			Departement dep;
-			sRet = "";
-			for (int cpt = 0; cpt < p.getNbDep(); cpt++)
-			{
-				dep = p.getDep(cpt);
-				
-				sRet += dep.getTypeDep().ordinal();
-				for (int cptCase = 0; cptCase < dep.getNbCase(); cptCase++)
-				{
-					c = dep.getCase(cptCase);
-					
-					sRet += "\t" + c.getX() + "," + c.getY();
-				}
-			}
+			
+			pw.println( GestionPlateau.departementToString(p) );
+			
+			pw.close();
+			
 		}
 		catch ( Exception e ) { e.printStackTrace(); }
 	}
 	
+	/**
+	* Restitue un plateau sauvegardé avec son nom.
+	*
+	* @param nomPlateau le nom du plateau sauvegarder à restituer.
+	*/
 	public static Plateau modifier ( String nomPlateau )
 	{
 		nomPlateau.replaceAll(" ", "_");
 		
 		try
 		{
+			
+			
 			Scanner sc = new Scanner ( new FileInputStream ( "../plateaux/" + nomPlateau + ".data" ) );
 
 			int[] infoPlateau = new int[5];
@@ -131,5 +119,69 @@ public class GestionPlateau
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	// Mise en forme des poles du plateau pour l'enregistrement dans un fichier
+	private static String poleToString( Plateau p )
+	{
+		Pole   pole;
+		String sRet = "";
+		
+		for ( int lig = 0 ; lig < p.getTailleX() ; lig++ )
+		{
+			
+			for ( int col = 0 ; col < p.getTailleY() ; col++ )
+			{
+				pole = p.getCase(lig,col).getPole();
+				
+				if ( pole == null )
+					sRet += null + "\t";
+				else
+					sRet += pole.getTypePole().ordinal() + "\t";
+			}
+			sRet += "\n";
+		}
+		
+		return sRet;
+	}
+	
+	// Mise en forme des cases de départ pour l'enregistrement dans un fichier
+	private static String caseDepartToString( Plateau p )
+	{
+		Case c;
+		String sRet = "";
+		
+		for (int cpt = 0; cpt < p.getNbCaseDepart(); cpt++)
+		{
+			c = p.getCaseDepart(cpt);
+			
+			sRet += c.getX() + "," + c.getY() + "\t";
+		}
+		
+		return sRet;
+	}
+	
+	// Mise en forme des départements pour l'enregistrement dans un fichier
+	private static String departementToString( Plateau p )
+	{
+		Case c;
+		Departement dep;
+		String sRet = "";
+		
+		for (int cpt = 0; cpt < p.getNbDep(); cpt++)
+		{
+			dep = p.getDep(cpt);
+			
+			sRet += dep.getTypeDep().ordinal();
+			for (int cptCase = 0; cptCase < dep.getNbCase(); cptCase++)
+			{
+				c = dep.getCase(cptCase);
+				
+				sRet += "\t" + c.getX() + "," + c.getY();
+			}
+			sRet += "\n";
+		}
+		
+		return sRet;
 	}
 }

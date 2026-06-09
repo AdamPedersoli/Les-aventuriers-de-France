@@ -2,6 +2,9 @@ package Conception.Metier;
 
 import java.awt.Color;
 
+/**
+* Cette classe énumère tout les départements de France.
+*/
 public enum TypeDepartement
 {
 	
@@ -159,7 +162,7 @@ public enum TypeDepartement
 	{
 		this.nom = nom;
 		
-		this.couleur = new Color( r, v, b);
+		this.couleur = new Color( r, v, b );
 	}
 	
 	/**
@@ -179,5 +182,22 @@ public enum TypeDepartement
 	public String toString()
 	{
 		return this.nom;
+	}
+	
+	/**
+	* Retourne l'enum de la couleur
+	*
+	* @param coul la couleur du département.
+	* @return un enum TypeDepartement de la couleur.
+	*/
+	public static TypeDepartement valueOf( Color coul )
+	{
+		for ( TypeDepartement tp : TypeDepartement.values() )
+		{
+			if ( tp.getCouleur().equals(coul) )
+				return tp;
+		}
+		
+		return null;
 	}
 }

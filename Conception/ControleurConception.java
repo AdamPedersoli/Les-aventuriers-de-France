@@ -2,6 +2,9 @@ package Conception;
 import Conception.IHM.*;
 import Conception.Metier.Plateau;
 
+import Conception.Metier.TypeDepartement;
+import Conception.Metier.TypePole;
+
 public class ControleurConception
 {
 	private Plateau plateau;
@@ -20,20 +23,35 @@ public class ControleurConception
 		this.plateau = new Plateau(nomPlateau, lig, col, nbPoles, nbDep, nbManches);
 		this.plateau.initCase();
 	}
-
-	public void setPole( int lig, int col )
+	
+	public void sauvegarder()
 	{
-		
+		this.plateau.sauvegarder();
+	}
+
+	public void ajouterPole( int lig, int col, TypePole typePole )
+	{
+		this.plateau.ajouterPole( typePole, lig, col );
 	}
 	
-	public void setCaseAtDep( int indexTypeDep, int ligCase, int colCase )
+	public void ajouterDep( int lig, int col, TypeDepartement typeDep )
 	{
+		this.plateau.ajouterDep( typeDep, lig, col );
+	}
 	
+	public void ajouterCaseDepart( int lig, int col )
+	{
+		this.plateau.ajouterCaseDepart( this.plateau.getCase(lig,col) );
 	}
 
 	public Plateau getPlateau()
 	{
 		return this.plateau;
+	}
+	
+	public String getNom()
+	{
+		return this.plateau.getNom();
 	}
 	
 	public int getTailleXPlateau()

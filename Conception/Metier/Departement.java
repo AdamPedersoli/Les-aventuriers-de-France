@@ -23,7 +23,7 @@ public class Departement
 	* Crée un département avec le nom, la valeur de la couleur rouge,
 	* la valeur de la couleur verte et la valeur de la couleur bleu entre 0 et 255.
 	*
-	* @param typeDepartement le département que l'on souhaite instancié.
+	* @param typeDepartement le département que l'on souhaite instancier.
 	*/
 	Departement( TypeDepartement typeDepartement )
 	{
@@ -40,7 +40,7 @@ public class Departement
 	public TypeDepartement getTypeDep () { return this.typeDepartement; }
 	
 	/**
-	* Méthode pour obtenir le nombre de case relié au département.
+	* Méthode pour obtenir le nombre de case reliée au département.
 	*
 	* @return le nombre de case courverte par le département.
 	*/
@@ -57,7 +57,7 @@ public class Departement
 	}
 	
 	/**
-	* Méthode pour obtenir une case la liste avec l'indice.
+	* Méthode pour obtenir une case de la liste avec l'indice.
 	*
 	* @param indice l'indice de la case dans la liste.
 	* @return la case correspondant à l'indice.
