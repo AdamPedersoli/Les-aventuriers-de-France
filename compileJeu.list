@@ -1,14 +1,17 @@
 ./Jeu/ControleurConception.java
 
-./Jeu/IHM/FrameJeu.java
+./Jeu/IHM/FrameMenuJeu.java
+./Jeu/IHM/PanelMenuJeu.java
+./Jeu/IHM/PanelPlateau.java
 
+./Jeu/Metier/Carte.java
 ./Jeu/Metier/Case.java
 ./Jeu/Metier/Departement.java
+./Jeu/Metier/GestionPlateau.java
 ./Jeu/Metier/MoyenTransport.java
 ./Jeu/Metier/Plateau.java
 ./Jeu/Metier/Pole.java
 ./Jeu/Metier/Segment.java
+./Jeu/Metier/Trajet.java
 ./Jeu/Metier/TypeDepartement.java
 ./Jeu/Metier/TypePole.java
-./Jeu/Metier/GestionPlateau.java
-
