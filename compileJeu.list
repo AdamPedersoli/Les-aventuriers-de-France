@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ./Jeu/ControleurConception.java
 
 ./Jeu/IHM/FrameJeu.java
@@ -12,3 +13,18 @@
 ./Jeu/Metier/TypePole.java
 ./Jeu/Metier/GestionPlateau.java
 
+=======
+./Jeu/Controleur.java
+
+./Jeu/IHM/FrameSolo.java
+./Jeu/IHM/PanelSolo.java
+./Jeu/IHM/FrameMenu.java
+./Jeu/IHM/PanelMenu.java
+
+./Jeu/Metier/Pole.java
+./Jeu/Metier/TypePole.java
+./Jeu/Metier/MoyenTransport.java
+./Jeu/Metier/Case.java
+./Jeu/Metier/Departement.java
+./Jeu/Metier/TypeDepartement.java
+>>>>>>> lubin
