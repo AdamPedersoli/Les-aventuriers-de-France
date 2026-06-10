@@ -1,136 +1,242 @@
-
 package Conception.IHM;
-import java.awt.*;
-import javax.swing.*;
-import java.awt.event.*;
 
+import Conception.inter.IPanelConception;
 import Conception.ControleurConception;
 import Conception.Metier.TypePole;
 
+import javax.swing.*;
+import java.awt.GridLayout;
+import java.awt.event.*;
 import java.util.ArrayList;
 
-public class PanelConfig extends JPanel implements ActionListener
+public class PanelConfig extends JPanel implements IPanelConception, ActionListener
 {
-	private ControleurConception ctrl;
-	private JButton buttonValider;
-	private JTextField textFieldNom       = new JTextField("NouveauPlateau", 20);
-	private JTextField textFieldLigne     = new JTextField(10);
-	private JTextField textFieldColonne   = new JTextField(10);
-	private JCheckBox[] tabCbPoles;
-	private JTextField textFieldDep       = new JTextField(10);
-	private JTextField textFieldTransport = new JTextField(10);
-	private ArrayList<Integer> lstPoleUtilise;
-
-	private String nomPlateau;
-	private int    lig, col, nbPoleDiff, dep, transport;
+	private static final int     ERREUR_LIGNE       = 0;
+	private static final int     ERREUR_COLONNE     = 1;
+	private static final int     ERREUR_DEPARTEMENT = 2;
+	private static final int     ERREUR_TRANSPORT   = 3;
+	private static final int     ERREUR_POLE        = 4;
 	
-	public PanelConfig( ControleurConception ctrl )
+	private static final int     NOMBRE_POLE_MINI   = 1;
+	
+	private ControleurConception ctrl;
+	private FrameConception      frameCpt;
+	private String               nomPanel;
+	
+	private JTextField           txtFldNom;
+	private JTextField           txtFldLig;
+	private JTextField           txtFldCol;
+	private JTextField           txtFldDep;
+	private JTextField           txtFldTransport;
+	
+	private JCheckBox[]          tabCBPoles;
+	
+	private JButton              btnAnnuler;
+	private JButton              btnValider;
+	
+	
+	public PanelConfig( ControleurConception ctrl, FrameConception frameCpt )
 	{
-		this.ctrl = ctrl;
+		this.ctrl     = ctrl;
+		this.frameCpt = frameCpt;
+		
+		this.nomPanel = "Configuration Plateau";
 		this.setLayout(new GridLayout(6, 1));
 		
-		this.tabCbPoles = new JCheckBox[7];
-		this.lstPoleUtilise = new ArrayList<Integer>();
+		/*-------------------------*/
+		/* Création des composants */
+		/*-------------------------*/
 		
-		for ( int cpt = 0 ; cpt < this.tabCbPoles.length ; cpt++ )
-			this.tabCbPoles[cpt] = new JCheckBox();
-		
-		JPanel panelNomPla     = new JPanel();
-		JPanel panelDim        = new JPanel();
-		JPanel panelPoles      = new JPanel();
+		JPanel panelNomPlateau = new JPanel();
+		JPanel panelDimensions = new JPanel();
 		JPanel panelDep        = new JPanel();
 		JPanel panelTransport  = new JPanel();
-
-		textFieldNom.addActionListener(this);
-
-		panelNomPla.add(new JLabel("Nom du Plateau : "));
-		panelNomPla.add(textFieldNom);
-
-		panelDim.add(new JLabel("Dimensions :   "));
-		panelDim.add(new JLabel("Ligne : "));
-		panelDim.add(textFieldLigne);
-		panelDim.add(new JLabel("Colonne : "));
-		panelDim.add(textFieldColonne);
-
-		for ( int cpt = 0 ; cpt < this.tabCbPoles.length ; cpt++ )
-		{
-			panelPoles.add( new JLabel( TypePole.values()[cpt].getNom() ) );
-			panelPoles.add( this.tabCbPoles[cpt] );
-		}
+		JPanel panelPoles      = new JPanel(new GridLayout(2, 4));
+		JPanel panelAction     = new JPanel();
 		
 		
-		panelDep.add(new JLabel("Nombre de Départements : "));
-		panelDep.add(textFieldDep);
-		panelTransport.add(new JLabel("Nombre de Transports : "));
-		panelTransport.add(textFieldTransport);
-
-		this.add(panelNomPla);
-		this.add(panelDim);
-		this.add(panelPoles);
-		this.add(panelDep);
-		this.add(panelTransport);
-		this.buttonValider = new JButton("Valider");
-		this.buttonValider.addActionListener(this);
-
-		this.add(this.buttonValider);
+		
+		JLabel lblNomPlateau = new JLabel("Nom du Plateau : ");
+		this.txtFldNom       = new JTextField("NouveauPlateau", 20);
+		
+		JLabel lblDim        = new JLabel("Dimensions :   ");
+		
+		JLabel lblLig        = new JLabel("Nombres de lignes : ");
+		this.txtFldLig       = new JTextField(10);
+		
+		JLabel lblCol        = new JLabel("Nombres de colonnes : ");
+		this.txtFldCol       = new JTextField(10);
+		
+		JLabel lblNbDep      = new JLabel("Nombre de départements : ");
+		this.txtFldDep       = new JTextField(10);
+		
+		JLabel lblNbTrans    = new JLabel("Nombres de moyen de transports : ");
+		this.txtFldTransport = new JTextField(10);
+		
+		
+		this.tabCBPoles      = new JCheckBox[7];
+		
+		for (int cpt = 0; cpt < this.tabCBPoles.length; cpt++)
+			this.tabCBPoles[cpt] = new JCheckBox( TypePole.values()[cpt].getNom() );
+		
+		
+		this.btnAnnuler = new JButton("Annuler");
+		this.btnValider = new JButton("Valider");
+		
+		
+		/*-------------------------------*/
+		/* Positionnement des composants */
+		/*-------------------------------*/
+		
+		panelNomPlateau.add(     lblNomPlateau);
+		panelNomPlateau.add(this.txtFldNom    );
+		
+		panelDimensions.add(     lblDim   );
+		panelDimensions.add(     lblLig   );
+		panelDimensions.add(this.txtFldLig);
+		panelDimensions.add(     lblCol   );
+		panelDimensions.add(this.txtFldCol);
+		
+		panelDep.add(     lblNbDep );
+		panelDep.add(this.txtFldDep);
+		
+		panelTransport.add(     lblNbTrans     );
+		panelTransport.add(this.txtFldTransport);
+		
+		for ( int cpt = 0 ; cpt < this.tabCBPoles.length ; cpt++ )
+			panelPoles.add( this.tabCBPoles[cpt] );
+		
+		panelAction.add(this.btnAnnuler);
+		panelAction.add(this.btnValider);
+		
+		
+		this.add( panelNomPlateau );
+		this.add( panelDimensions );
+		this.add( panelDep        );
+		this.add( panelTransport  );
+		this.add( panelPoles      );
+		this.add( panelAction     );
+		
+		
+		/*---------------------------*/
+		/* Activation des composants */
+		/*---------------------------*/
+		
+		
+		this.txtFldNom      .addActionListener(this);
+		this.txtFldLig      .addActionListener(this);
+		this.txtFldCol      .addActionListener(this);
+		this.txtFldDep      .addActionListener(this);
+		this.txtFldTransport.addActionListener(this);
+		
+		for (JCheckBox cb : this.tabCBPoles)
+			cb.addActionListener(this);
+		
+		this.btnAnnuler     .addActionListener(this);
+		this.btnValider     .addActionListener(this);
+		
 	}
 
 	public void actionPerformed(ActionEvent e) 
 	{
-		nomPlateau = textFieldNom.getText();
-		// on vérifie que tous les champs remplis sont des int et que les champs ne sont pas vides
-		try 
+		if ( e.getSource() == this.btnAnnuler )
+			this.frameCpt.changerPanel(FrameConception.PANEL_MENU, true);
+		
+		if ( e.getSource() == this.btnValider )
 		{
-			lig = Integer.parseInt(textFieldLigne.getText());
-			col = Integer.parseInt(textFieldColonne.getText());
-
-			this.nbPoleDiff = 0;
-			for ( int cpt = 0 ; cpt < this.tabCbPoles.length ; cpt++ )
+			
+			String nomPlateau = this.txtFldNom      .getText();
+			String sLig       = this.txtFldLig      .getText();
+			String sCol       = this.txtFldCol      .getText();
+			String sDep       = this.txtFldDep      .getText();
+			String sTransport = this.txtFldTransport.getText();
+			
+			int nbLig, nbCol, nbDep, nbTransport, nbPoleDiff;
+			
+			ArrayList<Integer> lstIndexTypePole  = new ArrayList<Integer>();
+			
+			// on vérifie que tous les champs remplis sont des entiers et que les champs ne sont pas vides
+			// sinon on renvoi une erreur
+			if ( !sLig.matches("[0-9]{1,9}") )
 			{
-				if ( this.tabCbPoles[cpt].isSelected() )
+				this.messageErreur(PanelConfig.ERREUR_LIGNE);
+				return;
+			}
+			nbLig = Integer.parseInt(sLig);
+			
+			if ( !sCol.matches("[0-9]{1,9}") )
+			{
+				this.messageErreur(PanelConfig.ERREUR_COLONNE);
+				return;
+			}
+			nbCol = Integer.parseInt(sCol);
+			
+			if ( !sDep.matches("[0-9]{1,9}") )
+			{
+				this.messageErreur(PanelConfig.ERREUR_DEPARTEMENT);
+				return;
+			}
+			nbDep = Integer.parseInt(sCol);
+			
+			if ( !sTransport.matches("[0-9]{1,9}") )
+			{
+				this.messageErreur(PanelConfig.ERREUR_TRANSPORT);
+				return;
+			}
+			nbTransport = Integer.parseInt(sTransport);
+			
+			
+			// On compte et stock les pôles utilisés et renvoi une erreur si inférieur au nombre minimal
+			nbPoleDiff = 0;
+			for ( int cpt = 0 ; cpt < tabCBPoles.length ; cpt++ )
+			{
+				if ( tabCBPoles[cpt].isSelected() )
 				{
-					this.nbPoleDiff++;
-					this.lstPoleUtilise.add( TypePole.values()[cpt].ordinal() );
+					nbPoleDiff++;
+					lstIndexTypePole.add( cpt );
 				}
 			}
-			if ( this.nbPoleDiff == 0 )
-				this.tabCbPoles[this.tabCbPoles.length + 1] = this.tabCbPoles[0];
-
-			dep = Integer.parseInt(textFieldDep.getText());
-			transport = Integer.parseInt(textFieldTransport.getText());
-		} 
-
-		catch (NumberFormatException ex) 
-		{
-			if (!textFieldLigne.getText().isEmpty() && 
-			!textFieldColonne.getText().  isEmpty() && 
-			 this.nbPoleDiff == 0 && 
-			!textFieldDep.getText().      isEmpty() && 
-			!textFieldTransport.getText().isEmpty())
+			
+			if ( nbPoleDiff < NOMBRE_POLE_MINI )
 			{
-				JOptionPane.showMessageDialog(this, "Veuillez entrer des nombres entiers valides dans tous les champs.", "Entrée invalide", JOptionPane.ERROR_MESSAGE);
+				this.messageErreur(PanelConfig.ERREUR_POLE);
+				return;
 			}
-			else
-			{
-				JOptionPane.showMessageDialog(this, "Veuillez remplir tous les champs pour continuer.", "Champs manquants", JOptionPane.WARNING_MESSAGE);
-			}
-			return;
+			
+			
+			this.ctrl.setPlateau(nomPlateau, nbLig, nbCol, nbDep, nbPoleDiff, nbTransport);
+			
+			this.ctrl.setLstPoleSelect( lstIndexTypePole );
+			
+			this.frameCpt.changerPanel(FrameConception.PANEL_CREATION_DEPARTEMENT, false);
 		}
+	}
+	
+	public void   init  ()
+	{
+		this.txtFldLig      .setText("");
+		this.txtFldCol      .setText("");
+		this.txtFldDep      .setText("");
+		this.txtFldTransport.setText("");
 		
-		// si toutes les infos ne sont pas remplis on ne peut passer à la suite
-		// sinon on ouvre la frame de création de plateau
-		this.ctrl.setPlateau(nomPlateau, lig, col, dep, nbPoleDiff, transport);
-		( new FrameCreation( this.ctrl, this.lstPoleUtilise ) ).setVisible(true);
-
-
-		textFieldLigne.     setText("");
-		textFieldColonne.   setText("");
-		
-		for ( JCheckBox cb : tabCbPoles )
+		for ( JCheckBox cb : this.tabCBPoles )
 			cb.setSelected(false);
 		
-		textFieldDep.       setText("");
-		textFieldTransport. setText("");
+		
+	}
+	public String getNom() { return this.nomPanel; }
+	
+	private void messageErreur(int erreur)
+	{
+		switch (erreur)
+		{
+			case 0  -> JOptionPane.showMessageDialog(this, "Le nombre de lignes doit être un entier inférieur à 1 000 000 000"             , "Entrée invalide", JOptionPane.ERROR_MESSAGE);
+			case 1  -> JOptionPane.showMessageDialog(this, "Le nombre de colonnes doit être un entier inférieur à 1 000 000 000"           , "Entrée invalide", JOptionPane.ERROR_MESSAGE);
+			case 2  -> JOptionPane.showMessageDialog(this, "Le nombre de départements doit être un entier inférieur à 1 000 000 000"       , "Entrée invalide", JOptionPane.ERROR_MESSAGE);
+			case 3  -> JOptionPane.showMessageDialog(this, "Le nombre de moyen de transports doit être un entier inférieur à 1 000 000 000", "Entrée invalide", JOptionPane.ERROR_MESSAGE);
+			case 4  -> JOptionPane.showMessageDialog(this, "Le nombre minimal de pôles requis est " + NOMBRE_POLE_MINI                     , "Entrée invalide", JOptionPane.ERROR_MESSAGE);
+			default -> { return; }
+		}
 	}
 }
 

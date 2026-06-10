@@ -24,9 +24,11 @@ public class GestionPlateau
 	*/
 	public static void sauvegarder( Plateau p )
 	{
+		String nomPlateau = p.getNom().replaceAll(" ", "_");
+		
 		try
 		{
-			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream( p.getNom() + ".data"), "UTF8" ));
+			PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream( "./Conception/plateaux/" + nomPlateau + ".data"), "UTF8" ));
 			
 			pw.println( p.getNom       () + "" );
 			pw.println( p.getTailleX   () + "" );
@@ -68,7 +70,7 @@ public class GestionPlateau
 		{
 			
 			
-			Scanner sc = new Scanner ( new FileInputStream ( "../plateaux/" + nomPlateau + ".data" ) );
+			Scanner sc = new Scanner ( new FileInputStream ( "./Conception/plateaux/" + nomPlateau + ".data" ) );
 
 			int[] infoPlateau = new int[5];
 

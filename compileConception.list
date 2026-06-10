@@ -1,13 +1,9 @@
 ./Conception/ControleurConception.java
 
-./Conception/IHM/FrameMenu.java
+./Conception/IHM/FrameConception.java
 ./Conception/IHM/PanelMenu.java
-./Conception/IHM/FrameConfig.java
 ./Conception/IHM/PanelConfig.java
-./Conception/IHM/FrameCreation.java
-./Conception/IHM/PanelCreation.java
-./Conception/IHM/FrameModification.java
-./Conception/IHM/PanelModification.java
+./Conception/IHM/PanelCreationDepartement.java
 
 ./Conception/Metier/Case.java
 ./Conception/Metier/Pole.java
@@ -16,3 +12,5 @@
 ./Conception/Metier/TypeDepartement.java
 ./Conception/Metier/GestionPlateau.java
 ./Conception/Metier/Plateau.java
+
+./Conception/inter/IPanelConception.java

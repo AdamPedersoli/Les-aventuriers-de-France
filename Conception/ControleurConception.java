@@ -1,21 +1,23 @@
 package Conception;
-import Conception.IHM.*;
-import Conception.Metier.Plateau;
 
+import Conception.IHM.FrameConception;
+
+import Conception.Metier.Plateau;
 import Conception.Metier.TypeDepartement;
 import Conception.Metier.TypePole;
+
+import java.util.ArrayList;
 
 public class ControleurConception
 {
 	private Plateau plateau;
-	private FrameMenu frameMenu;
-	private FrameConfig frameConfig;
-	private FrameCreation frameCreation;
-	private FrameModification frameModification;
+	private FrameConception frameCpt;
+	
+	private ArrayList<Integer> lstPoleSelect; // pour transiter la liste entre le panel Config et Création
 	
 	public ControleurConception()
 	{
-		this.frameMenu = new FrameMenu(this);
+		this.frameCpt = new FrameConception(this);
 	}
 
 	public void setPlateau(String nomPlateau, int lig, int col, int nbPoles, int nbDep, int nbManches)
@@ -63,6 +65,18 @@ public class ControleurConception
 	{
 		return this.plateau.getTailleY();
 	}
+	
+	public void setLstPoleSelect( ArrayList<Integer> lst )
+	{
+		this.lstPoleSelect = lst;
+	}
+	
+	public ArrayList<Integer> getLstPoleSelect()
+	{
+		return this.lstPoleSelect;
+	}
+	
+	public int getNbDep() { return this.plateau.getNbDep(); }
 	
 	public static void main(String[] args) 
 	{

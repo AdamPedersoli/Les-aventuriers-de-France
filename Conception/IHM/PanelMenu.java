@@ -1,78 +1,101 @@
-
 package Conception.IHM;
+
+import Conception.inter.IPanelConception;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import Conception.ControleurConception;
 
-public class PanelMenu extends JPanel implements ActionListener
+public class PanelMenu extends JPanel implements IPanelConception, ActionListener
 {
-	private FrameMenu frameMenu;
-	private JButton buttonCreation;
-	private JButton buttonModification;
-	private JComboBox<String> jcbPlateaux;
+	private String               nomPanel;
 	private ControleurConception ctrl;
+	private FrameConception      frameCpt;
+	
+	private JPanel               panelAction;
+	
+	private JComboBox<String>    jcbPlateaux;
+	
+	private JButton              btnCreation;
+	private JButton              btnModif;
 
-	public PanelMenu(FrameMenu frameMenu, ControleurConception ctrl )
+	public PanelMenu( ControleurConception ctrl, FrameConception frameCpt )
 	{
-		this.frameMenu = frameMenu;
-		this.ctrl = ctrl;
-		this.setLayout(new GridLayout(5, 1));
-
+		this.ctrl     = ctrl;
+		this.frameCpt = frameCpt;
+		this.nomPanel = "Menu";
+		
+		this.setLayout(new GridLayout(4, 1));
+		this.setOpaque(false);
+		
+		/*-------------------------*/
+		/* Création des composants */
+		/*-------------------------*/
+		
+		this.panelAction = new JPanel();
+		
 		this.jcbPlateaux = new JComboBox<String>();
-
-		/*for (Plateau plateau : Plateau.values()) 
-		{
-			this.jcbPlateaux.addItem(plateau.toString());
-	    }*/
 		
-		this.buttonCreation = new JButton("Creation");
-		this.buttonCreation.addActionListener(this);
-		
-		this.buttonModification = new JButton("Modification");
-		this.buttonModification.addActionListener(this);
-
 		this.jcbPlateaux.addItem(null);
 		this.jcbPlateaux.addItem("Test");
-		 // this.ctrl.getNomPlateaux());
-		this.jcbPlateaux.addActionListener(this);
 		
-		JLabel labelInfo = new JLabel("Choisir un plateau le modifier", SwingConstants.CENTER);
-		JLabel labelVide = new JLabel("");
-		this.setOpaque(false);
+		
+		this.btnCreation = new JButton("Creation");
+		this.btnModif    = new JButton("Modification");
+		
+		
+		JLabel labelInfo = new JLabel("Choisissez un plateau pour le modifier ou créez-en un nouveau", SwingConstants.CENTER);
 		labelInfo.setOpaque(true);
-		labelInfo.setForeground(Color.WHITE);
-		this.add(labelInfo).setBackground(new Color(0,0, 255));
+		labelInfo.setForeground(Color.GRAY);
+		
+		
+		/*-------------------------------*/
+		/* Positionnement des composants */
+		/*-------------------------------*/
+		
+		this.panelAction.add(this.btnModif);
+		this.panelAction.add(this.btnCreation);
+		
+		
+		this.add(     labelInfo  );
 		this.add(this.jcbPlateaux);
-		labelVide.setOpaque(true);
-		this.add(labelVide).setBackground(new Color(255, 0, 0));
-		this.add(this.buttonCreation);
-		this.add(this.buttonModification);
+		this.add(new  JLabel()   );
+		this.add(this.panelAction);
+		
+		
+		/*---------------------------*/
+		/* Activation des composants */
+		/*---------------------------*/
+		
+		this.jcbPlateaux.addActionListener(this);
+		this.btnCreation.addActionListener(this);
+		this.btnModif   .addActionListener(this);
+		
+		
+		
 	}
 
 	public void actionPerformed(ActionEvent e) 
 	{
-		String nomPlateau = (String) this.jcbPlateaux.getSelectedItem();
-		if (nomPlateau != null) 
-		{
-			/* 
-			String plateauSelectionne = (String) this.jcbPlateaux.getSelectedItem();
-			// FrameSolo frameSolo = new FrameSolo(plateauSelectionne);
-			// frameSolo.setVisible(true);
-			FrameMenu frameMenu = (FrameMenu) SwingUtilities.getWindowAncestor(this);
-			frameMenu.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-			this.setVisible(false);
-			this.setEnabled(false);*/
 
-			if (e.getSource() == this.buttonModification) 
+		if (e.getSource() == this.btnModif) 
+		{
+			String nomPlateau = (String) this.jcbPlateaux.getSelectedItem();
+			
+			if ( !nomPlateau.equals(null) || !nomPlateau.equals("") ) 
 			{
-				new FrameModification( this.ctrl );
+				// Changement de panel pour le panelModification
 			}
+			
 		}
-
-		if (e.getSource() == this.buttonCreation) 
+		
+		if (e.getSource() == this.btnCreation) 
 		{
-			(new FrameConfig( this.ctrl )).setVisible(true);
+			this.frameCpt.changerPanel(FrameConception.PANEL_CONFIG, false);
 		}
 	}
+	
+	public void   init  () {}
+	public String getNom() { return this.nomPanel; }
 }

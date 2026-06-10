@@ -77,9 +77,9 @@ public class Segment
 		
 		
 		
-		if ( p1.equals(p2) || p1.equals(p3) || p1.equals(p4) ||
-		     p2.equals(p3) || p2.equals(p4) ||
-			 p3.equals(p4)                                      )
+		if ( this.A.equals(this.B) || this.A.equals(seg.A) || this.A.equals(seg.B) ||
+		     this.B.equals(seg .A) || this.B.equals(seg.B) ||
+			 seg .A.equals(seg .B)                                                    )
 			return false;
 		
 		a1 = (y2 - y1) / (x2 - x1);
