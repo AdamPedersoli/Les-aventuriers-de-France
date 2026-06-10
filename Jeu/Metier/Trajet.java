@@ -49,6 +49,6 @@ public class Trajet
 	
 	public ArrayList<Segment> getLstSegment()
 	{
-		return this.lstSegment();
+		return this.lstSegment;
 	}
 }

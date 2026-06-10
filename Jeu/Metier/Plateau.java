@@ -305,7 +305,7 @@ public class Plateau
 	*/
 	public Carte getPioche()
 	{
-		return this.pioche().get(this.pioche.size()-1);
+		return this.pioche.get(this.pioche.size()-1);
 	}
 	
 	/**
@@ -408,7 +408,7 @@ public class Plateau
 	
 	public boolean estFinManche()
 	{
-		int cpt;
+		int cpt = 0;
 		for ( Carte c : this.defausse )
 			if ( c.getTeinte() == 'f' )
 				cpt++;
@@ -419,6 +419,21 @@ public class Plateau
 	public boolean estFin()
 	{
 		return this.indexManche < this.nbManche;
+	}
+	
+	public int getScoreFinal()
+	{
+		int nbZoneCapture = 0, nbPoleZone = 0, nbPoleMax = 0;
+		
+		for ( Departement d : this.lstDep )
+			for ( int cpt = 0 ; cpt < d.getNbCase() ; cpt++ )
+				if ( d.getCase(cpt).getPole().estVisite() )
+					nbPoleZone++;
+			nbPoleMax = Math.max( nbPoleZone, nbPoleMax );
+			if ( nbPoleZone > 0 )
+				nbZoneCapture++;
+
+		return nbZoneCapture * nbPoleMax;
 	}
 	
 	/**
