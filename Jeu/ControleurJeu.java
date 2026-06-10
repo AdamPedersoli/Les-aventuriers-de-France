@@ -52,7 +52,7 @@ public class ControleurJeu
 	
 	public int getScoreFinal()
 	{
-		
+		return this.plateau.getScoreFinal();
 	}
 	
 	public ArrayList<Departement> getLstDep()
