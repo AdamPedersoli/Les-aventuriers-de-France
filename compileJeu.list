@@ -1,7 +1,9 @@
-./Jeu/ControleurConception.java
+./Jeu/ControleurJeu.java
+
 ./Jeu/IHM/FrameMenuJeu.java
 ./Jeu/IHM/PanelMenuJeu.java
 ./Jeu/IHM/PanelPlateau.java
+
 ./Jeu/Metier/Carte.java
 ./Jeu/Metier/Case.java
 ./Jeu/Metier/Departement.java

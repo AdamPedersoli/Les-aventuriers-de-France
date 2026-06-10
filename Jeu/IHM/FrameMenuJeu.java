@@ -1,13 +1,15 @@
 package Jeu.IHM;
 
+import Jeu.ControleurJeu;
+
 import javax.swing.*;
 import java.awt.*;
 
 public class FrameMenuJeu extends JFrame
 {
-	private Controleur ctrl;
+	private ControleurJeu ctrl;
 
-	public FrameMenuJeu(Controleur ctrl)
+	public FrameMenuJeu(ControleurJeu ctrl)
 	{
 		this.ctrl = ctrl;
 		this.setTitle("Menu Les aventuriers de la France");

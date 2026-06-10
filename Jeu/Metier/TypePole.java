@@ -1,7 +1,12 @@
 package Jeu.Metier;
 
+
 import java.awt.Color;
-import javax.swing.ImageIcon;
+import java.awt.image.BufferedImage; 
+import javax.imageio.ImageIO; 
+import java.io.File; 
+import java.awt.Image;
+import java.io.IOException;
 
 /**
 * Cette classe énumère tout les différents type de pole.
@@ -25,7 +30,12 @@ public enum TypePole
 	/**
 	* Image du pôle.
 	*/
-	private ImageIcon image;
+	private Image image;
+	
+	/**
+	* Nom de l'image
+	*/
+	private String nomImage;
 	
 	/**
 	* Couleur du pôle.
@@ -47,9 +57,18 @@ public enum TypePole
 		
 		this.couleur = new Color( r, v, b );
 		
-		String cheminImage = "../images/poles/" + nomImage;
+		this.nomImage = nomImage;
 		
-		this.image = new ImageIcon( cheminImage, this.nom );
+		String cheminImage = "Jeu/images/poles/" + nomImage;
+		
+		try
+		{
+			this.image = ImageIO.read( new File ( cheminImage ) );
+		}
+		catch (IOException e)
+		{
+			System.out.println("Image Introuvable");
+		}
 	}
 	
 	/**
@@ -64,7 +83,7 @@ public enum TypePole
 	*
 	* @return l'image du pôle.
 	*/
-	public ImageIcon getImage () { return this.image;   }
+	public Image getImage () { return this.image;   }
 	
 	/**
 	* Méthode pour obtenir la couleur du pôle.
@@ -73,4 +92,10 @@ public enum TypePole
 	*/
 	public Color getCouleur   () { return this.couleur; }
 	
+	/**
+	* Methode pour obtenir le nom de l'image.
+	*
+	* @return le nom de l'image.
+	*/
+	public String getNomImage() { return this.nomImage; }
 }

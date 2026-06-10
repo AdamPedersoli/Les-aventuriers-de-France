@@ -24,16 +24,16 @@ public class GestionPlateau
 	*/
 	public static Plateau modifier ( String nomPlateau )
 	{
-		nomPlateau.replaceAll(" ", "_");
+		nomPlateau = nomPlateau.replaceAll(" ", "_");
 		
 		try
 		{
-			Scanner sc = new Scanner ( new FileInputStream ( "../plateaux/" + nomPlateau + ".data" ) );
+			Scanner sc = new Scanner ( new FileInputStream ( "Jeu/Plateau/" + nomPlateau ) );
 
 			int[] infoPlateau = new int[5];
 
 			sc.nextLine();
-			for ( int cpt = 1 ; cpt < infoPlateau.length ; cpt++ )
+			for ( int cpt = 1 ; cpt <= infoPlateau.length ; cpt++ )
 			{
 				infoPlateau[cpt-1] = Integer.parseInt( sc.nextLine() );
 			}
@@ -46,16 +46,22 @@ public class GestionPlateau
 			String[] tabLigne;
 			for ( int lig = 0 ; lig < infoPlateau[1] ; lig++ )
 			{
+				System.out.println( "Ligne : " + lig );
 				tabLigne = sc.nextLine().split("\t");
-				for ( int col = 0 ; col < infoPlateau[2] ; col++ )
+				for ( int col = 0 ; col <= tabLigne.length - 1; col++ )
 				{
 					if ( ! ( tabLigne[col].equals("null") ) )
 					{
+						System.out.println( tabLigne[col] );
 						plateau.getCase(lig,col).setPole( new Pole( TypePole.values()[ Integer.parseInt( tabLigne[col] ) ] ) );
 						plateau.ajouterCasePole( plateau.getCase(lig, col) );
 					}
 				}
 			}
+			
+			plateau.initVoisin();
+			
+			sc.nextLine();
 			
 			tabLigne = sc.nextLine().split("\t");
 			String[] tabCoord;
@@ -74,6 +80,7 @@ public class GestionPlateau
 					tabCoord = tabLigne[cptCase].split(",");
 					plateau.getDep( cpt ).ajouterCase( plateau.getCase( Integer.parseInt( tabCoord[0] ), Integer.parseInt( tabCoord[1] )) );
 				}
+				tabLigne = sc.nextLine().split("\t");
 			}
 
 			plateau.initCarte();

@@ -1,12 +1,14 @@
 package Jeu.IHM;
 
+import Jeu.ControleurJeu;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 public class PanelMenuJeu extends JPanel implements ActionListener
 {
-	private Controleur ctrl;
+	private ControleurJeu ctrl;
 	private String nomPlateau;
     
     private JTable tblPlateaux;
@@ -18,7 +20,7 @@ public class PanelMenuJeu extends JPanel implements ActionListener
 	private JPanel pnlDefausse;
 	private PanelPlateau pnlPlateau;
 
-	public PanelMenuJeu(Controleur ctrl)
+	public PanelMenuJeu(ControleurJeu ctrl)
 	{
 		this.ctrl = ctrl;
 		this.setLayout(new BorderLayout());
@@ -60,20 +62,23 @@ public class PanelMenuJeu extends JPanel implements ActionListener
 		{
 			this.pnlDefausse.add(new JLabel(this.lblPioche.getIcon()));
 			this.ctrl.jouerCarte();
-
+			this.revalidate();
+			this.repaint();
+			
 			if (this.ctrl.estFinManche()) 
 			{
 				if (this.ctrl.estFin()) 
 				{
-				    this.removeAll();
-				    this.fin();
-				    this.revalidate();
-				    this.repaint();
+					this.removeAll();
+					this.fin();
+					this.revalidate();
+					this.repaint();
 				}
-				else 
+				else
 				{
-				    this.ctrl.mancheSuivante();
-				    this.pnlPlateau.repaint(); 
+					this.ctrl.mancheSuivante();
+					this.lblPioche.setIcon(this.ctrl.getPioche().getImage());
+					this.pnlPlateau.repaint();
 				}
 			}
 			else
@@ -95,6 +100,7 @@ public class PanelMenuJeu extends JPanel implements ActionListener
 		JPanel pnlPioche  = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
 		pnlPioche.add(this.lblPioche);
+		this.pnlDefausse.add(new JLabel("Défausse :"));
 		pnlCartes.add(pnlPioche, BorderLayout.NORTH);
 		pnlCartes.add(this.pnlDefausse, BorderLayout.CENTER);
 

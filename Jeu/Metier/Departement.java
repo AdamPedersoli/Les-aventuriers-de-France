@@ -67,6 +67,11 @@ public class Departement
 		return this.lstCase.get(indice);
 	}
 	
+	public ArrayList<Case> getLstCase()
+	{
+		return this.lstCase;
+	}
+	
 	/**
 	* Méthode pour récupérer une version string à afficher.
 	*

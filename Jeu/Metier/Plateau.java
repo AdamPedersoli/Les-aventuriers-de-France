@@ -1,13 +1,11 @@
-<<<<<<< HEAD
 package Jeu.Metier;
-=======
-package Metier;
->>>>>>> lubin
 
+
+
+import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
 
-<<<<<<< HEAD
 import java.awt.Color;
 
 /**
@@ -114,6 +112,8 @@ public class Plateau
 		this.pioche            = new ArrayList<Carte>         ();
 		this.defausse          = new ArrayList<Carte>         ();
 		this.lstTrajet         = new ArrayList<Trajet>        ();
+		
+		this.initTrajet();
 	}
 	
 	/**
@@ -157,16 +157,11 @@ public class Plateau
 	*/
 	public void initMoyenTransport()
 	{
-		int indexTransport;
+		
+		ArrayList<MoyenTransport> lstMelangeTransport = new ArrayList<MoyenTransport>( Arrays.asList(MoyenTransport.values()));
+		Collections.shuffle( lstMelangeTransport );
 		for ( int cpt = 0 ; cpt < this.nbManche ; cpt++ )
-			while ( this.lstMoyenTransport.size() > cpt )
-			{
-				indexTransport = ( (int) Math.random() * MoyenTransport.values().length );
-				for ( MoyenTransport mT : this.lstMoyenTransport )
-					if ( MoyenTransport.values()[indexTransport].equals(mT) )
-						break;
-				this.lstMoyenTransport.add( MoyenTransport.values()[indexTransport] );
-			}
+			lstMoyenTransport.add(lstMelangeTransport.get(cpt));
 	}
 	
 	/**
@@ -174,24 +169,44 @@ public class Plateau
 	*/
 	public void initCarte()
 	{
-		TypePole[] typePoleUtilise = new TypePole[nbPoleDiff];
+		ArrayList<TypePole> typePoleUtilise = new ArrayList<TypePole>();
 		String nomPole;
+		boolean estDeja;
 
 		for ( Case[] ligCase : this.tabCase )
 			for ( Case ligColCase : ligCase )
-			{
-				for ( TypePole typeUtilise : typePoleUtilise )
-					if ( ligColCase.getPole().getTypePole().equals(typePoleUtilise) )
-						break;
-				nomPole = ligColCase.getPole().getTypePole().getNom().toLowerCase();
-				
-				this.pioche.add( new Carte( nomPole, 'c' ) );
-				this.pioche.add( new Carte( nomPole, 'f' ) );
-			}
+				if ( ligColCase.getPole() != null )
+				{
+					estDeja = false;
+					for ( TypePole typeUtilise : typePoleUtilise )
+					{
+						if ( ligColCase.getPole().getTypePole().equals(typeUtilise) )
+						{
+							estDeja = true;
+							break;
+						}
+					}
+					if ( ! estDeja )
+					{
+						nomPole = ligColCase.getPole().getTypePole().getNomImage().toLowerCase().replace(".png", "");
+						
+						this.pioche.add( new Carte( nomPole, 'c' ) );
+						this.pioche.add( new Carte( nomPole, 'f' ) );
+					
+						typePoleUtilise.add(ligColCase.getPole().getTypePole());
+					}
+				}
+
 		this.pioche.add( new Carte( "fusee", 'c' ) );
 		this.pioche.add( new Carte( "fusee", 'f' ) );
 		
 		Collections.shuffle( pioche );
+	}
+	
+	public void initTrajet()
+	{
+		for ( int cpt = 0 ; cpt <= nbManche ; cpt++ )
+			this.lstTrajet.add( new Trajet() );
 	}
 
 	/**
@@ -199,7 +214,8 @@ public class Plateau
 	*/
 	public void jouerCarte()
 	{
-		this.defausse.add( this.pioche.remove( this.pioche.size()-1 ) );
+		if ( this.pioche.size() > 0 )
+			this.defausse.add( this.pioche.remove( 0 ) );
 	}
 
 	/**
@@ -208,6 +224,9 @@ public class Plateau
 	public void mancheSuivante()
 	{
 		this.indexManche++;
+		this.pioche.clear();
+		this.initCarte();
+		this.defausse.clear();
 	}
 
 	/**
@@ -310,7 +329,7 @@ public class Plateau
 	*/
 	public Carte getPioche()
 	{
-		return this.pioche.get(this.pioche.size()-1);
+		return this.pioche.get(0);
 	}
 	
 	/**
@@ -397,11 +416,10 @@ public class Plateau
 	*/
 	public boolean ajouterSegment ( Case caseDep, Case caseArr )
 	{
-		if ( this.lstTrajet.get( this.getIndexManche() ) == null )
+		if ( this.lstTrajet.get(this.indexManche).getLstSegment().size() == 0 )
 		{
 			if ( caseDep == this.lstCaseDepart.get( this.getIndexManche() ) )
 			{
-				this.lstTrajet.add( new Trajet() );
 				this.lstTrajet.get( this.getIndexManche() ).ajouterSegment( caseDep, caseArr );
 				return true;
 			}
@@ -417,13 +435,12 @@ public class Plateau
 		for ( Carte c : this.defausse )
 			if ( c.getTeinte() == 'f' )
 				cpt++;
-
-		return nbPoleDiff + 1 == cpt; 
+		return nbPoleDiff == cpt; 
 	}
 	
 	public boolean estFin()
 	{
-		return this.indexManche < this.nbManche;
+		return this.indexManche == this.nbManche - 1;
 	}
 	
 	public int getScoreFinal()
@@ -432,7 +449,7 @@ public class Plateau
 		
 		for ( Departement d : this.lstDep )
 			for ( int cpt = 0 ; cpt < d.getNbCase() ; cpt++ )
-				if ( d.getCase(cpt).getPole().estVisite() )
+				if ( d.getCase(cpt).getPole() != null && d.getCase(cpt).getPole().estVisite() )
 					nbPoleZone++;
 			nbPoleMax = Math.max( nbPoleZone, nbPoleMax );
 			if ( nbPoleZone > 0 )
@@ -450,93 +467,33 @@ public class Plateau
 	{
 		this.lstCasePole.add(c);
 	}
-=======
-public class Plateau
-{
-	private Case[][]                  tabCase;
-	private int                       tailleX;
-	private int                       tailleY;
-	private int                       nbManche;
-	private int                       nbDept;
-	private int 					  numMancheActuelle;
-	private int[]                     scoreManche;
-	private MoyenTransport            mancheActuelle;
-	private ArrayList<Carte>          pioche;
-	private ArrayList<Carte>          defausse;
-	private ArrayList<MoyenTransport> moyenTransportUtilise;
-	private ArrayList<Trajet>         lstTrajet;				  
 	
-	public Plateau( int tailleX, int tailleY, int nbManche, int nbDept )
+	public void initVoisin()
 	{
-		this.tailleX  = tailleX;
-		this.tailleY  = tailleY;
-		this.nbManche = nbManche;
-		this.nbDept   = nbDept;
-		this.numMancheActuelle = 0;
-		this.scoreManche = new int[this.nbManche]; 
-		this.pioche   = new ArrayList<Carte>();
-		this.defausse = new ArrayList<Carte>();
-		
-	}
-	
-	public Plateau( Plateau p )
-	{
-		this( p.tailleX, p.tailleY, p.nbManche, p.nbDept );
-	}
-	
-	public void initPioche( String[] tabPole )
-	{
-		for ( String sPole : tabPole )
-		{
-			this.pioche.add( new Carte( 'C', sPole ) );
-			this.pioche.add( new Carte( 'F', sPole ) );
-		}	
-	}
-	
-	public void initTransport( MoyenTransport[] tabTransport )
-	{
-		this.moyenTransportUtilise = new ArrayList<MoyenTransport>();
-		
-		for ( MoyenTransport transport : tabTransport )
-		{
-			this.moyenTransportUtilise.add(transport);
-		}
-		
-		Collections.shuffle(this.moyenTransportUtilise);
-		
-		this.mancheActuelle = this.moyenTransportUtilise.get(this.numMancheActuelle);
-	}
-	
-	public void initCase()
-	{
-		this.tabCases = new Case[this.tailleX][this.tailleY];
-		for ( int lig = 0; lig < this.tabCase.length; lig++ )
-			for ( int col = 0; col < this.tabCase[lig].length; col++ )
+		int deltaX     , deltaY;
+		int deltaXEntre, deltaYEntre;
+		for ( Case cDep : this.lstCasePole )
+			for ( Case cArr : this.lstCasePole )
 			{
-				this.tabCases[lig][col] = new Cases(lig, col);
-			}
-		
-	}
-	
-	public void recupererPlateau()
-	{
-		// recupere avec fichier.data
-	}
-	
-	public void resetVisitePole()
-	{
-		for ( int lig = 0; lig < this.tabCase.length; lig++ )
-			for ( int col = 0; col < this.tabCase[lig].length; col++ )
-			{
-				if (this.tabCase[lig][col].getPole() != null ) this.tabCase[lig][col].getPole().setEstVisite(false);
+				deltaX = Math.abs( cArr.getX() - cDep.getX() );
+				deltaY = Math.abs( cArr.getY() - cDep.getY() );
+				
+				if ( ( deltaX == 0 || deltaY == 0 ) || ( deltaX == deltaY ) )
+				{
+					for ( Case cEntre : this.lstCasePole )
+						if ( ! cEntre.equals(cArr) && ! cEntre.equals(cArr) )
+						{
+							deltaXEntre = Math.abs( cEntre.getX() - cDep.getX() );
+							deltaYEntre = Math.abs( cEntre.getY() - cDep.getY() );
+							if ( ( deltaXEntre == 0 || deltaYEntre == 0 ) || ( deltaXEntre == deltaYEntre ) )
+								if ( deltaXEntre < deltaX || deltaYEntre < deltaY )
+								{
+									cDep.getPole().ajouterVoisin( cArr.getPole() );
+									System.out.println( "Case dep :" + " x : " + cDep.getX() + " y : " + cDep.getY() + "\n" +
+									                    "Case arr :" + " y : " + cArr.getY() + " y : " + cArr.getY()           );
+								}
+						}
+				}
 			}
 	}
-	
-	public void initTrajet( int x, int y )
-	{
-		lstTrajet.add( new Trajet(this.tabCase[x][y]) );
-	}
-	
-	
->>>>>>> lubin
 }

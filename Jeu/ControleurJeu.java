@@ -4,6 +4,8 @@ import Jeu.IHM.*;
 import Jeu.Metier.*;
 import java.io.File;
 
+import java.util.ArrayList;
+
 public class ControleurJeu
 {
 	private Plateau      plateau;
@@ -32,7 +34,7 @@ public class ControleurJeu
 	
 	public boolean estFinManche()
 	{
-		return this.plateau.estFinManche()
+		return this.plateau.estFinManche();
 	}
 	
 	public void mancheSuivante()
@@ -57,12 +59,12 @@ public class ControleurJeu
 	
 	public ArrayList<Departement> getLstDep()
 	{
-		this.plateau.getLstDep();
+		return this.plateau.getLstDep();
 	}
 	
 	public ArrayList<Case> getLstCaseDepart()
 	{
-		this.plateau.getLstCaseDepart();
+		return this.plateau.getLstCaseDepart();
 	}
 	
 	public ArrayList<MoyenTransport> getLstMoyenTransport()
@@ -82,12 +84,17 @@ public class ControleurJeu
 	
 	public boolean ajouterSegment( Case caseDep, Case caseArr)
 	{
-		return plateau.ajouterSegment ( caseDep, caseArr )
+		return plateau.ajouterSegment ( caseDep, caseArr );
 	}
 	
 	public void modifier( String s )
 	{
 		this.plateau = GestionPlateau.modifier(s);
+	}
+	
+	public void jouerCarte()
+	{
+		this.plateau.jouerCarte();
 	}
 	
 	public static void main ( String[] args )
