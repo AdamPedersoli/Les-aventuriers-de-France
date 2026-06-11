@@ -90,21 +90,16 @@ public class Segment
 		
 		b1 = y1 - a1 * x1;
 		
-		System.out.println( "y = " + a1 + "x + " + b1 );
-		
 		
 		
 		a2 = (y4 - y3) / (x4 - x3);
 		
 		b2 = y3 - a2 * x3;
 		
-		System.out.println( "y = " + a2 + "x + " + b2 );
-		
 		
 		
 		if ( a1 == a2 )
 		{
-			System.out.println("segments parallèle");
 			return false;
 		}
 		
@@ -141,13 +136,8 @@ public class Segment
 		double yMinSeg2 = Double.min( y3, y4 );
 		
 		
-		System.out.println( "intersection :" + " (" + x + ";" + y + ")");
-		
-		
 		if ( Double.isFinite(x) && Double.isFinite(y) )
 		{
-			System.out.println( "(" + xMaxSeg1 + ":" + yMaxSeg1 + ")" + " " + "(" + xMinSeg1 + ":" + yMinSeg1 + ")" );
-			
 			return x >= xMinSeg1 && x <= xMaxSeg1 && y >= yMinSeg1 && y <= yMaxSeg1 &&
 			       x >= xMinSeg2 && x <= xMaxSeg2 && y >= yMinSeg2 && y <= yMaxSeg2;
 		}
