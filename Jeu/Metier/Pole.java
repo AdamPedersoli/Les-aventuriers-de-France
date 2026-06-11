@@ -73,7 +73,7 @@ public class Pole
 	*
 	* @param voisin le voisin ajouté.
 	*/
-	public void ajouterVoisin( Pole voisin )
+	public void ajouterVoisin( Case voisin )
 	{
 		this.lstVoisin.add( voisin );
 	}
@@ -84,9 +84,9 @@ public class Pole
 	* @param p le pôle à vérifier.
 	* @return vrai s'il est voisin sinon faux.
 	*/
-	public boolean estVoisin( Pole p )
+	public boolean estVoisin( Case c )
 	{
-		return this.lstVoisin.contains( p );
+		return this.lstVoisin.contains( c );
 	}
 	
 }

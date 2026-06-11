@@ -534,7 +534,7 @@ public class Plateau
 							 col >= 0 && col < this.tabCase[ligLbl].length &&
 							 tabCase[lig][col].getPole() != null )
 						{
-							tabCase[lig][col].getPole().ajouterVoisin( tabCase[ligLbl][colLbl].getPole() );
+							tabCase[lig][col].getPole().ajouterVoisin( tabCase[ligLbl][colLbl] );
 						}
 					}
 				}
