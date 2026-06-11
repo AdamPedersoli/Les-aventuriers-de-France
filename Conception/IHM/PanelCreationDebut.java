@@ -351,6 +351,11 @@ public class PanelCreationDebut extends JPanel implements IPanelConception, Acti
 		
 	}
 	
+	public void tracerLiaison()
+	{
+		this.repaint;
+	}
+	
 	public void paintChildren(Graphics g)
 	{
 		super.paintChildren(g);
@@ -404,8 +409,8 @@ public class PanelCreationDebut extends JPanel implements IPanelConception, Acti
 						{
 						
 
-							int longueurLabel = PanelCreation.this.tabLblPlateau[lig][col].getWidth ();
-							int hauteurLabel  = PanelCreation.this.tabLblPlateau[lig][col].getHeight();
+							int longueurLabel = this.tabLblPlateau[lig][col].getWidth ();
+							int hauteurLabel  = this.tabLblPlateau[lig][col].getHeight();
 						
 							int x1 = col    * longueurLabel + longueurLabel/2 + panelVisuel.getX();
 							int y1 = lig    * hauteurLabel  + hauteurLabel /2 + panelVisuel.getY();

@@ -96,6 +96,7 @@ public class PanelMenu extends JPanel implements IPanelConception, ActionListene
 		}
 	}
 	
-	public void   init  () {}
-	public String getNom() { return this.nomPanel; }
+	public String getNom     () { return this.nomPanel; }
+	public void   init       () {}
+	public void   sauvegarder() {}
 }

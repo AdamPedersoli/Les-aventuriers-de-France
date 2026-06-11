@@ -4,6 +4,11 @@
 ./Conception/IHM/PanelMenu.java
 ./Conception/IHM/PanelConfig.java
 ./Conception/IHM/PanelCreationDepartement.java
+./Conception/IHM/PanelCreationPole.java
+./Conception/IHM/LabelPole.java
+./Conception/IHM/PoleTransferable.java
+./Conception/IHM/PoleSourceHandler.java
+./Conception/IHM/PoleCibleHandler.java
 
 ./Conception/Metier/Case.java
 ./Conception/Metier/Pole.java

@@ -144,69 +144,7 @@ public class PanelConfig extends JPanel implements IPanelConception, ActionListe
 		
 		if ( e.getSource() == this.btnValider )
 		{
-			
-			String nomPlateau = this.txtFldNom      .getText();
-			String sLig       = this.txtFldLig      .getText();
-			String sCol       = this.txtFldCol      .getText();
-			String sDep       = this.txtFldDep      .getText();
-			String sTransport = this.txtFldTransport.getText();
-			
-			int nbLig, nbCol, nbDep, nbTransport, nbPoleDiff;
-			
-			ArrayList<Integer> lstIndexTypePole  = new ArrayList<Integer>();
-			
-			// on vérifie que tous les champs remplis sont des entiers et que les champs ne sont pas vides
-			// sinon on renvoi une erreur
-			if ( !sLig.matches("[0-9]{1,9}") )
-			{
-				this.messageErreur(PanelConfig.ERREUR_LIGNE);
-				return;
-			}
-			nbLig = Integer.parseInt(sLig);
-			
-			if ( !sCol.matches("[0-9]{1,9}") )
-			{
-				this.messageErreur(PanelConfig.ERREUR_COLONNE);
-				return;
-			}
-			nbCol = Integer.parseInt(sCol);
-			
-			if ( !sDep.matches("[0-9]{1,9}") )
-			{
-				this.messageErreur(PanelConfig.ERREUR_DEPARTEMENT);
-				return;
-			}
-			nbDep = Integer.parseInt(sCol);
-			
-			if ( !sTransport.matches("[0-9]{1,9}") )
-			{
-				this.messageErreur(PanelConfig.ERREUR_TRANSPORT);
-				return;
-			}
-			nbTransport = Integer.parseInt(sTransport);
-			
-			
-			// On compte et stock les pôles utilisés et renvoi une erreur si inférieur au nombre minimal
-			nbPoleDiff = 0;
-			for ( int cpt = 0 ; cpt < tabCBPoles.length ; cpt++ )
-			{
-				if ( tabCBPoles[cpt].isSelected() )
-				{
-					nbPoleDiff++;
-					lstIndexTypePole.add( cpt );
-				}
-			}
-			
-			if ( nbPoleDiff < NOMBRE_POLE_MINI )
-			{
-				this.messageErreur(PanelConfig.ERREUR_POLE);
-				return;
-			}
-			
-			
-			this.ctrl.setPlateau(nomPlateau, nbLig, nbCol, nbDep, nbPoleDiff, nbTransport);
-			
-			this.ctrl.setLstPoleSelect( lstIndexTypePole );
+			this.sauvegarder();
 			
 			this.frameCpt.changerPanel(FrameConception.PANEL_CREATION_DEPARTEMENT, false);
 		}
@@ -224,7 +162,77 @@ public class PanelConfig extends JPanel implements IPanelConception, ActionListe
 		
 		
 	}
+	
 	public String getNom() { return this.nomPanel; }
+	
+	public void   sauvegarder()
+	{
+		
+		String nomPlateau = this.txtFldNom      .getText();
+		String sLig       = this.txtFldLig      .getText();
+		String sCol       = this.txtFldCol      .getText();
+		String sDep       = this.txtFldDep      .getText();
+		String sTransport = this.txtFldTransport.getText();
+		
+		int nbLig, nbCol, nbDep, nbTransport, nbPoleDiff;
+		
+		ArrayList<Integer> lstIndexTypePole  = new ArrayList<Integer>();
+		
+		// on vérifie que tous les champs remplis sont des entiers et que les champs ne sont pas vides
+		// sinon on renvoi une erreur
+		if ( !sLig.matches("[0-9]{1,9}") )
+		{
+			this.messageErreur(PanelConfig.ERREUR_LIGNE);
+			return;
+		}
+		nbLig = Integer.parseInt(sLig);
+		
+		if ( !sCol.matches("[0-9]{1,9}") )
+		{
+			this.messageErreur(PanelConfig.ERREUR_COLONNE);
+			return;
+		}
+		nbCol = Integer.parseInt(sCol);
+		
+		if ( !sDep.matches("[0-9]{1,9}") )
+		{
+			this.messageErreur(PanelConfig.ERREUR_DEPARTEMENT);
+			return;
+		}
+		nbDep = Integer.parseInt(sCol);
+		
+		if ( !sTransport.matches("[0-9]{1,9}") )
+		{
+			this.messageErreur(PanelConfig.ERREUR_TRANSPORT);
+			return;
+		}
+		nbTransport = Integer.parseInt(sTransport);
+		
+		
+		// On compte et stock les pôles utilisés et renvoi une erreur si inférieur au nombre minimal
+		nbPoleDiff = 0;
+		for ( int cpt = 0 ; cpt < tabCBPoles.length ; cpt++ )
+		{
+			if ( tabCBPoles[cpt].isSelected() )
+			{
+				nbPoleDiff++;
+				lstIndexTypePole.add( cpt );
+			}
+		}
+		
+		if ( nbPoleDiff < NOMBRE_POLE_MINI )
+		{
+			this.messageErreur(PanelConfig.ERREUR_POLE);
+			return;
+		}
+		
+		
+		this.ctrl.setPlateau(nomPlateau, nbLig, nbCol, nbDep, nbPoleDiff, nbTransport);
+		
+		this.ctrl.setLstPoleSelect( lstIndexTypePole );
+		
+		
+	}
 	
 	private void messageErreur(int erreur)
 	{
