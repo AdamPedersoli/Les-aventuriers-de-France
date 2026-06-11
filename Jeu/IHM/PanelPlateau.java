@@ -53,8 +53,14 @@ public class PanelPlateau extends JPanel implements MouseListener
 			g2.setColor(lstMoyenTransport.get(i).getCouleur());
 			g2.drawRect(c.getY() * 50, c.getX() * 50, 50, 50);
 		}
-		g2.setStroke(new BasicStroke(1)); 
-
+		g2.setStroke(new BasicStroke(1));
+		
+		/*====================*/
+		/* SEGMENTS (METIER)  */
+		/*====================*/
+		
+		
+		
 		/*====================*/
 		/* SEGMENTS (METIER)  */
 		/*====================*/

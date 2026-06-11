@@ -28,7 +28,7 @@ public class Pole
 	/**
 	* Liste des voisin du pôle.
 	*/
-	private ArrayList<Pole> lstVoisin;
+	private ArrayList<Case> lstVoisin;
 	
 	/**
 	* Crée un pôle avec un nom et une couleur.

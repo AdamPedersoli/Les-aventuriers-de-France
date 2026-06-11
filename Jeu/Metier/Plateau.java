@@ -428,12 +428,13 @@ public class Plateau
 				if ( s.seCroise( new Segment(caseDep, caseArr) ) )
 					estCroise = true;
 		
-		if ( ! imageValide && ! estFusee && 
-		     estPremier && ! caseDep.equals( this.lstCaseDepart.get( this.getIndexManche() ) ) && ! caseDepValide  ||
-		     estCroise )
+		if ( ! imageValide && ! estFusee || estCroise )
 		{
 			return false;
 		}
+		
+		if ( estPremier && ! caseDepValide )
+			return false;
 		
 		return this.lstTrajet.get( this.getIndexManche() ).ajouterSegment( caseDep, caseArr, estPremier );
 	}
