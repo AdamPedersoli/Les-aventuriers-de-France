@@ -41,7 +41,7 @@ public class Pole
 		
 		this.estVisite = false;
 		
-		this.lstVoisin = new ArrayList<Pole>();
+		this.lstVoisin = new ArrayList<Case>();
 	}
 	
 	/**
