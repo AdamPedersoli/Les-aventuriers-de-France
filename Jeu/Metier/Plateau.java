@@ -405,6 +405,7 @@ public class Plateau
 	public void ajouterCaseDepart ( Case c )
 	{
 		this.lstCaseDepart.add(c);
+		c.getPole().setEstVisite(true);
 	}
 	
 	/**
@@ -416,17 +417,25 @@ public class Plateau
 	*/
 	public boolean ajouterSegment ( Case caseDep, Case caseArr )
 	{
-		if ( this.lstTrajet.get(this.indexManche).getLstSegment().size() == 0 )
+		boolean imageValide   = caseArr.getPole().getTypePole().getNomImage().replace(".png", "").equals( this.getPioche().getType() );
+		boolean estFusee      = this.getPioche().getType().equals("fusee");
+		boolean estPremier    = this.lstTrajet.get(this.indexManche).getLstSegment().size() == 0;
+		boolean caseDepValide = caseDep.equals( this.lstCaseDepart.get( this.getIndexManche() ) );
+		boolean estCroise     = false;
+		
+		for ( Trajet t : lstTrajet )
+			for ( Segment s : t.getLstSegment() )
+				if ( s.seCroise( new Segment(caseDep, caseArr) ) )
+					estCroise = true;
+		
+		if ( ! imageValide && ! estFusee && 
+		     estPremier && ! caseDep.equals( this.lstCaseDepart.get( this.getIndexManche() ) ) && ! caseDepValide  ||
+		     estCroise )
 		{
-			if ( caseDep == this.lstCaseDepart.get( this.getIndexManche() ) )
-			{
-				this.lstTrajet.get( this.getIndexManche() ).ajouterSegment( caseDep, caseArr );
-				return true;
-			}
-			else
-				return false;
+			return false;
 		}
-		return this.lstTrajet.get( this.getIndexManche() ).ajouterSegment( caseDep, caseArr );
+		
+		return this.lstTrajet.get( this.getIndexManche() ).ajouterSegment( caseDep, caseArr, estPremier );
 	}
 	
 	public boolean estFinManche()
@@ -435,7 +444,11 @@ public class Plateau
 		for ( Carte c : this.defausse )
 			if ( c.getTeinte() == 'f' )
 				cpt++;
-		return nbPoleDiff == cpt; 
+			
+		if ( nbPoleDiff + 1 == cpt )
+			return true;
+			
+		return false;
 	}
 	
 	public boolean estFin()
@@ -450,11 +463,15 @@ public class Plateau
 		for ( Departement d : this.lstDep )
 			for ( int cpt = 0 ; cpt < d.getNbCase() ; cpt++ )
 				if ( d.getCase(cpt).getPole() != null && d.getCase(cpt).getPole().estVisite() )
+				{
 					nbPoleZone++;
+				}
+
 			nbPoleMax = Math.max( nbPoleZone, nbPoleMax );
+
 			if ( nbPoleZone > 0 )
 				nbZoneCapture++;
-
+		
 		return nbZoneCapture * nbPoleMax;
 	}
 	
@@ -470,30 +487,56 @@ public class Plateau
 	
 	public void initVoisin()
 	{
-		int deltaX     , deltaY;
-		int deltaXEntre, deltaYEntre;
-		for ( Case cDep : this.lstCasePole )
-			for ( Case cArr : this.lstCasePole )
-			{
-				deltaX = Math.abs( cArr.getX() - cDep.getX() );
-				deltaY = Math.abs( cArr.getY() - cDep.getY() );
-				
-				if ( ( deltaX == 0 || deltaY == 0 ) || ( deltaX == deltaY ) )
+		int lig, col;
+		for ( int ligLbl = 0 ; ligLbl < this.tabCase.length ; ligLbl++ )
+			for ( int colLbl = 0 ; colLbl < this.tabCase[ligLbl].length ; colLbl++ )
+				if ( this.tabCase[ligLbl][colLbl].getPole() != null )
 				{
-					for ( Case cEntre : this.lstCasePole )
-						if ( ! cEntre.equals(cArr) && ! cEntre.equals(cArr) )
+					for ( int cpt = 0 ; cpt < 8 ; cpt++ )
+					{
+						lig = ligLbl;
+						col = colLbl;
+						
+						switch (cpt)
 						{
-							deltaXEntre = Math.abs( cEntre.getX() - cDep.getX() );
-							deltaYEntre = Math.abs( cEntre.getY() - cDep.getY() );
-							if ( ( deltaXEntre == 0 || deltaYEntre == 0 ) || ( deltaXEntre == deltaYEntre ) )
-								if ( deltaXEntre < deltaX || deltaYEntre < deltaY )
-								{
-									cDep.getPole().ajouterVoisin( cArr.getPole() );
-									System.out.println( "Case dep :" + " x : " + cDep.getX() + " y : " + cDep.getY() + "\n" +
-									                    "Case arr :" + " y : " + cArr.getY() + " y : " + cArr.getY()           );
-								}
+							case 0, 1, 2 -> lig--;
+							case 4, 5, 6 -> lig++;
 						}
+
+						switch (cpt)
+						{
+							case 0, 6, 7 -> col--;
+							case 2, 3, 4 -> col++;
+						}
+						
+						
+						while ( lig >= 0 && lig < this.tabCase        .length &&
+								col >= 0 && col < this.tabCase[ligLbl].length &&
+								tabCase[lig][col].getPole() == null              )
+						{
+						
+							// Ligne :
+							switch ( cpt )
+							{
+								case 0, 1, 2 -> lig -- ;
+								case 4, 5, 6 -> lig ++ ;
+							}
+							
+							// Colonne :
+							switch ( cpt )
+							{
+								case 0, 6, 7 -> col -- ;
+								case 2, 3, 4 -> col ++ ;
+							}
+						}
+						
+						if ( lig >= 0 && lig < this.tabCase        .length &&
+							 col >= 0 && col < this.tabCase[ligLbl].length &&
+							 tabCase[lig][col].getPole() != null )
+						{
+							tabCase[lig][col].getPole().ajouterVoisin( tabCase[ligLbl][colLbl].getPole() );
+						}
+					}
 				}
-			}
 	}
 }

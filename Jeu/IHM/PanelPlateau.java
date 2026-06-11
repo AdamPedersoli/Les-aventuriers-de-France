@@ -13,12 +13,14 @@ public class PanelPlateau extends JPanel implements MouseListener
 {
 	private ControleurJeu ctrl;
 	private Case selection = null;
+	public boolean aJoue;
 
 	public PanelPlateau(ControleurJeu ctrl)
 	{
 		this.ctrl = ctrl;
 		this.setPreferredSize(new Dimension(1500, 1000));
 		this.addMouseListener(this);
+		this.aJoue = false;
 	}
 
 	protected void paintComponent(Graphics g)
@@ -65,10 +67,10 @@ public class PanelPlateau extends JPanel implements MouseListener
 				int idx = this.ctrl.getLstTrajet().indexOf(t);
 				g2.setColor(lstMoyenTransport.get(idx).getCouleur());
 				g2.drawLine(
-					s.getCaseA().getX() * 50 + 25,
 					s.getCaseA().getY() * 50 + 25,
-					s.getCaseB().getX() * 50 + 25,
-					s.getCaseB().getY() * 50 + 25
+					s.getCaseA().getX() * 50 + 25,
+					s.getCaseB().getY() * 50 + 25,
+					s.getCaseB().getX() * 50 + 25
 				);
 			}
 		}
@@ -106,7 +108,7 @@ public class PanelPlateau extends JPanel implements MouseListener
 
 		for (Case c : ctrl.getLstCasePole())
 		{
-			if (c.getX() == x && c.getY() == y)
+			if ( (c.getX() == x && c.getY() == y) && !this.aJoue )
 			{
 				if (selection == null)
 				{
@@ -114,7 +116,7 @@ public class PanelPlateau extends JPanel implements MouseListener
 				}
 				else
 				{
-					ctrl.ajouterSegment(selection, c);
+					this.aJoue = this.ctrl.ajouterSegment(selection, c);
 					selection = null;
 				}
 				repaint();

@@ -49,7 +49,6 @@ public class PanelMenuJeu extends JPanel implements ActionListener
 		{
 			if (this.tblPlateaux.getSelectedRow() == -1) return;
 			this.nomPlateau = this.ctrl.getNomPlateaux()[this.tblPlateaux.getSelectedRow()][0]; 
-			
 			this.ctrl.modifier(this.nomPlateau);
 			
 			this.removeAll();
@@ -62,6 +61,7 @@ public class PanelMenuJeu extends JPanel implements ActionListener
 		{
 			this.pnlDefausse.add(new JLabel(this.lblPioche.getIcon()));
 			this.ctrl.jouerCarte();
+			this.pnlPlateau.aJoue = false;
 			this.revalidate();
 			this.repaint();
 			
