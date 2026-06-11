@@ -89,4 +89,9 @@ public class Pole
 		return this.lstVoisin.contains( c );
 	}
 	
+	public ArrayList<Case> getLstVoisin()
+	{
+		return this.lstVoisin;
+	}
+	
 }

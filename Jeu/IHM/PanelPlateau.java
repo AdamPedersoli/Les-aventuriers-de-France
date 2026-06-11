@@ -56,11 +56,26 @@ public class PanelPlateau extends JPanel implements MouseListener
 		g2.setStroke(new BasicStroke(1));
 		
 		/*====================*/
-		/* SEGMENTS (METIER)  */
+		/* LAISONS DE BASE    */
 		/*====================*/
-		
-		
-		
+
+		for ( Case c : this.ctrl.getLstCasePole() )
+		{
+			for ( Case v : c.getPole().getLstVoisin() )
+			{
+				int x1 = c.getX();
+				int y1 = c.getY();
+				int x2 = v.getX();
+				int y2 = v.getY();
+
+				g2.drawLine(
+					y1 * 50 + 25,
+					x1 * 50 + 25,
+					y2 * 50 + 25,
+					x2 * 50 + 25
+				);
+			}
+		}
 		/*====================*/
 		/* SEGMENTS (METIER)  */
 		/*====================*/
