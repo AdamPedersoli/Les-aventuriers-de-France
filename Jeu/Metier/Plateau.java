@@ -157,9 +157,9 @@ public class Plateau
 	{
 		
 		ArrayList<MoyenTransport> lstMelangeTransport = new ArrayList<MoyenTransport>( Arrays.asList(MoyenTransport.values()));
-		Collections.shuffle( lstMelangeTransport );
+		//Collections.shuffle( lstMelangeTransport ); Probleme de doublons
 		for ( int cpt = 0 ; cpt < this.nbManche ; cpt++ )
-			lstMoyenTransport.add(lstMelangeTransport.get(cpt));
+			this.lstMoyenTransport.add(lstMelangeTransport.get(cpt));
 	}
 	
 	/**
@@ -203,7 +203,7 @@ public class Plateau
 	
 	public void initTrajet()
 	{
-		for ( int cpt = 0 ; cpt <= nbManche ; cpt++ )
+		for ( int cpt = 0 ; cpt < nbManche ; cpt++ )
 			this.lstTrajet.add( new Trajet() );
 	}
 

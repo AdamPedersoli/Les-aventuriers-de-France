@@ -87,6 +87,16 @@ public class ControleurJeu
 		return this.plateau.getIndexManche();
 	}
 	
+	public int getTailleX()
+	{
+		return this.plateau.getTailleX();
+	}
+	
+	public int getTailleY()
+	{
+		return this.plateau.getTailleY();
+	}
+	
 	public boolean ajouterSegment( Case caseDep, Case caseArr)
 	{
 		return plateau.ajouterSegment ( caseDep, caseArr );

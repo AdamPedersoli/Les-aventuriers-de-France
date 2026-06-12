@@ -92,6 +92,7 @@ public class PanelMenuJeu extends JPanel implements ActionListener
 					this.pnlDefausse.add(new JLabel("Défausse :"));
 					this.pnlManche.add(new JLabel("Manche : " + (this.ctrl.getManche()+1)));
 					this.lblPioche.setIcon(this.ctrl.getPioche().getImage());
+					this.pnlPlateau.majBordure();
 					this.pnlPlateau.repaint();
 				}
 			}

@@ -1,156 +1,164 @@
 package Jeu.IHM;
-
 import Jeu.ControleurJeu;
 import Jeu.Metier.*;
-
 import java.util.ArrayList;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 public class PanelPlateau extends JPanel implements MouseListener
 {
-	private ControleurJeu ctrl;
-	private Case selection = null;
-	public boolean aJoue;
+    private ControleurJeu ctrl;
+    private Case selection = null;
+    public boolean aJoue;
 
-	public PanelPlateau(ControleurJeu ctrl)
-	{
-		this.ctrl = ctrl;
-		this.setPreferredSize(new Dimension(1500, 1000));
-		this.addMouseListener(this);
-		this.aJoue = false;
-	}
+    private int nbCols;
+    private int nbLigs;  
 
-	protected void paintComponent(Graphics g)
-	{
-		super.paintComponent(g);
-		Graphics2D g2 = (Graphics2D) g;
+    public PanelPlateau(ControleurJeu ctrl)
+    {
+        this.ctrl = ctrl;
+        this.nbCols = this.ctrl.getTailleX();
+        this.nbLigs = this.ctrl.getTailleY();
+        this.setPreferredSize(new Dimension(1500, 1000));
+        this.addMouseListener(this);
+        this.aJoue = false;
+        this.majBordure();
+    }
 
-		// Contours 
-		this.setBorder(BorderFactory.createLineBorder( this.ctrl.getLstMoyenTransport().get(this.ctrl.getManche()).getCouleur(), 5));
+    // Taille d'une case en pixels (calculée dynamiquement)
+    private int cellW() { return this.getWidth()  / this.nbCols;   }
+    private int cellH() { return this.getHeight() / this.nbLigs;   }
 
-		/*====================*/
-		/* DEPARTEMENTS       */
-		/*====================*/
-		for (Departement dep : ctrl.getLstDep())
-		{
-			g2.setColor(dep.getTypeDepartement().getCouleur());
-			for (Case c : dep.getLstCase())
-			{
-				g2.fillRect(c.getX() * 50, c.getY() * 50, 50, 50);
-			}
-		}
-		
-		/*====================*/
-		/* CASES DEPART       */
-		/*====================*/
-		ArrayList<Case> lstCaseDepart = ctrl.getLstCaseDepart();
-		ArrayList<MoyenTransport> lstMoyenTransport = ctrl.getLstMoyenTransport();
+    public void majBordure()
+    {
+        Color couleur = this.ctrl.getLstMoyenTransport()
+                                 .get(this.ctrl.getManche())
+                                 .getCouleur();
+        this.setBorder(BorderFactory.createLineBorder(couleur, 3));
+    }
 
-		g2.setStroke(new BasicStroke(3));
-		for (int i = 0; i < lstCaseDepart.size(); i++)
-		{
-			Case c = lstCaseDepart.get(i);
-			g2.setColor(lstMoyenTransport.get(i).getCouleur());
-			g2.drawRect(c.getY() * 50, c.getX() * 50, 50, 50);
-		}
-		g2.setStroke(new BasicStroke(1));
-		
-		/*====================*/
-		/* LAISONS DE BASE    */
-		/*====================*/
-		g2.setColor(Color.DARK_GRAY);
-		for ( Case c : this.ctrl.getLstCasePole() )
-		{
-			for ( Case v : c.getPole().getLstVoisin() )
-			{
-				int x1 = c.getX();
-				int y1 = c.getY();
-				int x2 = v.getX();
-				int y2 = v.getY();
+    protected void paintComponent(Graphics g)
+    {
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D) g;
 
-				g2.drawLine(
-					y1 * 50 + 25,
-					x1 * 50 + 25,
-					y2 * 50 + 25,
-					x2 * 50 + 25
-				);
-			}
-		}
-		/*====================*/
-		/* SEGMENTS (METIER)  */
-		/*====================*/
+        int cw = cellW();
+        int ch = cellH();
 
-		g2.setStroke(new BasicStroke(3)); 
-		for (Trajet t : ctrl.getLstTrajet())
-		{
-			for (Segment s : t.getLstSegment())
-			{
-				int idx = this.ctrl.getLstTrajet().indexOf(t);
-				g2.setColor(lstMoyenTransport.get(idx).getCouleur());
-				g2.drawLine(
-					s.getCaseA().getY() * 50 + 25,
-					s.getCaseA().getX() * 50 + 25,
-					s.getCaseB().getY() * 50 + 25,
-					s.getCaseB().getX() * 50 + 25
-				);
-			}
-		}
-		g2.setStroke(new BasicStroke(1));
+        /*====================*/
+        /* DEPARTEMENTS       */
+        /*====================*/
+        for (Departement dep : ctrl.getLstDep())
+        {
+            g2.setColor(dep.getTypeDepartement().getCouleur());
+            for (Case c : dep.getLstCase())
+            {
+                g2.fillRect(c.getX() * cw, c.getY() * ch, cw, ch);
+            }
+        }
 
-		/*====================*/
-		/* POLES              */
-		/*====================*/
-		for (Case c : ctrl.getLstCasePole())
-		{
-			g2.drawImage(
-				c.getPole().getTypePole().getImage(),
-				c.getY() * 50,
-				c.getX() * 50,
-				50,
-				50,
-				this
-			);
-		}
+        /*====================*/
+        /* CASES DEPART       */
+        /*====================*/
+        ArrayList<Case> lstCaseDepart     = ctrl.getLstCaseDepart();
+        ArrayList<MoyenTransport> lstMT   = ctrl.getLstMoyenTransport();
+        g2.setStroke(new BasicStroke(3));
+        for (int i = 0; i < lstCaseDepart.size(); i++)
+        {
+            Case c = lstCaseDepart.get(i);
+            g2.setColor(lstMT.get(i).getCouleur());
+            g2.drawRect(c.getY() * cw, c.getX() * ch, cw, ch); // cohérent avec fillRect
+        }
+        g2.setStroke(new BasicStroke(1));
 
-		/*====================*/
-		/* SELECTION VISUEL   */
-		/*====================*/
-		if (selection != null)
-		{
-			g2.setColor(new Color(255, 0, 0, 120));
-			g2.fillOval(selection.getY() * 50, selection.getX() * 50, 50, 50);
-		}
-	}
+        /*====================*/
+        /* LIAISONS DE BASE   */
+        /*====================*/
+        g2.setColor(Color.DARK_GRAY);
+        for (Case c : this.ctrl.getLstCasePole())
+        {
+            for (Case v : c.getPole().getLstVoisin())
+            {
+                g2.drawLine(
+                    c.getY() * cw + cw / 2,  // centre X de la case
+                    c.getX() * ch + ch / 2,  // centre Y de la case
+                    v.getY() * cw + cw / 2,
+                    v.getX() * ch + ch / 2
+                );
+            }
+        }
 
-	public void mouseClicked(MouseEvent e)
-	{
-		int x = e.getY() / 50;
-		int y = e.getX() / 50;
+        /*====================*/
+        /* SEGMENTS (METIER)  */
+        /*====================*/
+        g2.setStroke(new BasicStroke(3));
+        for (Trajet t : ctrl.getLstTrajet())
+        {
+            g2.setColor(lstMT.get(ctrl.getLstTrajet().indexOf(t)).getCouleur());
+            for (Segment s : t.getLstSegment())
+            {
+                g2.drawLine(
+                    s.getCaseA().getY() * cw + cw / 2,
+                    s.getCaseA().getX() * ch + ch / 2,
+                    s.getCaseB().getY() * cw + cw / 2,
+                    s.getCaseB().getX() * ch + ch / 2
+                );
+            }
+        }
+        g2.setStroke(new BasicStroke(1));
 
-		for (Case c : ctrl.getLstCasePole())
-		{
-			if ( (c.getX() == x && c.getY() == y) && !this.aJoue )
-			{
-				if (selection == null)
-				{
-					selection = c;
-				}
-				else
-				{
-					this.aJoue = this.ctrl.ajouterSegment(selection, c);
-					selection = null;
-				}
-				repaint();
-				return; 
-			}
-		}
-	}
+        /*====================*/
+        /* POLES              */
+        /*====================*/
+        for (Case c : ctrl.getLstCasePole())
+        {
+            g2.drawImage(
+                c.getPole().getTypePole().getImage(),
+                c.getY() * cw,
+                c.getX() * ch,
+                cw, ch,   // l'image remplit toute la case
+                this
+            );
+        }
 
-	public void mousePressed (MouseEvent e) {}
-	public void mouseReleased(MouseEvent e) {}
-	public void mouseEntered (MouseEvent e) {}
-	public void mouseExited  (MouseEvent e) {}
+        /*====================*/
+        /* SELECTION VISUEL   */
+        /*====================*/
+        if (selection != null)
+        {
+            g2.setColor(new Color(255, 0, 0, 120));
+            g2.fillOval(selection.getY() * cw, selection.getX() * ch, cw, ch);
+        }
+    }
+
+    public void mouseClicked(MouseEvent e)
+    {
+        int cw = cellW();
+        int ch = cellH();
+
+        int x = e.getY() / ch;  // ligne  (axe X métier)
+        int y = e.getX() / cw;  // colonne (axe Y métier)
+
+        for (Case c : ctrl.getLstCasePole())
+        {
+            if ((c.getX() == x && c.getY() == y) && !this.aJoue)
+            {
+                if (selection == null)
+                    selection = c;
+                else
+                {
+                    this.aJoue = this.ctrl.ajouterSegment(selection, c);
+                    selection = null;
+                }
+                repaint();
+                return;
+            }
+        }
+    }
+
+    public void mousePressed (MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {}
+    public void mouseEntered (MouseEvent e) {}
+    public void mouseExited  (MouseEvent e) {}
 }
