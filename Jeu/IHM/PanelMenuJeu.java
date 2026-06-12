@@ -18,6 +18,7 @@ public class PanelMenuJeu extends JPanel implements ActionListener
 	private JButton btnFinTour;
     
 	private JPanel pnlDefausse;
+	private JPanel pnlManche;
 	private PanelPlateau pnlPlateau;
 
 	public PanelMenuJeu(ControleurJeu ctrl)
@@ -59,7 +60,15 @@ public class PanelMenuJeu extends JPanel implements ActionListener
 
 		if (e.getSource() == this.btnFinTour)
 		{
-			this.pnlDefausse.add(new JLabel(this.lblPioche.getIcon()));
+			ImageIcon icon = (ImageIcon) this.lblPioche.getIcon();
+
+			Image imgRedim = icon.getImage().getScaledInstance(
+				50, 70,
+				Image.SCALE_SMOOTH
+			);
+
+			JLabel carteDefausse = new JLabel(new ImageIcon(imgRedim));
+			this.pnlDefausse.add(carteDefausse);
 			this.ctrl.jouerCarte();
 			this.pnlPlateau.aJoue = false;
 			this.revalidate();
@@ -69,6 +78,7 @@ public class PanelMenuJeu extends JPanel implements ActionListener
 			{
 				if (this.ctrl.estFin()) 
 				{
+
 					this.removeAll();
 					this.fin();
 					this.revalidate();
@@ -76,7 +86,11 @@ public class PanelMenuJeu extends JPanel implements ActionListener
 				}
 				else
 				{
+					this.pnlDefausse.removeAll();
+					this.pnlManche.removeAll();
 					this.ctrl.mancheSuivante();
+					this.pnlDefausse.add(new JLabel("Défausse :"));
+					this.pnlManche.add(new JLabel("Manche : " + (this.ctrl.getManche()+1)));
 					this.lblPioche.setIcon(this.ctrl.getPioche().getImage());
 					this.pnlPlateau.repaint();
 				}
@@ -90,25 +104,31 @@ public class PanelMenuJeu extends JPanel implements ActionListener
 
 	private void creerPnlJeu()
 	{
-		this.setLayout(new GridLayout(1, 2));
+		this.setLayout(new BorderLayout());
 
 		this.lblPioche    = new JLabel(this.ctrl.getPioche().getImage());
 		this.btnFinTour   = new JButton("Fin du tour");
 		this.pnlDefausse  = new JPanel(new FlowLayout(FlowLayout.LEFT));
+		this.pnlManche 	  = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+		JScrollPane scrollDefausse = new JScrollPane(this.pnlDefausse);
+
+		scrollDefausse.setPreferredSize(new Dimension(250, 120));
 
 		JPanel pnlCartes  = new JPanel(new BorderLayout());
 		JPanel pnlPioche  = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
+		this.pnlManche.add(new JLabel("Manche : " + (this.ctrl.getManche()+1)));
 		pnlPioche.add(this.lblPioche);
 		this.pnlDefausse.add(new JLabel("Défausse :"));
 		pnlCartes.add(pnlPioche, BorderLayout.NORTH);
-		pnlCartes.add(this.pnlDefausse, BorderLayout.CENTER);
+		pnlCartes.add(scrollDefausse, BorderLayout.CENTER);
+		pnlCartes.add(this.pnlManche, BorderLayout.SOUTH);
 
 		JPanel pnlGrille  = new JPanel(new BorderLayout());
 		JPanel pnlTitre   = new JPanel(new FlowLayout(FlowLayout.CENTER));
 		JPanel pnlBtnTour = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
-        
 		this.pnlPlateau   = new PanelPlateau(this.ctrl);
         
 		pnlTitre  .add(new JLabel(this.nomPlateau));
@@ -119,8 +139,11 @@ public class PanelMenuJeu extends JPanel implements ActionListener
 		pnlGrille.add(this.pnlPlateau, BorderLayout.CENTER);
 		pnlGrille.add(pnlBtnTour, BorderLayout.SOUTH);
 
-		this.add(pnlCartes);
-		this.add(pnlGrille);
+		pnlCartes.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+		pnlGrille.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+		this.add(pnlCartes, BorderLayout.WEST);
+		this.add(pnlGrille, BorderLayout.CENTER);
 
 		this.btnFinTour.addActionListener(this);
 	}

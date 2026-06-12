@@ -65,7 +65,11 @@ public class Trajet
 	}
 
 	private boolean estVoisin( Pole poleDepart, Case poleArr )
+<<<<<<< HEAD
 	{
+=======
+	{	
+>>>>>>> 77e3917 (Amélioration de l'ihm)
 		return poleDepart.estVoisin(poleArr);
 	}
 	
