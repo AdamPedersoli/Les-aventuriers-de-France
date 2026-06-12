@@ -455,24 +455,37 @@ public class Plateau
 		return this.indexManche == this.nbManche - 1;
 	}
 	
-	public int getScoreFinal()
+	public int getScoreFinal() 
 	{
-		int nbZoneCapture = 0, nbPoleZone = 0, nbPoleMax = 0;
-		
-		
-		for ( Departement d : this.lstDep )
-			for ( int cpt = 0 ; cpt < d.getNbCase() ; cpt++ )
-				if ( d.getCase(cpt).getPole() != null && d.getCase(cpt).getPole().estVisite() )
-				{
-					nbPoleZone++;
-				}
+		int nbZoneCapture, nbPoleZone, nbPoleMax, scoreFinal = 0;
 
-			nbPoleMax = Math.max( nbPoleZone, nbPoleMax );
+		for (Trajet traj : this.lstTrajet) 
+		{
+			nbZoneCapture = 0;
+			nbPoleMax = 0;
 
-			if ( nbPoleZone > 0 )
-				nbZoneCapture++;
-		
-		return nbZoneCapture * nbPoleMax;
+			for (Departement dep : this.lstDep) 
+			{
+				nbPoleZone = 0;
+				for (Case caseDepartement : dep.getLstCase())
+					for (Case caseTraj : traj.getLstCase())
+						if (caseDepartement.equals(caseTraj))
+						{
+							nbPoleZone++;
+							System.out.println( caseDepartement.getX() + " / " + caseDepartement.getY() + " : " + dep.getTypeDepartement().getNom() );
+						}
+							
+
+				if (nbPoleZone > 0)
+					nbZoneCapture++;
+
+				nbPoleMax = Math.max(nbPoleZone, nbPoleMax);
+			}
+
+			System.out.println(nbPoleMax);
+			scoreFinal += nbZoneCapture * nbPoleMax;
+		}
+		return scoreFinal;
 	}
 	
 	/**

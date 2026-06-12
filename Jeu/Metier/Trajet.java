@@ -79,6 +79,11 @@ public class Trajet
 		return this.lstSegment;
 	}
 	
+	public ArrayList<Case> getLstCase()
+	{
+		return this.lstCase;
+	}
+	
 	public Case getPremier()
 	{
 		return this.lstSegment.get(0).getCaseA();
