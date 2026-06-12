@@ -93,5 +93,4 @@ public class Pole
 	{
 		return this.lstVoisin;
 	}
-	
 }
