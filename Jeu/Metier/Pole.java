@@ -28,7 +28,7 @@ public class Pole
 	/**
 	* Liste des voisin du pôle.
 	*/
-	private ArrayList<Pole> lstVoisin;
+	private ArrayList<Case> lstVoisin;
 	
 	/**
 	* Crée un pôle avec un nom et une couleur.
@@ -41,7 +41,7 @@ public class Pole
 		
 		this.estVisite = false;
 		
-		this.lstVoisin = new ArrayList<Pole>();
+		this.lstVoisin = new ArrayList<Case>();
 	}
 	
 	/**
@@ -73,7 +73,7 @@ public class Pole
 	*
 	* @param voisin le voisin ajouté.
 	*/
-	public void ajouterVoisin( Pole voisin )
+	public void ajouterVoisin( Case voisin )
 	{
 		this.lstVoisin.add( voisin );
 	}
@@ -84,9 +84,17 @@ public class Pole
 	* @param p le pôle à vérifier.
 	* @return vrai s'il est voisin sinon faux.
 	*/
-	public boolean estVoisin( Pole p )
+	public boolean estVoisin( Case c )
 	{
-		return this.lstVoisin.contains( p );
+		return this.lstVoisin.contains( c );
 	}
 	
+	public ArrayList<Case> getLstVoisin()
+	{
+		return this.lstVoisin;
+	}
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 77e3917 (Amélioration de l'ihm)
 }

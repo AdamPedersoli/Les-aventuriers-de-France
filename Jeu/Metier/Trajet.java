@@ -31,7 +31,7 @@ public class Trajet
 		     caseArr == null || caseArr.getPole() == null || this.lstCase.contains( caseArr ) )
 			return false;
 
-		if ( this.estVoisin( caseDep.getPole(), caseArr.getPole() ) )
+		if ( this.estVoisin( caseDep.getPole(), caseArr ) )
 		{
 			if ( estPremier )
 			{
@@ -64,8 +64,12 @@ public class Trajet
 		return false;
 	}
 
-	private boolean estVoisin( Pole poleDepart, Pole poleArr )
+	private boolean estVoisin( Pole poleDepart, Case poleArr )
+<<<<<<< HEAD
 	{
+=======
+	{	
+>>>>>>> 77e3917 (Amélioration de l'ihm)
 		return poleDepart.estVoisin(poleArr);
 	}
 	

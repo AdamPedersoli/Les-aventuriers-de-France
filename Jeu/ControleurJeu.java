@@ -81,6 +81,11 @@ public class ControleurJeu
 	{
 		return this.plateau.getLstTrajet();
 	}
+
+	public int getManche()
+	{
+		return this.plateau.getIndexManche();
+	}
 	
 	public boolean ajouterSegment( Case caseDep, Case caseArr)
 	{
