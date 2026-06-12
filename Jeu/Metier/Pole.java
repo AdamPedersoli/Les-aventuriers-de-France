@@ -93,8 +93,4 @@ public class Pole
 	{
 		return this.lstVoisin;
 	}
-<<<<<<< HEAD
-=======
-	
->>>>>>> 77e3917 (Amélioration de l'ihm)
 }
