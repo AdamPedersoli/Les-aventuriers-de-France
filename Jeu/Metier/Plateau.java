@@ -552,4 +552,44 @@ public class Plateau
 					}
 				}
 	}
+
+	public ArrayList<Carte> getCartesDispo()
+	{
+		ArrayList<Carte> cartesUniques = new ArrayList<>();
+		ArrayList<String> typesVus = new ArrayList<>();
+
+		for (Carte c : this.pioche)
+		{
+			String cle = c.getType() + "_" + c.getTeinte();
+			if (!typesVus.contains(cle))
+			{
+				typesVus.add(cle);
+				cartesUniques.add(c);
+			}
+		}
+		for (Carte c : this.defausse)
+		{
+			String cle = c.getType() + "_" + c.getTeinte();
+			if (!typesVus.contains(cle))
+			{
+				typesVus.add(cle);
+				cartesUniques.add(c);
+			}
+		}
+		return cartesUniques;
+	}
+
+	public void forcerProchaineCarte(String type, char teinte)
+	{
+		for (int i = 0; i < this.pioche.size(); i++)
+		{
+			Carte c = this.pioche.get(i);
+			if (c.getType().equals(type) && c.getTeinte() == teinte)
+			{
+				this.pioche.remove(i);
+				this.pioche.add(1, c);
+				return;
+			}
+		}
+	}
 }

@@ -111,6 +111,16 @@ public class ControleurJeu
 	{
 		this.plateau.jouerCarte();
 	}
+
+	public ArrayList<Carte> getCartesDispo()
+	{
+		return this.plateau.getCartesDispo();
+	}
+
+	public void forcerProchaineCarte(String type, char teinte)
+	{
+		this.plateau.forcerProchaineCarte(type, teinte);
+	}
 	
 	public static void main ( String[] args )
 	{

@@ -16,6 +16,7 @@ public class PanelMenuJeu extends JPanel implements ActionListener
     
 	private JLabel lblPioche;
 	private JButton btnFinTour;
+	private JButton btnDebug;
     
 	private JPanel pnlDefausse;
 	private JPanel pnlManche;
@@ -46,6 +47,11 @@ public class PanelMenuJeu extends JPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
+		if (e.getSource() == this.btnDebug)
+		{
+			new FrameDebug(this.ctrl);
+		}
+		
 		if (e.getSource() == this.btnJouer)
 		{
 			if (this.tblPlateaux.getSelectedRow() == -1) return;
@@ -91,6 +97,10 @@ public class PanelMenuJeu extends JPanel implements ActionListener
 					this.ctrl.mancheSuivante();
 					this.pnlDefausse.add(new JLabel("Défausse :"));
 					this.pnlManche.add(new JLabel("Manche : " + (this.ctrl.getManche()+1)));
+					JLabel coulManche = new JLabel("  ");
+					coulManche.setOpaque(true);
+					coulManche.setBackground(this.ctrl.getLstMoyenTransport().get(this.ctrl.getManche()).getCouleur());
+					this.pnlManche.add(coulManche);	
 					this.lblPioche.setIcon(this.ctrl.getPioche().getImage());
 					this.pnlPlateau.majBordure();
 					this.pnlPlateau.repaint();
@@ -109,6 +119,7 @@ public class PanelMenuJeu extends JPanel implements ActionListener
 
 		this.lblPioche    = new JLabel(this.ctrl.getPioche().getImage());
 		this.btnFinTour   = new JButton("Fin du tour");
+		this.btnDebug 	  = new JButton("Mode Debug" );
 		this.pnlDefausse  = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		this.pnlManche 	  = new JPanel(new FlowLayout(FlowLayout.LEFT));
 
@@ -120,6 +131,10 @@ public class PanelMenuJeu extends JPanel implements ActionListener
 		JPanel pnlPioche  = new JPanel(new FlowLayout(FlowLayout.CENTER));
 
 		this.pnlManche.add(new JLabel("Manche : " + (this.ctrl.getManche()+1)));
+		JLabel coulManche = new JLabel("  ");
+		coulManche.setOpaque(true);
+		coulManche.setBackground(this.ctrl.getLstMoyenTransport().get(this.ctrl.getManche()).getCouleur());
+		this.pnlManche.add(coulManche);
 		pnlPioche.add(this.lblPioche);
 		this.pnlDefausse.add(new JLabel("Défausse :"));
 		pnlCartes.add(pnlPioche, BorderLayout.NORTH);
@@ -134,6 +149,7 @@ public class PanelMenuJeu extends JPanel implements ActionListener
         
 		pnlTitre  .add(new JLabel(this.nomPlateau));
 		pnlBtnTour.add(this.btnFinTour);
+		pnlBtnTour.add(this.btnDebug);
 
 
 		pnlGrille.add(pnlTitre, BorderLayout.NORTH);
@@ -147,6 +163,7 @@ public class PanelMenuJeu extends JPanel implements ActionListener
 		this.add(pnlGrille, BorderLayout.CENTER);
 
 		this.btnFinTour.addActionListener(this);
+		this.btnDebug.addActionListener(this);
 	}
 
 	private void fin()
