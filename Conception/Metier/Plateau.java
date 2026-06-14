@@ -174,26 +174,12 @@ public class Plateau
 	* @param lig la ligne de la case.
 	* @param col la colonne de la case.
 	*/
-	public void ajouterDep ( TypeDepartement typeDep, int lig, int col )
+	public void ajouterCaseDep ( Departement dep, int lig, int col )
 	{
-		int indexDep = -1;
+		if ( false == this.lstDep.contains(dep) )
+			this.lstDep.add(dep);
 		
-		for (int cpt = 0; cpt < this.lstDep.size(); cpt++)
-		{
-			if ( this.lstDep.get(cpt).getTypeDep() == typeDep )
-				indexDep = cpt;
-		}
-		
-		if ( indexDep == -1 )
-		{
-			this.lstDep.add( new Departement( typeDep ) );
-			
-			indexDep = this.lstDep.size() - 1;
-		}
-		
-		this.lstDep.get(indexDep).ajouterCase( this.tabCase[lig][col] );
-		
-		
+		this.lstDep.
 	}
 	
 	
@@ -204,7 +190,9 @@ public class Plateau
 	*/
 	public void ajouterDep( Departement dep )
 	{
-		this.lstDep.add(dep);
+		if ( !this.lstDep.contains(dep) )
+			this.lstDep.add(dep);
+		
 	}
 	
 	/**

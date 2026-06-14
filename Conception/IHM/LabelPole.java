@@ -14,14 +14,16 @@ public class LabelPole extends JLabel
 	private int lig;
 	private int col;
 	
-	private Runnable repaint;
+	private Runnable repeindre;
 	
-	public LabelPole ( int lig, int col, Runnable repaint )
+	public LabelPole ( int lig, int col, Runnable repeindre )
 	{
 		super ( "", SwingConstants.CENTER);
 		
 		this.lig = lig;
 		this.col = col;
+		
+		this.repeindre = repeindre;
 		
 		this.pole = null;
 		
@@ -40,15 +42,13 @@ public class LabelPole extends JLabel
 	{
 		this.pole = pole;
 		
-		this.repaint.run();
 		
 		if ( this.pole == null )
-		{
 			this.setIcon(null);
-			return;
-		}
+		else
+			this.setIcon( this.pole.getImage() );
 		
-		this.setIcon( this.pole.getImage() );
+		repeindre.run();
 	}
 	
 	

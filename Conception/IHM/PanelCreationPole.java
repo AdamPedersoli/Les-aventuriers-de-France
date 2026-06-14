@@ -14,11 +14,12 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
 
 import java.util.ArrayList;
 
 
-public class PanelCreationPole extends JPanel implements IPanelConception, ActionListener
+public class PanelCreationPole extends JPanel implements IPanelConception, ActionListener, Runnable
 {
 	private ControleurConception ctrl;
 	private FrameConception      frameCpt;
@@ -171,7 +172,7 @@ public class PanelCreationPole extends JPanel implements IPanelConception, Actio
 		{
 			for(int col = 0; col < this.tabLblPlateau[lig].length; col++)
 			{
-				this.tabLblPlateau[lig][col] = new LabelPole(lig, col, () -> this.repaint() );
+				this.tabLblPlateau[lig][col] = new LabelPole(lig, col, this);
 				
 			}
 			
@@ -229,6 +230,8 @@ public class PanelCreationPole extends JPanel implements IPanelConception, Actio
 		for ( LabelPole[] ligTabLbl : this.tabLblPlateau )
 			for ( LabelPole lbl : ligTabLbl )
 				lbl.setIcon(null);
+		
+		this.run();
 	}
 	
 	public void sauvegarder()
@@ -240,6 +243,11 @@ public class PanelCreationPole extends JPanel implements IPanelConception, Actio
 				this.ctrl.ajouterPole( lbl.getLig(), lbl.getCol(), lbl.getPole() );
 			}
 		}
+	}
+	
+	public void run()
+	{
+		this.repaint();
 	}
 	
 	public void paintChildren(Graphics g)
@@ -277,15 +285,15 @@ public class PanelCreationPole extends JPanel implements IPanelConception, Actio
 							// Ligne :
 							switch ( cpt )
 							{
-								case 0, 1, 2 -> lig -- ;
-								case 4, 5, 6 -> lig ++ ;
+								case 0, 1, 2 -> lig-- ;
+								case 4, 5, 6 -> lig++ ;
 							}
 							
 							// Colonne :
 							switch ( cpt )
 							{
-								case 0, 6, 7 -> col -- ;
-								case 2, 3, 4 -> col ++ ;
+								case 0, 6, 7 -> col-- ;
+								case 2, 3, 4 -> col++ ;
 							}
 						}
 						
@@ -293,19 +301,15 @@ public class PanelCreationPole extends JPanel implements IPanelConception, Actio
 							 col >= 0 && col < this.tabLblPlateau[ligLbl].length &&
 							 tabLblPlateau[lig][col].getIcon() != null )
 						{
-						
-
-							int longueurLabel = this.tabLblPlateau[lig][col].getWidth ();
-							int hauteurLabel  = this.tabLblPlateau[lig][col].getHeight();
-						
-							int x1 = col    * longueurLabel + longueurLabel /2 + this.panelPlateau.getX();
-							int y1 = lig    * hauteurLabel  + hauteurLabel  /2 + this.panelPlateau.getY();
+							LabelPole lblA = this.tabLblPlateau[lig   ][col   ];
+							LabelPole lblB = this.tabLblPlateau[ligLbl][colLbl];
 							
-							int x2 = colLbl * longueurLabel + longueurLabel /2 + this.panelPlateau.getX();
-							int y2 = ligLbl * hauteurLabel  + hauteurLabel  /2 + this.panelPlateau.getY();
-
+							Point pA = SwingUtilities.convertPoint(lblA, lblA.getWidth()/2, lblA.getHeight()/2, this);
+							Point pB = SwingUtilities.convertPoint(lblB, lblB.getWidth()/2, lblB.getHeight()/2, this);
+							
+							
 							g.setColor( Color.BLACK );
-							g.drawLine( x1, y1, x2, y2 );
+							g.drawLine( (int)pA.getX(), (int)pA.getY(), (int)pB.getX(), (int)pB.getY() );
 						}
 					}
 				}

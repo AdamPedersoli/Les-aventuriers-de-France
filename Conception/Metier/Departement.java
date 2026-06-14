@@ -77,4 +77,5 @@ public class Departement
 	{
 		return this.typeDepartement.getNom() + ", nb Case courverte : " + this.lstCase.size();
 	}
+	
 }
