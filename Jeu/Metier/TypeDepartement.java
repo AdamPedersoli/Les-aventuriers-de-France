@@ -162,7 +162,7 @@ public enum TypeDepartement
 	{
 		this.nom = nom;
 		
-		this.couleur = new Color( r, v, b);
+		this.couleur = new Color( r, v, b, 155);
 	}
 	
 	/**

@@ -3,6 +3,7 @@ import Jeu.ControleurJeu;
 import Jeu.Metier.*;
 import java.util.ArrayList;
 import javax.swing.*;
+
 import java.awt.*;
 import java.awt.event.*;
 
@@ -45,6 +46,12 @@ public class PanelPlateau extends JPanel implements MouseListener
 
         int cw = cellW();
         int ch = cellH();
+
+        /*====================*/
+        /* FOND : CARTE       */   
+        /*====================*/
+        ImageIcon icon = new ImageIcon(getClass().getResource("../images/France.png"));
+        g2.drawImage(icon.getImage(), 0, 0, getWidth(), getHeight(), this);
 
         /*====================*/
         /* DEPARTEMENTS       */
