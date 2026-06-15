@@ -1,7 +1,7 @@
 ./jeu/ControleurJeu.java
 
-./jeu/ihm/FrameMenujeu.java
-./jeu/ihm/PanelMenujeu.java
+./jeu/ihm/FrameMenuJeu.java
+./jeu/ihm/PanelMenuJeu.java
 ./jeu/ihm/PanelPlateau.java
 
 ./jeu/metier/Carte.java

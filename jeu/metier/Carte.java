@@ -14,7 +14,7 @@ public class Carte
 		this.teinte = teinte;
 		
 		String teinteImg = teinte == 'c' ? "clair" : "fonce";
-		String cheminImg = "Jeu/images/cartes/" + type + "_" + teinteImg + ".png";
+		String cheminImg = "jeu/images/cartes/" + type + "_" + teinteImg + ".png";
 		
 		this.image = new ImageIcon( cheminImg );
 	}

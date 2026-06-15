@@ -71,6 +71,11 @@ public class Plateau
 	*/
 	private ArrayList<Carte>          pioche;
 	
+	/*
+	* Copie de la pioche
+	*/
+	private ArrayList<Carte>          copiePioche;
+	
 	/**
 	* Liste des cartes de la defausse.
 	*/
@@ -198,7 +203,11 @@ public class Plateau
 		this.pioche.add( new Carte( "fusee", 'c' ) );
 		this.pioche.add( new Carte( "fusee", 'f' ) );
 		
-		Collections.shuffle( pioche );
+		Collections.shuffle( this.pioche );
+		
+		this.copiePioche = new ArrayList<Carte>();
+		for ( Carte c : this.pioche )
+			this.copiePioche.add(c);
 	}
 	
 	public void initTrajet()
@@ -579,12 +588,11 @@ public class Plateau
 
 	public void forcerProchaineCarte(String type, char teinte)
 	{
-		for (int i = 0; i < this.pioche.size(); i++)
+		for (int i = 0; i < this.copiePioche.size(); i++)
 		{
-			Carte c = this.pioche.get(i);
+			Carte c = this.copiePioche.get(i);
 			if (c.getType().equals(type) && c.getTeinte() == teinte)
 			{
-				this.pioche.remove(i);
 				this.pioche.add(1, c);
 				return;
 			}
