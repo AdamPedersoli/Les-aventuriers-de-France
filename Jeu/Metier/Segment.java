@@ -1,4 +1,4 @@
-package Jeu.Metier;
+package jeu.metier;
 
 import java.awt.Point;
 

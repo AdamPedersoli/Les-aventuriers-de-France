@@ -1,8 +1,8 @@
-package Jeu.IHM;
+package jeu.ihm;
 
 import javax.swing.*;
 import java.awt.*;
-import Jeu.ControleurJeu;
+import jeu.ControleurJeu;
 
 public class FrameDebug extends JFrame
 {

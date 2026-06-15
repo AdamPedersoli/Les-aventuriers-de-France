@@ -1,6 +1,6 @@
-package Jeu.IHM;
+package jeu.ihm;
 
-import Jeu.ControleurJeu;
+import jeu.ControleurJeu;
 
 import javax.swing.*;
 import java.awt.*;

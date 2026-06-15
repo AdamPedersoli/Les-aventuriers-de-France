@@ -1,4 +1,4 @@
-package Jeu.Metier;
+package jeu.metier;
 
 
 import java.awt.Color;
@@ -59,7 +59,7 @@ public enum TypePole
 		
 		this.nomImage = nomImage;
 		
-		String cheminImage = "Jeu/images/poles/" + nomImage;
+		String cheminImage = "jeu/images/poles/" + nomImage;
 		
 		try
 		{

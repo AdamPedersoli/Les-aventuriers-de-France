@@ -1,4 +1,4 @@
-package Jeu.Metier;
+package jeu.metier;
 
 // Ecriture
 import java.io.PrintWriter;
@@ -28,7 +28,7 @@ public class GestionPlateau
 		
 		try
 		{
-			Scanner sc = new Scanner ( new FileInputStream ( "Jeu/Plateau/" + nomPlateau ) );
+			Scanner sc = new Scanner ( new FileInputStream ( "jeu/plateau/" + nomPlateau ) );
 
 			int[] infoPlateau = new int[5];
 
