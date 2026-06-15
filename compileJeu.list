@@ -1,17 +1,17 @@
-./Jeu/ControleurJeu.java
+./jeu/ControleurJeu.java
 
-./Jeu/IHM/FrameMenuJeu.java
-./Jeu/IHM/PanelMenuJeu.java
-./Jeu/IHM/PanelPlateau.java
+./jeu/ihm/FrameMenujeu.java
+./jeu/ihm/PanelMenujeu.java
+./jeu/ihm/PanelPlateau.java
 
-./Jeu/Metier/Carte.java
-./Jeu/Metier/Case.java
-./Jeu/Metier/Departement.java
-./Jeu/Metier/GestionPlateau.java
-./Jeu/Metier/MoyenTransport.java
-./Jeu/Metier/Plateau.java
-./Jeu/Metier/Pole.java
-./Jeu/Metier/Segment.java
-./Jeu/Metier/Trajet.java
-./Jeu/Metier/TypeDepartement.java
-./Jeu/Metier/TypePole.java
+./jeu/metier/Carte.java
+./jeu/metier/Case.java
+./jeu/metier/Departement.java
+./jeu/metier/GestionPlateau.java
+./jeu/metier/MoyenTransport.java
+./jeu/metier/Plateau.java
+./jeu/metier/Pole.java
+./jeu/metier/Segment.java
+./jeu/metier/Trajet.java
+./jeu/metier/TypeDepartement.java
+./jeu/metier/TypePole.java
