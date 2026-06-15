@@ -1,7 +1,7 @@
-package jeu;
+package Jeu;
 
-import jeu.ihm.*;
-import jeu.metier.*;
+import Jeu.IHM.*;
+import Jeu.Metier.*;
 import java.io.File;
 
 import java.util.ArrayList;

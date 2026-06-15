@@ -1,7 +1,7 @@
-package jeu.ihm;
+package Jeu.IHM;
 
-import jeu.ControleurJeu;
-import jeu.metier.Carte;
+import Jeu.ControleurJeu;
+import Jeu.Metier.Carte;
 
 import javax.swing.*;
 import java.awt.*;

@@ -1,6 +1,6 @@
-package jeu.ihm;
-import jeu.ControleurJeu;
-import jeu.metier.*;
+package Jeu.IHM;
+import Jeu.ControleurJeu;
+import Jeu.Metier.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
