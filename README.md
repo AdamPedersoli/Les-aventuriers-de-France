@@ -35,5 +35,5 @@ java Conception.ControleurConception
 
 Pour exécuter l'application Jeu :
 ```bash
-java Conception.ControleurJeu
+java jeu.ControleurJeu
 ```
