@@ -431,9 +431,19 @@ public class Plateau
 		boolean estCroise     = false;
 		
 		for ( Trajet t : lstTrajet )
+		{
 			for ( Segment s : t.getLstSegment() )
+			{
 				if ( s.seCroise( new Segment(caseDep, caseArr) ) )
+				{
 					estCroise = true;
+					break;
+				}
+			}
+			
+			if ( estCroise )
+				break;
+		}
 		
 		if ( ! imageValide && ! estFusee || estCroise )
 		{
