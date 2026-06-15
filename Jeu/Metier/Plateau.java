@@ -472,7 +472,6 @@ public class Plateau
 						if (caseDepartement.equals(caseTraj))
 						{
 							nbPoleZone++;
-							System.out.println( caseDepartement.getX() + " / " + caseDepartement.getY() + " : " + dep.getTypeDepartement().getNom() );
 						}
 							
 
@@ -482,7 +481,6 @@ public class Plateau
 				nbPoleMax = Math.max(nbPoleZone, nbPoleMax);
 			}
 
-			System.out.println(nbPoleMax);
 			scoreFinal += nbZoneCapture * nbPoleMax;
 		}
 		return scoreFinal;

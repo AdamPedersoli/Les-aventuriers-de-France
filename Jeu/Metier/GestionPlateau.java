@@ -46,13 +46,11 @@ public class GestionPlateau
 			String[] tabLigne;
 			for ( int lig = 0 ; lig < infoPlateau[1] ; lig++ )
 			{
-				System.out.println( "Ligne : " + lig );
 				tabLigne = sc.nextLine().split("\t");
 				for ( int col = 0 ; col <= tabLigne.length - 1; col++ )
 				{
 					if ( ! ( tabLigne[col].equals("null") ) )
 					{
-						System.out.println( tabLigne[col] );
 						plateau.getCase(lig,col).setPole( new Pole( TypePole.values()[ Integer.parseInt( tabLigne[col] ) ] ) );
 						plateau.ajouterCasePole( plateau.getCase(lig, col) );
 					}
@@ -82,6 +80,8 @@ public class GestionPlateau
 				}
 				tabLigne = sc.nextLine().split("\t");
 			}
+
+			
 
 			plateau.initCarte();
 
