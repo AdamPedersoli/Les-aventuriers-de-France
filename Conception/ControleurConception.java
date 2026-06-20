@@ -3,6 +3,7 @@ package Conception;
 import Conception.IHM.FrameConception;
 
 import Conception.Metier.Plateau;
+import Conception.Metier.Departement;
 import Conception.Metier.TypeDepartement;
 import Conception.Metier.TypePole;
 
@@ -36,9 +37,19 @@ public class ControleurConception
 		this.plateau.ajouterPole( typePole, lig, col );
 	}
 	
-	public void ajouterDep( int lig, int col, TypeDepartement typeDep )
+	public Departement getDepCase( int lig, int col)
 	{
-		this.plateau.ajouterDep( typeDep, lig, col );
+		return this.plateau.getDepCase(lig, col);
+	}
+	
+	public void ajouterCaseDep ( TypeDepartement typeDep, int lig, int col )
+	{
+		this.plateau.ajouterCaseDep(typeDep, lig, col);
+	}
+	
+	public void enleverCaseDep( int lig, int col )
+	{
+		this.plateau.enleverCaseDep( lig, col );
 	}
 	
 	public void ajouterCaseDepart( int lig, int col )

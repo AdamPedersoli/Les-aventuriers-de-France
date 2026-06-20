@@ -70,7 +70,7 @@ public class PanelConfig extends JPanel implements IPanelConception, ActionListe
 		JLabel lblNbDep      = new JLabel("Nombre de départements : ");
 		this.txtFldDep       = new JTextField(10);
 		
-		JLabel lblNbTrans    = new JLabel("Nombres de moyen de transports : ");
+		JLabel lblNbTrans    = new JLabel("Nombres de moyen de transports (Manches) : ");
 		this.txtFldTransport = new JTextField(10);
 		
 		
@@ -199,7 +199,7 @@ public class PanelConfig extends JPanel implements IPanelConception, ActionListe
 			this.messageErreur(PanelConfig.ERREUR_DEPARTEMENT);
 			return;
 		}
-		nbDep = Integer.parseInt(sCol);
+		nbDep = Integer.parseInt(sDep);
 		
 		if ( !sTransport.matches("[0-9]{1,9}") )
 		{

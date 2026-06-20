@@ -30,7 +30,7 @@ public class LabelPole extends JLabel
 		this.setTransferHandler(new PoleCibleHandler(this));
 		this.setPreferredSize  (new Dimension(50, 50));
 		this.setBorder         (BorderFactory.createLineBorder(Color.BLACK));
-		this.setOpaque         (false);
+		this.setOpaque         (true);
 	}
 	
 	

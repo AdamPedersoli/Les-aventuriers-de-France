@@ -25,7 +25,7 @@ public class Departement
 	*
 	* @param typeDepartement le département que l'on souhaite instancier.
 	*/
-	Departement( TypeDepartement typeDepartement )
+	public Departement( TypeDepartement typeDepartement )
 	{
 		this.typeDepartement = typeDepartement;
 		
@@ -45,6 +45,11 @@ public class Departement
 	* @return le nombre de case courverte par le département.
 	*/
 	public int getNbCase() { return this.lstCase.size(); }
+	
+	public Color getCouleur()
+	{
+		return this.typeDepartement.getCouleur();
+	}
 
 	/**
 	* Ajoute une case à la liste des cases.
@@ -66,7 +71,32 @@ public class Departement
 	{
 		return this.lstCase.get(indice);
 	}
-
+	
+	/**
+	* Méthode pour obtenir une case avec la coordonnées.
+	*
+	* @param lig ligne de la case.
+	* @param col colonne de la case.
+	* @return l'index de la case et -1 si elle n'existe pas.
+	*/
+	public int getCaseIndex( int lig, int col )
+	{
+		for ( Case c : this.lstCase )
+		{
+			if ( c.getX() == lig && c.getY() == col )
+				return this.lstCase.indexOf(c);
+		}
+		
+		return -1;
+	}
+	
+	public void enleverCase( int indice )
+	{
+		if ( indice >= 0 && indice < this.lstCase.size() )
+			this.lstCase.remove(indice);
+		
+	}
+	
 	
 	/**
 	* Méthode pour récupérer une version string à afficher.

@@ -165,7 +165,9 @@ public class PanelCreationPole extends JPanel implements IPanelConception, Actio
 		}
 		
 		
-		// Création des boutons du plateau
+		// Création des Labels du plateau
+		Departement dep;
+		
 		this.tabLblPlateau = new LabelPole[this.ctrl.getTailleYPlateau()][this.ctrl.getTailleXPlateau()];
 		
 		for(int lig = 0; lig < this.tabLblPlateau.length; lig++)
@@ -174,6 +176,12 @@ public class PanelCreationPole extends JPanel implements IPanelConception, Actio
 			{
 				this.tabLblPlateau[lig][col] = new LabelPole(lig, col, this);
 				
+				dep = this.ctrl.getDepCase(lig, col);
+				
+				if ( dep != null )
+					this.tabLblPlateau[lig][col].setBackground( dep.getCouleur() );
+				else
+					this.tabLblPlateau[lig][col].setBackground(Color.WHITE);
 			}
 			
 		}

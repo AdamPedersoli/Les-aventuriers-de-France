@@ -167,6 +167,24 @@ public class Plateau
 		return this.lstCaseDepart.get(indice);
 	}
 	
+	public Departement getDepCase( int lig, int col)
+	{
+		Departement dep;
+		
+		for (int cptDep = 0; cptDep < this.lstDep.size(); cptDep++)
+		{
+			for (int cptCase = 0; cptCase < this.lstDep.get(cptDep).getNbCase(); cptCase++)
+			{
+				dep = this.lstDep.get(cptDep);
+				
+				if ( dep.getCaseIndex(lig,col) >= 0 )
+					return dep;
+			}
+		}
+		
+		return null;
+	}
+	
 	/**
 	* Ajoute un département à la liste des départements.
 	*
@@ -174,12 +192,39 @@ public class Plateau
 	* @param lig la ligne de la case.
 	* @param col la colonne de la case.
 	*/
-	public void ajouterCaseDep ( Departement dep, int lig, int col )
+	public void ajouterCaseDep ( TypeDepartement typeDep, int lig, int col )
 	{
-		if ( false == this.lstDep.contains(dep) )
-			this.lstDep.add(dep);
+		this.enleverCaseDep(lig,col);
 		
-		this.lstDep.
+		for ( Departement dep : this.lstDep )
+		{
+			if ( dep.getTypeDep() == typeDep && dep.getCaseIndex(lig,col) < 0 )
+			{
+				dep.ajouterCase( new Case(lig,col) );
+				return;
+			}
+		}
+		
+		
+		Departement nouvDep = new Departement( typeDep );
+		
+		nouvDep.ajouterCase( new Case(lig,col) );
+		
+		this.lstDep.add(nouvDep);
+	}
+	
+	public void enleverCaseDep( int lig, int col )
+	{
+		int indice;
+		
+		for ( Departement depLst : this.lstDep )
+		{
+			indice = depLst.getCaseIndex(lig,col);
+			
+			if ( indice >= 0 )
+				depLst.enleverCase(indice);
+			
+		}
 	}
 	
 	

@@ -26,7 +26,7 @@ public class PanelCreationDepartement extends JPanel implements IPanelConception
 	private String               nomPanel;
 	private String               nomPlateau;
 	
-	private Color                couleurDep;
+	private TypeDepartement      typeDepartement;
 	
 	private JPanel               panelSelection;
 	private JPanel               panelPlateau;
@@ -42,7 +42,7 @@ public class PanelCreationDepartement extends JPanel implements IPanelConception
 	private JButton     btnSuivant;
 	private JButton[][] tabBtnPlateau;
 	
-	private JLabel     lblCouleur;
+	private JLabel      lblCouleur;
 	
 
 	public PanelCreationDepartement( ControleurConception ctrl, FrameConception frameCpt )
@@ -86,7 +86,6 @@ public class PanelCreationDepartement extends JPanel implements IPanelConception
 		// Couleur de département
 		this.lblCouleur = new JLabel();
 		this.lblCouleur.setOpaque(true);
-		this.lblCouleur.setBackground( this.couleurDep );
 		
 		
 		
@@ -127,27 +126,35 @@ public class PanelCreationDepartement extends JPanel implements IPanelConception
 		// Si on sélectionne un département
 		if (e.getSource() == this.jcbDep )
 		{
-			this.couleurDep = ((TypeDepartement)this.jcbDep.getSelectedItem()).getCouleur();
+			this.typeDepartement = (TypeDepartement)this.jcbDep.getSelectedItem();
 			
-			this.lblCouleur.setBackground( this.couleurDep );
+			if ( this.typeDepartement != null)
+				this.lblCouleur.setBackground( this.typeDepartement.getCouleur() );
 		}
 		
 		
 		// Si on colorie le plateau
+		Color couleurDep;
+		
 		for (int lig = 0; lig < this.tabBtnPlateau.length; lig++)
 		{
 			for (int col = 0; col < this.tabBtnPlateau[lig].length; col++)
 			{
 				if ( e.getSource() == this.tabBtnPlateau[lig][col] )
 				{
-					if ( this.estSurPlateau( this.couleurDep ) )
+					couleurDep = this.typeDepartement.getCouleur();
+					
+					if ( this.estSurPlateau( couleurDep ) && this.aUnVoisin( couleurDep, lig, col) )
 					{
-						if ( this.aUnVoisin( this.couleurDep, lig, col ) )
-							this.tabBtnPlateau[lig][col].setBackground(this.couleurDep);
+						this.ctrl.ajouterCaseDep( typeDepartement, lig, col);
+						
+						this.tabBtnPlateau[lig][col].setBackground(couleurDep);
 					}
-					else
+					else if ( false == this.estSurPlateau( couleurDep ) )
 					{
-						this.tabBtnPlateau[lig][col].setBackground(this.couleurDep);
+						this.ctrl.ajouterCaseDep( typeDepartement, lig, col);
+						
+						this.tabBtnPlateau[lig][col].setBackground(couleurDep);
 					}
 				}
 			}
@@ -206,7 +213,7 @@ public class PanelCreationDepartement extends JPanel implements IPanelConception
 				
 				this.tabBtnPlateau[lig][col].setFocusPainted     (false);
 				this.tabBtnPlateau[lig][col].setContentAreaFilled(false);
-				this.tabBtnPlateau[lig][col].setBackground       (null );
+				this.tabBtnPlateau[lig][col].setBackground       (Color.WHITE);
 				this.tabBtnPlateau[lig][col].setOpaque           (true );
 				
 				this.tabBtnPlateau[lig][col].setBorder(BorderFactory.createLineBorder(Color.BLACK));
@@ -220,6 +227,8 @@ public class PanelCreationDepartement extends JPanel implements IPanelConception
 		
 		// Ajout des départements à la combobox (après la création des boutons)
 		this.remplirDepartementComboBox();
+		
+		this.lblCouleur.setBackground( this.typeDepartement.getCouleur() );
 		
 		/*--------------------------------*/
 		/* Positionnements des composants */
@@ -244,20 +253,23 @@ public class PanelCreationDepartement extends JPanel implements IPanelConception
 	
 	public String getNom() { return this.nomPanel; }
 	
-	public void sauvegarder()
-	{
-		// appeler ajouter dep du Controleur
-	}
-	
 	private void effacerDepartementTableau()
 	{
-		for ( JButton[] ligTabBtn : this.tabBtnPlateau )
-			for ( JButton btn : ligTabBtn )
-				btn.setBackground(null);
+		for (int lig = 0; lig < this.tabBtnPlateau.length; lig++)
+		{
+			for (int col = 0; col < this.tabBtnPlateau[lig].length; col++)
+			{
+				this.ctrl.enleverCaseDep( lig, col);
+				
+				this.tabBtnPlateau[lig][col].setBackground(Color.WHITE);
+			}
+		}
 	}
 	
 	private void remplirDepartementComboBox()
 	{
+		this.jcbDep.removeAllItems();
+		
 		int random;
 		
 		int cpt = 0;
@@ -275,7 +287,7 @@ public class PanelCreationDepartement extends JPanel implements IPanelConception
 		
 		this.jcbDep.setSelectedIndex(0);
 		
-		this.couleurDep = ((TypeDepartement)this.jcbDep.getSelectedItem()).getCouleur();
+		this.typeDepartement = (TypeDepartement)this.jcbDep.getSelectedItem();
 	}
 	
 	private boolean estSurPlateau( Color coul )
@@ -284,7 +296,7 @@ public class PanelCreationDepartement extends JPanel implements IPanelConception
 		{
 			for (int col = 0; col < this.tabBtnPlateau[lig].length; col++)
 			{
-				if ( this.tabBtnPlateau[lig][col].getBackground() == coul )
+				if ( this.tabBtnPlateau[lig][col].getBackground().equals(coul) )
 					return true;
 			}
 		}
@@ -294,19 +306,19 @@ public class PanelCreationDepartement extends JPanel implements IPanelConception
 	
 	private boolean aUnVoisin( Color coul, int lig, int col )
 	{
-		int nbLigTab = this.tabBtnPlateau   .length;
-		int nbColTab = this.tabBtnPlateau[0].length;
+		int nbLigTab = this.tabBtnPlateau          .length;
+		int nbColTab = this.tabBtnPlateau[nbLigTab].length;
 		
-		if ( lig - 1 >= 0       && this.tabBtnPlateau[lig - 1][col].getBackground() == coul )
+		if ( lig - 1 >= 0       && this.tabBtnPlateau[lig - 1][col].getBackground().equals(coul) )
 			return true;
 		
-		if ( col + 1 < nbColTab && this.tabBtnPlateau[lig][col + 1].getBackground() == coul )
+		if ( col + 1 < nbColTab && this.tabBtnPlateau[lig][col + 1].getBackground().equals(coul) )
 			return true;
 		
-		if ( lig + 1 < nbLigTab && this.tabBtnPlateau[lig + 1][col].getBackground() == coul )
+		if ( lig + 1 < nbLigTab && this.tabBtnPlateau[lig + 1][col].getBackground().equals(coul) )
 			return true;
 		
-		if ( col - 1 >= 0       && this.tabBtnPlateau[lig][col - 1].getBackground() == coul )
+		if ( col - 1 >= 0       && this.tabBtnPlateau[lig][col - 1].getBackground().equals(coul) )
 			return true;
 		
 		return false;
@@ -314,10 +326,14 @@ public class PanelCreationDepartement extends JPanel implements IPanelConception
 	
 	public boolean estPlein()
 	{
-		for ( JButton[] tabLigPlateau : this.tabBtnPlateau )
-			for ( JButton btn : tabLigPlateau )
-				if ( btn.getBackground() == null )
+		for (int lig = 0; lig < this.tabBtnPlateau.length; lig++)
+		{
+			for (int col = 0; col < this.tabBtnPlateau[lig].length; col++)
+			{
+				if ( this.tabBtnPlateau[lig][col].getBackground().equals(Color.WHITE) )
 					return false;
+			}
+		}
 		
 		return true;
 	}
