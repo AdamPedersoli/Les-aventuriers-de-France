@@ -121,7 +121,7 @@ public class PanelCreationPole extends JPanel implements IPanelConception, Actio
 			this.effacerPolePlateau();
 		
 		if ( e.getSource() == this.btnSuivant ) {}
-			// this.frameCpt.changerPanel(FrameConception.PANEL_CREATION_DEBUT, false);
+			this.frameCpt.changerPanel(FrameConception.PANEL_CREATION_DEBUT, false);
 		
 	}
 	
